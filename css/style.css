@@ -117,6 +117,21 @@ ul, ol { list-style: none; padding: 0; }
 .btn-sm { padding: 11px 22px; font-size: .89rem; }
 .btn-block { width: 100%; }
 
+/* On a touch screen every button gets at least a 44px tap area — the tour
+   cards' "Details" and "Book this" sat at 40px, which is where mis-taps start.
+   Keyed off the pointer, not the width, so a small laptop window is unaffected. */
+@media (pointer: coarse) {
+  .btn { min-height: 44px; }
+  .burger { width: 44px; height: 44px; }
+  .link-gold { padding: 9px 0; }
+  .filters button { min-height: 42px; }
+}
+/* Long button labels have nowhere to go on a narrow screen; let them wrap
+   rather than run past the edge of the button. */
+@media (max-width: 480px) {
+  .btn { white-space: normal; text-align: center; padding-inline: 20px; }
+}
+
 .btn-gold {
   background: var(--gold-grad); color: #17120A;
   box-shadow: 0 2px 0 rgba(255,255,255,.35) inset, 0 10px 26px rgba(180,130,40,.30);
@@ -183,15 +198,7 @@ ul, ol { list-style: none; padding: 0; }
 
 .head-actions { display: flex; align-items: center; gap: .85rem; }
 
-.lang { display: flex; border: 1px solid var(--line-d); border-radius: 999px; overflow: hidden; }
-.lang button {
-  padding: 7px 13px; font-size: .755rem; font-weight: 700; letter-spacing: .1em;
-  color: rgba(236,232,223,.6); transition: background .2s, color .2s;
-}
-.lang button:hover { color: var(--white); }
-.lang button[aria-pressed="true"] { background: var(--gold-grad); color: #17120A; }
-
-.burger { display: none; width: 42px; height: 42px; border: 1px solid var(--line-d); border-radius: 12px; padding: 11px 10px; flex-direction: column; justify-content: space-between; }
+.burger { display: none; width: 44px; height: 44px; border: 1px solid var(--line-d); border-radius: 12px; padding: 12px 10px; flex-direction: column; justify-content: space-between; }
 .burger span { display: block; height: 1.8px; background: var(--tx-light); border-radius: 2px; transition: transform .3s var(--ease), opacity .2s; }
 .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7.1px) rotate(45deg); }
 .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
@@ -215,9 +222,14 @@ ul, ol { list-style: none; padding: 0; }
   .brand-name { font-size: .8rem; letter-spacing: .02em; white-space: nowrap; }
   .brand-mark { width: 38px; height: 38px; }
   .brand { gap: .55rem; }
-  .head-actions { gap: .55rem; }
-  .head-actions .btn-gold { display: none; }
-  .lang button { padding: 7px 10px; }
+  .head-actions { gap: .5rem; }
+  /* "Book now" used to be hidden here, which removed the one action that
+     matters from the screen most guests actually use. The language switch
+     that crowded it out is gone, so it stays — just narrower. */
+  .head-actions .btn-gold { padding: 10px 14px; font-size: .8rem; }
+}
+@media (max-width: 380px) {
+  .brand-name { display: none; }
 }
 
 /* ---------- 6. Hero ------------------------------------------------------- */
@@ -259,17 +271,54 @@ ul, ol { list-style: none; padding: 0; }
 .hero-sub { color: rgba(240,237,229,.9); font-size: clamp(1.02rem, 1.65vw, 1.28rem); max-width: 60ch; margin-bottom: 2.2rem; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: .9rem; justify-content: center; margin-bottom: 2.6rem; }
 
-.hero-badges { display: flex; flex-wrap: wrap; gap: .6rem 1.6rem; justify-content: center; }
-.hero-badges li { display: flex; align-items: center; gap: .5rem; font-size: .875rem; color: rgba(236,232,223,.82); }
+/* Each badge carries its own dark pill. The three of them sit low in the hero,
+   where the photo is brightest and the fade to the sand section has already
+   begun — plain light text washed out completely there on a phone. */
+.hero-badges { display: flex; flex-wrap: wrap; gap: .55rem; justify-content: center; }
+.hero-badges li {
+  display: flex; align-items: center; gap: .5rem;
+  font-size: .875rem; font-weight: 500; color: var(--white);
+  padding: 8px 15px; border-radius: 999px;
+  background: rgba(8,8,10,.62); border: 1px solid rgba(236,232,223,.16);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
 .ico { width: 17px; height: 17px; flex: none; fill: none; stroke: var(--gold); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------- 7. Marquee ---------------------------------------------------- */
+/* ---------- 7b. Social proof bar ------------------------------------------ */
+/* Phone layout first: stars and score on one line, the quote wrapping under
+   it. From 640px up the three parts sit on a single row. */
+.proof {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: .5rem .9rem; padding: 14px clamp(16px, 5vw, 32px);
+  background: var(--ink-1); border-bottom: 1px solid var(--line-d);
+  color: var(--tx-light); text-align: center;
+  transition: background .2s;
+}
+.proof:hover { background: var(--ink-2); }
+.proof-stars { display: inline-flex; gap: 2px; flex: none; }
+.proof-stars svg { width: 16px; height: 16px; fill: var(--gold); stroke: none; }
+.proof-score { font-size: .92rem; flex: none; }
+.proof-score strong { color: var(--gold-hi); font-weight: 700; }
+.proof-quote {
+  font-size: .88rem; color: var(--tx-light-2); font-style: italic;
+  flex: 1 1 100%; max-width: 62ch;
+}
+.proof-quote em { font-style: normal; color: var(--tx-light); }
+@media (min-width: 640px) {
+  .proof-quote { flex: 0 1 auto; }
+  .proof-quote::before { content: '·'; margin-right: .9rem; color: var(--tx-light-2); }
+}
+
 .marquee { background: var(--ink); border-block: 1px solid var(--line-d); overflow: hidden; padding: 15px 0; }
 .marquee-track { display: flex; gap: 0; width: max-content; animation: slide 42s linear infinite; }
+/* A phone shows barely two items at a time, so the same speed reads much
+   faster there. Slow it down until a full phrase is comfortably readable. */
+@media (max-width: 700px) { .marquee-track { animation-duration: 68s; } }
 .marquee-track span {
   display: inline-flex; align-items: center; gap: 2.6rem; padding-right: 2.6rem;
   font-family: var(--ff-display); font-size: clamp(1.05rem, 2vw, 1.5rem); letter-spacing: .01em;
-  color: rgba(236,232,223,.5); white-space: nowrap;
+  color: rgba(240,236,228,.92); white-space: nowrap;
 }
 .marquee-track span::after { content: '◆'; font-size: .5em; color: var(--gold); }
 @keyframes slide { to { transform: translateX(-50%); } }
@@ -432,6 +481,8 @@ ul, ol { list-style: none; padding: 0; }
   position: absolute; right: -16px; bottom: -20px; width: clamp(88px, 12vw, 132px); height: auto;
   border-radius: 50%; box-shadow: 0 0 0 4px var(--sand), 0 18px 40px rgba(0,0,0,.3);
 }
+/* The overhang has no room to spill into on a phone and widened the page. */
+@media (max-width: 700px) { .about-badge { right: 6px; bottom: -14px; } }
 .about-copy h2 { font-family: var(--ff-display); font-size: clamp(2rem, 4vw, 3.05rem); font-weight: 600; letter-spacing: -.015em; line-height: 1.08; margin-bottom: 1.1rem; }
 .about-copy p { color: var(--tx-dark-2); margin-bottom: 1rem; max-width: 60ch; }
 .about-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.1rem; margin-top: 2rem; }
@@ -462,6 +513,7 @@ ul, ol { list-style: none; padding: 0; }
 /* ---------- 14. Booking --------------------------------------------------- */
 .sec-book { background: linear-gradient(180deg, var(--sand) 0%, var(--sand-2) 100%); }
 .book-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .92fr); gap: clamp(2rem, 4.5vw, 4rem); align-items: start; }
+.book-grid > * { min-width: 0; }
 @media (max-width: 940px) { .book-grid { grid-template-columns: 1fr; } }
 
 .book-intro h2 { font-family: var(--ff-display); font-size: clamp(2rem, 4vw, 3.05rem); font-weight: 600; letter-spacing: -.015em; line-height: 1.08; margin-bottom: .6rem; }
@@ -497,12 +549,24 @@ ul, ol { list-style: none; padding: 0; }
   box-shadow: var(--sh-lg); border: 1px solid rgba(16,17,21,.06);
   display: flex; flex-direction: column; gap: 1.05rem;
 }
-.field { display: flex; flex-direction: column; gap: .4rem; }
+.field { display: flex; flex-direction: column; gap: .4rem; min-width: 0; }
 .field label { font-size: .81rem; font-weight: 600; letter-spacing: .04em; color: var(--tx-dark-2); }
 .field input, .field select, .field textarea {
   padding: 13px 15px; border: 1px solid rgba(16,17,21,.15); border-radius: var(--r-sm);
-  background: #FCFBF8; font-size: .96rem; transition: border-color .2s, box-shadow .2s, background .2s;
+  background: #FCFBF8; transition: border-color .2s, box-shadow .2s, background .2s;
   width: 100%;
+  /* Grid and flex children size to min-content by default. A date input's
+     min-content width is wider than a phone column, so the field refused to
+     shrink and pushed the whole page sideways. */
+  min-width: 0;
+  /* iOS Safari zooms the viewport when a control below 16px takes focus, and
+     never zooms back out. 16px is the threshold, not a design choice. */
+  font-size: 16px;
+}
+/* Safari gives date inputs their own intrinsic width and centred text. */
+.field input[type="date"] {
+  -webkit-appearance: none; appearance: none;
+  text-align: left; min-height: 50px;
 }
 .field textarea { resize: vertical; min-height: 96px; }
 .field input:focus, .field select:focus, .field textarea:focus {
@@ -510,7 +574,14 @@ ul, ol { list-style: none; padding: 0; }
   box-shadow: 0 0 0 3px rgba(212,165,68,.18);
 }
 .field input::placeholder, .field textarea::placeholder { color: #A6A7AE; }
-.row { display: grid; grid-template-columns: 1fr .62fr; gap: 1.05rem; }
+.row { display: grid; grid-template-columns: 1fr .62fr; gap: 1.05rem; min-width: 0; }
+.row > * { min-width: 0; }
+/* On a phone the date needs every pixel it can get — Safari renders a full
+   dd.mm.yyyy plus a picker icon inside it — while the guest count never needs
+   more than two digits. */
+@media (max-width: 560px) {
+  .row { grid-template-columns: 1fr 96px; gap: .7rem; }
+}
 .form-error { color: #B4231E; font-size: .87rem; font-weight: 500; }
 .wa-hint { font-size: .8rem; color: var(--tx-dark-2); text-align: center; }
 
@@ -523,6 +594,12 @@ ul, ol { list-style: none; padding: 0; }
 .foot-brand p { color: var(--tx-light-2); font-size: .92rem; max-width: 34ch; }
 .foot-col h3 { font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.05rem; font-weight: 600; }
 .foot-col a { display: block; padding: 5px 0; color: var(--tx-light-2); font-size: .93rem; transition: color .2s, transform .2s; }
+/* The footer is a dense list of links; on a phone they need real spacing. */
+@media (pointer: coarse) {
+  .foot-col a { padding: 11px 0; }
+  .foot-top { padding: 11px 0; }
+  .copy-btn { min-height: 44px; }
+}
 .foot-col a:hover { color: var(--gold); transform: translateX(3px); }
 .foot-col address { font-style: normal; color: var(--tx-light-2); font-size: .89rem; margin-top: .8rem; line-height: 1.6; }
 

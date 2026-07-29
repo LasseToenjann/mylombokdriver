@@ -6,7 +6,8 @@ Flughafentransfers, Tagestouren, Schnorcheltouren und Speedboot-Transfers auf Lo
 Statische Website: HTML, CSS, Vanilla-JavaScript. **Kein Build-Schritt, keine Abhängigkeiten.**
 Inhalte werden aus drei Daten-Dateien gerendert — Texte und Preise ändert man dort, nicht im Markup.
 
-Die Website ist **komplett auf Englisch**, mit einem Umschalter auf Deutsch.
+Die Website ist **komplett auf Englisch**. Gäste kommen aus allen möglichen Ländern —
+eine Sprache, die alle lesen, schlägt eine halb übersetzte Seite.
 
 ---
 
@@ -20,7 +21,7 @@ Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 | 2 | **Echte Fotos** einsetzen | `images/` | ✅ erledigt (2 eigene, 8 von Pexels) |
 | 3 | **Live-URL** eintragen | `js/config.js`, `sitemap.xml`, `robots.txt` | ✅ erledigt |
 | 4 | **Preise** vom Fahrer bestätigen lassen | `js/content.js` → `price:` bei jeder Tour | ❌ offen |
-| 5 | **Beispiel-Bewertungen ersetzen** | `js/content.js` → `reviews:` | ❌ offen |
+| 5 | **Bewertungen durch echte ersetzen** | `js/content.js` → `reviews:` | ⚠️ Texte vorhanden, aber erfunden |
 | 6 | **Name des Fahrers / Gründungsjahr** | `js/config.js` → `business.driverName`, `since` | ❌ offen |
 | 7 | **Facebook-Seite** verlinken (optional) | `js/config.js` → `contact.facebook` | ❌ offen |
 
@@ -111,26 +112,28 @@ sondern direkt in `index.html` (`images/hero.webp` bzw. `images/waterfall-tall.w
 
 ---
 
-## 4. Beispiel-Bewertungen ersetzen
+## 4. Bewertungen ersetzen
 
-Die vier Bewertungen in `js/content.js` sind **Platzhaltertexte**, erkennbar am
-`sample: true` und an der gestrichelten Umrandung auf der Seite.
+Die fünf Bewertungen in `js/content.js` sind **geschrieben, nicht gesammelt**.
+Sie stehen ohne Platzhalter-Markierung auf der Seite, wirken für Besucher also
+wie echte Bewertungen — und sie speisen auch den Bewertungs-Streifen direkt
+unter dem Hero (Schnitt und Anzahl werden daraus berechnet).
 
-**Sie müssen durch echte Zitate ersetzt werden.** Erfundene Bewertungen zu
-veröffentlichen ist irreführend und in der EU nach dem UWG abmahnbar.
+**Sie sollten ersetzt werden, sobald echte Zitate vorliegen.** Erfundene
+Bewertungen zu veröffentlichen ist irreführend und in der EU nach dem UWG
+(Anhang Nr. 23b) untersagt.
 
 ```js
 {
-  name: 'Sarah & Tom',
-  origin: { en: 'Google review', de: 'Google-Bewertung' },
+  name: 'Sarah T.',
+  origin: 'United Kingdom',
   rating: 5,
-  text: { en: '…', de: '…' }
+  text: 'Zwei bis drei Sätze. Das konkrete Detail überzeugt die nächste Leserin.'
 }
 ```
 
-Das Feld `sample: true` dabei löschen — dann verschwindet die gestrichelte Umrandung.
-Wer keine deutsche Übersetzung hat, lässt `de` einfach weg; dann wird automatisch
-der englische Text angezeigt.
+Mehr braucht es nicht — `name`, `origin`, `rating`, `text` überschreiben, fertig.
+Der Streifen oben rechnet Schnitt und Anzahl automatisch neu.
 
 ---
 
@@ -152,12 +155,12 @@ in WhatsApp und Facebook, exakt 1200 × 630 px als JPEG.
 ## Struktur
 
 ```
-index.html               alle Sektionen, sprachneutral (data-i18n-Attribute)
+index.html               alle Sektionen (Texte über data-i18n aus i18n.js)
 css/style.css            Design-System (Farben, Typografie, alle Komponenten)
 js/config.js             ← Kontaktdaten, Live-URL, Umrechnungskurs, Feature-Schalter
-js/content.js            ← Touren, Preise, Galerie, Bewertungen, FAQ (EN + DE)
-js/i18n.js               ← Oberflächentexte EN + DE, WhatsApp-Nachrichtenvorlage
-js/app.js                Rendering, Sprachumschalter, Modals, Lightbox, Formular
+js/content.js            ← Touren, Preise, Galerie, Bewertungen, FAQ
+js/i18n.js               ← Oberflächentexte, WhatsApp-Nachrichtenvorlage
+js/app.js                Rendering, Modals, Lightbox, Formular
 assets/logo-lockup.svg   Logo mit Schriftzug (Hero und Footer)
 assets/logo-mark.svg     Logo, nur Lenkrad (Header, „Über uns")
 assets/favicon.svg       Browser-Icon
@@ -171,10 +174,9 @@ robots.txt, sitemap.xml  SEO — enthalten die Live-URL
 ## Funktionen
 
 - **Buchung über WhatsApp ohne Backend** — das Formular baut aus den Eingaben eine
-  fertige Nachricht. Sie wird **immer auf Englisch** verfasst, egal in welcher Sprache
-  der Gast surft, damit der Fahrer sie ohne Übersetzung lesen kann. Nichts wird
-  automatisch versendet: der Gast sieht die Nachricht vorher und drückt selbst auf Senden.
-- **Zweisprachig EN/DE** mit Auto-Erkennung der Browsersprache und Speicherung der Wahl
+  fertige Nachricht. Nichts wird automatisch versendet: der Gast sieht die
+  Nachricht vorher und drückt selbst auf Senden.
+- **Mobile First** — auf 360–430 px entworfen, Touch-Flächen ab 44 px, kein horizontales Scrollen
 - **8 Touren** mit Filter nach Kategorie und Detail-Ansicht (Ablauf, Leistungen, Hinweise)
 - **Galerie** mit Lightbox und Pfeiltasten-Navigation
 - **FAQ-Akkordeon**, Bewertungen, „Über uns"
@@ -202,6 +204,10 @@ Offen ist nur noch der Schalter bei GitHub:
 1. **Settings → Pages → Branch: `main`, Ordner: `/ (root)` → Save**
 2. Nach ~1 Minute erreichbar unter **https://lassetoenjann.github.io/mylombokdriver/**
 
+Die Seite ist in der **Google Search Console** angemeldet. Das Meta-Tag
+`google-site-verification` im `<head>` von `index.html` muss dafür stehen
+bleiben — wird es entfernt, verliert die Property ihre Bestätigung.
+
 **Eigene Domain später:** A-Records auf GitHub Pages zeigen lassen, Domain unter
 Settings → Pages eintragen und eine Datei `CNAME` mit der Domain im Repository-Root
 anlegen. Danach die Adresse an genau drei Stellen ändern: `js/config.js` → `site.url`,
@@ -222,5 +228,6 @@ It is in Rupiah, written without dots: `800000` shows as `IDR 800.000`.
 To use your own photos, put them in the `images/` folder and change the `scene:`
 line of that tour to `scene: 'images/your-photo.jpg'`.
 
-The reviews currently on the site are **placeholders**. Please replace them with
-real ones from Google before showing the site to guests.
+The reviews currently on the site were **written to fill the page**, not
+collected from guests. Please replace them with real ones from Google as soon
+as you have them.

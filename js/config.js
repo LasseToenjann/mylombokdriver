@@ -47,8 +47,7 @@ window.MLD_CONFIG = {
        This is the GitHub Pages address of this repository. If a custom domain
        is added later (e.g. 'https://mylombokdriver.com'), change it here and
        in sitemap.xml and robots.txt — those are the only three places. */
-    url: 'https://lassetoenjann.github.io/mylombokdriver',
-    defaultLang: 'en'
+    url: 'https://lassetoenjann.github.io/mylombokdriver'
   },
 
   pricing: {
@@ -65,7 +64,6 @@ window.MLD_CONFIG = {
   features: {
     reviews: true,
     gallery: true,
-    faq: true,
-    languageSwitch: true
+    faq: true
   }
 };

@@ -11,13 +11,11 @@
   const CFG   = window.MLD_CONFIG;
   const DATA  = window.MLD_CONTENT;
   const I18N  = window.MLD_I18N;
-  const LANGS = window.MLD_LANGS;
 
   const $  = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
   const SCENES = 'images/';
-  let lang = 'en';
 
   /* Resolve an image reference from content.js.
      A bare file name  ("waterfall.webp")     -> images/waterfall.webp
@@ -27,8 +25,7 @@
 
   /* ---------------------------------------------------------------- utils */
 
-  const t  = key => (I18N[lang] && I18N[lang][key]) ?? (I18N.en[key] ?? key);
-  const tr = obj => (obj && (obj[lang] ?? obj.en)) ?? '';
+  const t = key => I18N[key] ?? key;
 
   const esc = str => String(str).replace(/[&<>"']/g, c =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -74,20 +71,13 @@
     map:  '<svg viewBox="0 0 24 24"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>'
   };
 
-  /* ----------------------------------------------------------------- i18n */
+  /* ------------------------------------------------------------ page text */
 
-  function detectLang() {
-    const saved = localStorage.getItem('mld-lang');
-    if (saved && I18N[saved]) return saved;
-    const nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
-    if (I18N[nav]) return nav;
-    return CFG.site.defaultLang in I18N ? CFG.site.defaultLang : 'en';
-  }
-
-  function applyLang() {
-    document.documentElement.lang = lang;
-    document.documentElement.dataset.lang = lang;
-
+  /* Fills every element carrying a data-i18n* attribute from the string table
+     in i18n.js. The markup ships with the English text already in place, so
+     this only has to re-apply it — the page reads fine before the script runs
+     and even if it never does. */
+  function applyText() {
     $$('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
     $$('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
     $$('[data-i18n-attr]').forEach(el => {
@@ -100,22 +90,6 @@
     /* form placeholders */
     const ph = { 'f-name': 'book.namePh', 'f-hotel': 'book.hotelPh', 'f-flight': 'book.flightPh', 'f-message': 'book.messagePh' };
     Object.entries(ph).forEach(([id, key]) => { const el = $('#' + id); if (el) el.placeholder = t(key); });
-
-    $$('#langSwitch button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
-    localStorage.setItem('mld-lang', lang);
-  }
-
-  function buildLangSwitch() {
-    const host = $('#langSwitch');
-    if (!host || CFG.features.languageSwitch === false) { if (host) host.remove(); return; }
-    host.innerHTML = LANGS.map(l =>
-      `<button type="button" data-lang="${l.code}" title="${esc(l.name)}" aria-pressed="false">${esc(l.label)}</button>`).join('');
-    host.addEventListener('click', e => {
-      const btn = e.target.closest('button');
-      if (!btn) return;
-      lang = btn.dataset.lang;
-      renderAll();
-    });
   }
 
   /* -------------------------------------------------------------- render */
@@ -130,8 +104,8 @@
     $('#valueGrid').innerHTML = DATA.values.map(v => `
       <article class="value-card reveal">
         <div class="value-icon"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[v.icon] || ICONS.shield}</svg></div>
-        <h3>${esc(tr(v.title))}</h3>
-        <p>${esc(tr(v.text))}</p>
+        <h3>${esc(v.title)}</h3>
+        <p>${esc(v.text)}</p>
       </article>`).join('');
   }
 
@@ -153,7 +127,7 @@
   function catLabel(tour) {
     const first = tour.cats[0];
     const cat = DATA.categories.find(c => c.id === first);
-    return cat ? tr(cat.label) : '';
+    return cat ? cat.label : '';
   }
 
   function renderTours(filter = 'all') {
@@ -162,15 +136,15 @@
       <article class="tour-card" style="animation-delay:${i * 55}ms">
         <div class="tour-media">
           <span class="tour-tag">${esc(catLabel(tour))}</span>
-          <img src="${img(tour.scene)}" alt="${esc(tr(tour.title))}" loading="lazy" width="800" height="500">
+          <img src="${img(tour.scene)}" alt="${esc(tour.title)}" loading="lazy" width="800" height="500">
           <span class="tour-dur">
             <svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 6.8V12.4l3.4 2"/></svg>
-            ${esc(tr(tour.duration))}
+            ${esc(tour.duration)}
           </span>
         </div>
         <div class="tour-body">
-          <h3>${esc(tr(tour.title))}</h3>
-          <p>${esc(tr(tour.short))}</p>
+          <h3>${esc(tour.title)}</h3>
+          <p>${esc(tour.short)}</p>
           ${priceBlock(tour)}
           <div class="tour-actions">
             <button class="btn btn-line" data-tour="${tour.id}">${esc(t('tours.details'))}</button>
@@ -183,7 +157,7 @@
   function renderFilters() {
     const host = $('#filters');
     host.innerHTML = DATA.categories.map((c, i) =>
-      `<button type="button" role="tab" data-cat="${c.id}" aria-selected="${i === 0}">${esc(tr(c.label))}</button>`).join('');
+      `<button type="button" role="tab" data-cat="${c.id}" aria-selected="${i === 0}">${esc(c.label)}</button>`).join('');
   }
 
   function renderGallery() {
@@ -192,9 +166,29 @@
     if (!host) return;
     host.innerHTML = DATA.gallery.map((g, i) => `
       <button class="gal-item" type="button" data-index="${i}">
-        <img src="${img(g.scene)}" alt="${esc(tr(g.caption))}" loading="lazy" width="800" height="600">
-        <span class="gal-cap">${esc(tr(g.caption))}</span>
+        <img src="${img(g.scene)}" alt="${esc(g.caption)}" loading="lazy" width="800" height="600">
+        <span class="gal-cap">${esc(g.caption)}</span>
       </button>`).join('');
+  }
+
+  /* Compact rating bar under the hero. Everything in it is derived from the
+     reviews array, so the count and the average can never drift away from the
+     quotes actually shown further down the page. */
+  function renderProof() {
+    const bar = $('#proofBar');
+    if (!bar) return;
+    const list = DATA.reviews || [];
+    if (CFG.features.reviews === false || !list.length) { bar.remove(); return; }
+
+    const avg = list.reduce((s, r) => s + r.rating, 0) / list.length;
+    const rounded = Math.round(avg);
+    const shown = list[Math.floor(Math.random() * list.length)];
+
+    bar.setAttribute('aria-label', t('proof.aria').replace('{avg}', avg.toFixed(1)).replace('{n}', list.length));
+    bar.innerHTML = `
+      <span class="proof-stars" aria-hidden="true">${STAR.repeat(rounded)}</span>
+      <span class="proof-score"><strong>${avg.toFixed(1)}</strong> ${esc(t('proof.of'))} ${list.length} ${esc(t('proof.reviews'))}</span>
+      <span class="proof-quote">“${esc(shown.text.split('. ')[0])}.” <em>— ${esc(shown.name)}</em></span>`;
   }
 
   function renderReviews() {
@@ -204,10 +198,10 @@
     host.innerHTML = DATA.reviews.map(r => `
       <article class="review-card reveal${r.sample ? ' is-sample' : ''}">
         <div class="stars" aria-label="${r.rating} / 5">${STAR.repeat(r.rating)}</div>
-        <blockquote>${esc(tr(r.text))}</blockquote>
+        <blockquote>${esc(r.text)}</blockquote>
         <div class="review-who">
           <strong>${esc(r.name)}</strong>
-          <span>${esc(tr(r.origin))}</span>
+          <span>${esc(r.origin)}</span>
         </div>
       </article>`).join('');
     const more = $('#reviewsMore');
@@ -223,10 +217,10 @@
     host.innerHTML = DATA.faq.map((f, i) => `
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-${i}">
-          <span>${esc(tr(f.q))}</span>
+          <span>${esc(f.q)}</span>
           <span class="faq-sign" aria-hidden="true"></span>
         </button>
-        <div class="faq-a" id="faq-a-${i}" role="region"><p>${esc(tr(f.a))}</p></div>
+        <div class="faq-a" id="faq-a-${i}" role="region"><p>${esc(f.a)}</p></div>
       </div>`).join('');
   }
 
@@ -234,7 +228,7 @@
     $('#year').textContent = new Date().getFullYear();
 
     $('#footServices').innerHTML = DATA.tours.slice(0, 6)
-      .map(x => `<a href="#tours" data-tour-link="${x.id}">${esc(tr(x.title))}</a>`).join('');
+      .map(x => `<a href="#tours" data-tour-link="${x.id}">${esc(x.title)}</a>`).join('');
 
     const c = CFG.contact, b = CFG.business;
     const rows = [];
@@ -267,7 +261,7 @@
     const keep = sel.value;
     sel.innerHTML =
       `<option value="" disabled ${keep ? '' : 'selected'}>${esc(t('book.servicePh'))}</option>` +
-      DATA.tours.map(x => `<option value="${x.id}">${esc(tr(x.title))}</option>`).join('') +
+      DATA.tours.map(x => `<option value="${x.id}">${esc(x.title)}</option>`).join('') +
       `<option value="custom">${esc(t('book.serviceCustom'))}</option>`;
     if (keep) sel.value = keep;
   }
@@ -290,11 +284,6 @@
     } else if (canonical) {
       canonical.remove();
     }
-    document.querySelector('meta[property="og:locale"]')?.remove();
-    const loc = document.createElement('meta');
-    loc.setAttribute('property', 'og:locale');
-    loc.content = lang === 'de' ? 'de_DE' : 'en_US';
-    document.head.appendChild(loc);
   }
 
   function renderStructuredData() {
@@ -353,24 +342,24 @@
 
     $('#modalBody').innerHTML = `
       <div class="modal-hero">
-        <img src="${img(x.scene)}" alt="${esc(tr(x.title))}" width="1200" height="675">
-        <h3>${esc(tr(x.title))}</h3>
+        <img src="${img(x.scene)}" alt="${esc(x.title)}" width="1200" height="675">
+        <h3>${esc(x.title)}</h3>
       </div>
       <div class="modal-inner">
         <div class="modal-meta">
-          <div><span class="k">${esc(t('modal.duration'))}</span><span class="v">${esc(tr(x.duration))}</span></div>
+          <div><span class="k">${esc(t('modal.duration'))}</span><span class="v">${esc(x.duration)}</span></div>
           <div><span class="k">${esc(t('modal.price'))}</span><span class="v">${esc(priceLine)}</span>
             <span class="k" style="text-transform:none;letter-spacing:0">${esc([unitLine, e].filter(Boolean).join(' · '))}</span></div>
         </div>
-        <p>${esc(tr(x.long))}</p>
+        <p>${esc(x.long)}</p>
 
         <h4>${esc(t('modal.highlights'))}</h4>
-        <ul class="modal-list">${x.highlights.map(h => `<li>${esc(tr(h))}</li>`).join('')}</ul>
+        <ul class="modal-list">${x.highlights.map(h => `<li>${esc(h)}</li>`).join('')}</ul>
 
         <h4>${esc(t('modal.includes'))}</h4>
-        <ul class="modal-list">${x.includes.map(h => `<li>${esc(tr(h))}</li>`).join('')}</ul>
+        <ul class="modal-list">${x.includes.map(h => `<li>${esc(h)}</li>`).join('')}</ul>
 
-        ${x.note ? `<p class="modal-note"><strong>${esc(t('modal.note'))}:</strong> ${esc(tr(x.note))}</p>` : ''}
+        ${x.note ? `<p class="modal-note"><strong>${esc(t('modal.note'))}:</strong> ${esc(x.note)}</p>` : ''}
 
         <div class="modal-cta">
           <a class="btn btn-gold btn-block" href="#book" data-book-service="${x.id}" data-close>${esc(t('modal.book'))}</a>
@@ -397,8 +386,8 @@
     lbIndex = (i + DATA.gallery.length) % DATA.gallery.length;
     const g = DATA.gallery[lbIndex];
     $("#lbImg").src = img(g.scene);
-    $('#lbImg').alt = tr(g.caption);
-    $('#lbCap').textContent = tr(g.caption);
+    $('#lbImg').alt = g.caption;
+    $('#lbCap').textContent = g.caption;
     $('#lightbox').hidden = false;
     document.body.classList.add('no-scroll');
     $('.lb-x').focus();
@@ -520,9 +509,18 @@
     const nav  = $('#nav');
     const burger = $('#burger');
 
+    const book = $('#book');
+
     const onScroll = () => {
       head.classList.toggle('scrolled', window.scrollY > 40);
-      $('#waFloat').classList.toggle('show', window.scrollY > 600);
+      /* The floating button is a shortcut to the booking form, so it only gets
+         in the way once the form itself is on screen — on a phone it sat right
+         on top of the submit button. */
+      const bookVisible = book
+        ? (() => { const r = book.getBoundingClientRect();
+                   return r.top < window.innerHeight && r.bottom > 0; })()
+        : false;
+      $('#waFloat').classList.toggle('show', window.scrollY > 600 && !bookVisible);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
@@ -635,9 +633,10 @@
   /* ------------------------------------------------------------ lifecycle */
 
   function renderAll() {
-    applyLang();
+    applyText();
     renderMeta();
     renderMarquee();
+    renderProof();
     renderFilters();
     renderTours($('#filters button[aria-selected="true"]')?.dataset.cat || 'all');
     renderValues();
@@ -654,8 +653,6 @@
   }
 
   function init() {
-    lang = detectLang();
-    buildLangSwitch();
     renderAll();
     initDelegates();
     initHeader();
