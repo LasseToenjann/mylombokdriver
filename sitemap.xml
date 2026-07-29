@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Die Adresse unten muss mit js/config.js -> site.url und der Sitemap-Zeile in
+  Die Adresse hier muss mit js/config.js -> site.url und der Sitemap-Zeile in
   robots.txt übereinstimmen. Kommt später eine eigene Domain dazu, sind das die
   drei Stellen, die geändert werden müssen.
+
+  Nur eine URL, weil die Seite eine einzige Seite ist. Die Touren liegen hinter
+  #tour-…-Adressen — Google behandelt Fragmente nicht als eigene Seiten, sie
+  gehören deshalb NICHT hier hinein. Sollen Touren einzeln ranken, brauchen sie
+  echte HTML-Dateien (siehe README, Abschnitt SEO).
 -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lassetoenjann.github.io/mylombokdriver/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://lassetoenjann.github.io/mylombokdriver/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://lassetoenjann.github.io/mylombokdriver/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://lassetoenjann.github.io/mylombokdriver/"/>
   </url>
 </urlset>

@@ -304,24 +304,73 @@
         addressRegion: 'Nusa Tenggara Barat',
         addressCountry: 'ID'
       },
-      areaServed: ['Lombok', 'Gili Islands', 'Lombok International Airport'],
+      /* Senggigi, the base the driver works out of. Coordinates help Google tie
+         the site to the Google Business Profile for local queries. */
+      geo: { '@type': 'GeoCoordinates', latitude: -8.4922, longitude: 116.0437 },
+      areaServed: [
+        { '@type': 'Place', name: 'Lombok' },
+        { '@type': 'Place', name: 'Gili Islands' },
+        { '@type': 'Place', name: 'Senggigi' },
+        { '@type': 'Place', name: 'Kuta Lombok' },
+        { '@type': 'Place', name: 'Mataram' },
+        { '@type': 'Airport', name: 'Lombok International Airport (LOP)', iataCode: 'LOP' }
+      ],
       openingHours: 'Mo-Su 00:00-23:59',
       sameAs: [CFG.contact.instagram, CFG.contact.facebook, CFG.contact.googleMaps].filter(Boolean),
       makesOffer: DATA.tours.map(x => ({
         '@type': 'Offer',
-        name: x.title.en,
-        description: x.short.en,
-        ...(x.unit !== 'ask' ? { price: x.price, priceCurrency: 'IDR' } : {})
+        name: x.title,
+        description: x.short,
+        ...(url ? { url: url + '/#tour-' + x.id } : {}),
+        itemOffered: {
+          '@type': 'Service',
+          name: x.title,
+          serviceType: x.cats.includes('transfers') ? 'Airport transfer' : 'Guided day tour',
+          areaServed: { '@type': 'Place', name: 'Lombok, Indonesia' }
+        },
+        ...(x.unit !== 'ask'
+          ? { price: x.price, priceCurrency: 'IDR',
+              priceSpecification: {
+                '@type': 'UnitPriceSpecification',
+                price: x.price, priceCurrency: 'IDR',
+                referenceQuantity: {
+                  '@type': 'QuantitativeValue', value: 1,
+                  unitText: x.unit === 'person' ? 'per person' : 'per vehicle'
+                }
+              } }
+          : { availability: 'https://schema.org/InStock' })
       }))
     };
     if (url) data.url = url + '/';
     if (hasWa()) data.telephone = '+' + waDigits();
     if (CFG.contact.email) data.email = CFG.contact.email;
 
+    /* The FAQ is the one part of this page that can win a rich result on its
+       own, so it gets its own graph node. Google only honours it when the same
+       questions and answers are visible on the page — they are, in #faq. */
+    const graph = [data];
+    if (CFG.features.faq !== false && (DATA.faq || []).length) {
+      graph.push({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        ...(url ? { '@id': url + '/#faq' } : {}),
+        mainEntity: DATA.faq.map(f => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a }
+        }))
+      });
+    }
+
+    /* Deliberately NOT emitted: aggregateRating / Review markup. The quotes in
+       content.js were written, not collected. Feeding invented ratings to
+       Google is a spam-policy violation and risks a manual action against the
+       whole property. Add it once the reviews are real. */
+
     const s = document.createElement('script');
     s.type = 'application/ld+json';
     s.id = 'mld-jsonld';
-    s.textContent = JSON.stringify(data);
+    s.textContent = JSON.stringify(graph.length > 1 ? graph : data);
     document.head.appendChild(s);
   }
 
@@ -370,12 +419,28 @@
     m.hidden = false;
     document.body.classList.add('no-scroll');
     m.querySelector('.modal-x').focus();
+
+    /* Give the open tour its own address. It makes a tour shareable, lets the
+       back button close it, and — the reason it matters here — the #tour-<id>
+       URLs published in the structured data actually resolve to something. */
+    document.title = x.title + ' — ' + CFG.business.name;
+    if (location.hash !== '#tour-' + id) history.pushState({ tour: id }, '', '#tour-' + id);
   }
 
-  function closeModal() {
+  function closeModal(fromPopState) {
     $('#tourModal').hidden = true;
     document.body.classList.remove('no-scroll');
+    document.title = t('meta.title');
+    if (!fromPopState && location.hash.startsWith('#tour-')) history.pushState({}, '', location.pathname + location.search);
     lastFocus?.focus();
+  }
+
+  /* Open the tour named in the address bar, on first load and on back/forward. */
+  function syncTourFromHash() {
+    const id = location.hash.startsWith('#tour-') ? location.hash.slice(6) : null;
+    const open = !$('#tourModal').hidden;
+    if (id && DATA.tours.some(x => x.id === id)) openTourModal(id);
+    else if (open) closeModal(true);
   }
 
   /* ------------------------------------------------------------ lightbox */
@@ -658,6 +723,8 @@
     initHeader();
     initBooking();
     updatePreview();
+    window.addEventListener('popstate', syncTourFromHash);
+    syncTourFromHash();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

@@ -215,6 +215,48 @@ anlegen. Danach die Adresse an genau drei Stellen ändern: `js/config.js` → `s
 
 ---
 
+## SEO
+
+**Was eingebaut ist**
+
+- `title` und `meta description` in `js/i18n.js` (`meta.title`, `meta.description`).
+  Sie stehen zusätzlich statisch in `index.html` — beide Stellen müssen gleich
+  bleiben, sonst sieht ein Crawler ohne JavaScript etwas anderes als ein Besucher.
+  Faustregel: Titel bis ~60 Zeichen sichtbar, Description bis ~155.
+- **Strukturierte Daten** (`js/app.js` → `renderStructuredData`): `TravelAgency`
+  mit Adresse, Koordinaten, Einzugsgebiet und allen 8 Touren als `Offer`, plus
+  eine eigene `FAQPage` aus `content.js`. Prüfen unter
+  [search.google.com/test/rich-results](https://search.google.com/test/rich-results).
+- **Kein `aggregateRating`/`Review`-Markup.** Bewusst weggelassen: die Bewertungen
+  sind geschrieben, nicht gesammelt. Erfundene Bewertungen als Schema an Google
+  zu melden verstößt gegen die Spam-Richtlinien und riskiert eine manuelle
+  Maßnahme gegen die ganze Domain. Sobald echte Bewertungen da sind, kann es rein.
+- **Tour-Deeplinks**: jede Tour hat eine eigene Adresse (`#tour-airport-transfer`),
+  teilbar und mit funktionierender Zurück-Taste.
+- `sitemap.xml`, `robots.txt`, `canonical`, Open Graph, `google-site-verification`.
+
+**Die größte verbleibende Schwäche**
+
+Das ist *eine* Seite. Google indexiert `#tour-…` nicht als eigene Seiten, also
+konkurriert die Startseite mit sich selbst um alle Suchbegriffe gleichzeitig.
+Wer für „lombok airport transfer" **und** „sendang gile waterfall tour" separat
+ranken will, braucht echte HTML-Dateien pro Tour (`/airport-transfer/`,
+`/waterfalls/` …) mit eigenem Titel, eigener Description und eigenem Text.
+Das ist der mit Abstand größte Hebel, wenn die Seite ernsthaft Traffic bringen soll.
+
+**Search Console — Reihenfolge**
+
+1. Sitemap einreichen: `sitemap.xml` unter „Sitemaps".
+2. Startseite über „URL-Prüfung" → „Indexierung beantragen" anstoßen.
+3. Nach 2–3 Tagen unter „Seiten" prüfen, ob die URL wirklich indexiert ist.
+4. Nach ~2 Wochen unter „Leistung" die Suchanfragen ansehen — daraus ergeben
+   sich die echten Keywords, nicht aus Vermutungen.
+5. Das **Google-Unternehmensprofil** ist für einen lokalen Fahrer wichtiger als
+   die Website: vollständig ausfüllen, Fotos hochladen, Gäste um echte
+   Bewertungen bitten, Website-Link auf diese Adresse setzen.
+
+---
+
 ## For the owner (English)
 
 Everything you will ever need to change is in two files:

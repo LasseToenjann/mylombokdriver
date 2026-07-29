@@ -10,8 +10,12 @@
 
 window.MLD_I18N = {
 
-  'meta.title':        'My Lombok Driver — Private Driver, Airport Transfers & Tours in Lombok',
-  'meta.description':  'Private English-speaking driver on Lombok. Airport transfers, full-day tours to waterfalls, Rinjani and the south coast, Gili snorkelling trips and fast boat transfers. Fixed prices, book on WhatsApp.',
+  /* Title: the search term people actually type comes first, the brand last —
+     Google truncates around 60 characters, so the tail is for exact-name
+     searches, not for the snippet. Description: keep under ~155 characters or
+     Google cuts it mid-sentence and writes its own. */
+  'meta.title':        'Private Driver in Lombok — Airport Transfers & Day Tours | My Lombok Driver',
+  'meta.description':  'English-speaking private driver on Lombok: airport transfers from LOP, day tours, Gili snorkelling and fast boats. Fixed prices, book on WhatsApp.',
 
   'nav.tours':    'Tours & prices',
   'nav.why':      'Why me',
@@ -40,7 +44,7 @@ window.MLD_I18N = {
   'strip.5': 'Multi-day itineraries',
 
   'tours.eyebrow': 'What we do',
-  'tours.title':   'Tours & transfers',
+  'tours.title':   'Lombok tours & airport transfers',
   'tours.sub':     'Honest “from” prices, everything that is included spelled out, and every route open to change. Tell me what you would rather see and the day is rebuilt around it.',
   'tours.from':    'from',
   'tours.perCar':  'per car · up to 6 guests',
@@ -67,7 +71,7 @@ window.MLD_I18N = {
   'why.sub':     'Booking here reaches the person who will be behind the wheel. Nothing is resold, nothing is subcontracted, and the price you agree is the price that is paid.',
 
   'gallery.eyebrow': 'The island',
-  'gallery.title':   'Where the days go',
+  'gallery.title':   'Where the days go on Lombok',
   'gallery.sub':     'Volcano, waterfalls, coral and a coastline that changes every twenty minutes. This is the Lombok guests come back for.',
   'gallery.ig':      'See the real photos on Instagram',
   'gallery.igSub':   'Every trip is posted on the account — guests, reefs, sunsets and the occasional flat tyre.',
@@ -80,7 +84,7 @@ window.MLD_I18N = {
   'reviews.more':    'Read the reviews on Google',
 
   'about.eyebrow': 'About',
-  'about.title':   'Behind the wheel',
+  'about.title':   'Behind the wheel on Lombok',
   'about.p1':      'My Lombok Driver is a small, family-run transport and tour service based in Senggigi on the west coast. The work is simple: pick guests up on time, drive them safely, show them the island the way a local sees it, and charge what was agreed.',
   'about.p2':      'Lombok is still quieter than its neighbour across the strait, and that is the point. There are mornings at Tiu Kelep when nobody else is there. There are viewpoints on the Sembalun road where you can hear the wind. Knowing when to be where is most of the job.',
   'about.p3':      'Guests come from all over the world, and most of them arrive with a plan that changes by lunchtime. That is fine. The car is yours for the day.',
