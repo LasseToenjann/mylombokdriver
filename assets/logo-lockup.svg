@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 566" width="1000" height="566" role="img" aria-label="My Lombok Driver — Your journey, our priority">
+  <title>My Lombok Driver</title>
+  <desc>Vector rebuild of the My Lombok Driver logo: gold steering wheel, wordmark and claim.</desc>
+  <defs>
+    <linearGradient id="lkGold" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0%"   stop-color="#FBEFB4"/>
+      <stop offset="24%"  stop-color="#EBCB77"/>
+      <stop offset="52%"  stop-color="#C6952F"/>
+      <stop offset="74%"  stop-color="#F0DA92"/>
+      <stop offset="100%" stop-color="#A5701A"/>
+    </linearGradient>
+    <linearGradient id="lkGoldFlat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#F4DE93"/>
+      <stop offset="55%"  stop-color="#D2A33E"/>
+      <stop offset="100%" stop-color="#A5701A"/>
+    </linearGradient>
+    <linearGradient id="lkRule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#A5701A" stop-opacity="0"/>
+      <stop offset="45%"  stop-color="#E3C168" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#E3C168" stop-opacity="1"/>
+    </linearGradient>
+    <linearGradient id="lkRuleR" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#E3C168" stop-opacity="1"/>
+      <stop offset="55%"  stop-color="#E3C168" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#A5701A" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── steering wheel ─────────────────────────────────────────────────── -->
+  <g transform="translate(500 158)">
+    <!-- rim -->
+    <circle cx="0" cy="0" r="118" fill="none" stroke="url(#lkGold)" stroke-width="23"/>
+    <!-- horizontal spoke pair, sitting just below centre so the top pad reads big -->
+    <path d="M -112 -4 h 224 a 6 6 0 0 1 6 6 v 18 a 6 6 0 0 1 -6 6 h -224 a 6 6 0 0 1 -6 -6 v -18 a 6 6 0 0 1 6 -6 Z"
+          fill="url(#lkGoldFlat)"/>
+    <!-- bottom spoke -->
+    <path d="M -17 10 h 34 a 6 6 0 0 1 6 6 v 96 a 6 6 0 0 1 -6 6 h -34 a 6 6 0 0 1 -6 -6 v -96 a 6 6 0 0 1 6 -6 Z"
+          fill="url(#lkGoldFlat)"/>
+    <!-- hub -->
+    <circle cx="0" cy="10" r="33" fill="url(#lkGold)"/>
+    <!-- four point star inside the hub -->
+    <path d="M 0 -14 L 6 4 L 24 10 L 6 16 L 0 34 L -6 16 L -24 10 L -6 4 Z" fill="#0A0A0B"/>
+  </g>
+
+  <!-- ── wordmark ───────────────────────────────────────────────────────── -->
+  <!-- textLength pins the width so the lockup holds its shape even when
+       Playfair Display is unavailable and a fallback serif is substituted. -->
+  <text x="500" y="386" text-anchor="middle" textLength="856" lengthAdjust="spacingAndGlyphs"
+        font-family="'Playfair Display', 'Georgia', 'Times New Roman', serif"
+        font-size="104" font-weight="700" fill="url(#lkGold)">MY LOMBOK DRIVER</text>
+
+  <!-- ── ornamental divider ─────────────────────────────────────────────── -->
+  <g transform="translate(0 432)">
+    <rect x="96" y="-1.5" width="300" height="3" fill="url(#lkRule)"/>
+    <rect x="604" y="-1.5" width="300" height="3" fill="url(#lkRuleR)"/>
+    <g fill="url(#lkGoldFlat)">
+      <!-- outer diamonds -->
+      <path d="M 410 0 l 9 -9 l 9 9 l -9 9 Z"/>
+      <path d="M 572 0 l 9 -9 l 9 9 l -9 9 Z"/>
+      <!-- leaves, pointing outwards from the centre -->
+      <path d="M 449 0 q 15 -11 30 0 q -15 11 -30 0 Z"/>
+      <path d="M 521 0 q 15 -11 30 0 q -15 11 -30 0 Z"/>
+      <!-- centre diamond -->
+      <path d="M 500 -16 l 16 16 l -16 16 l -16 -16 Z"/>
+    </g>
+    <path d="M 500 -7 l 7 7 l -7 7 l -7 -7 Z" fill="#0A0A0B" opacity="0.55"/>
+  </g>
+
+  <!-- ── claim ──────────────────────────────────────────────────────────── -->
+  <text x="500" y="512" text-anchor="middle" textLength="596" lengthAdjust="spacingAndGlyphs"
+        font-family="'Inter', -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+        font-size="41" font-weight="500" fill="#EFEBE1">YOUR JOURNEY, OUR PRIORITY</text>
+</svg>

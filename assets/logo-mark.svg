@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="My Lombok Driver">
+  <title>My Lombok Driver mark</title>
+  <defs>
+    <linearGradient id="mkGold" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0%"   stop-color="#FBEFB4"/>
+      <stop offset="24%"  stop-color="#EBCB77"/>
+      <stop offset="52%"  stop-color="#C6952F"/>
+      <stop offset="74%"  stop-color="#F0DA92"/>
+      <stop offset="100%" stop-color="#A5701A"/>
+    </linearGradient>
+    <linearGradient id="mkFlat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F4DE93"/>
+      <stop offset="55%" stop-color="#D2A33E"/>
+      <stop offset="100%" stop-color="#A5701A"/>
+    </linearGradient>
+    <radialGradient id="mkBg" cx="0.5" cy="0.4" r="0.72">
+      <stop offset="0%" stop-color="#1C1D21"/>
+      <stop offset="100%" stop-color="#08080A"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="100" cy="100" r="100" fill="url(#mkBg)"/>
+  <circle cx="100" cy="100" r="95.5" fill="none" stroke="url(#mkGold)" stroke-width="2" opacity="0.6"/>
+
+  <g transform="translate(100 100)">
+    <circle cx="0" cy="0" r="70" fill="none" stroke="url(#mkGold)" stroke-width="14"/>
+    <path d="M -66 -3 h 132 a 4 4 0 0 1 4 4 v 11 a 4 4 0 0 1 -4 4 h -132 a 4 4 0 0 1 -4 -4 v -11 a 4 4 0 0 1 4 -4 Z" fill="url(#mkFlat)"/>
+    <path d="M -10 6 h 20 a 4 4 0 0 1 4 4 v 57 a 4 4 0 0 1 -4 4 h -20 a 4 4 0 0 1 -4 -4 v -57 a 4 4 0 0 1 4 -4 Z" fill="url(#mkFlat)"/>
+    <circle cx="0" cy="6" r="20" fill="url(#mkGold)"/>
+    <path d="M 0 -8.5 L 3.6 2.4 L 14.5 6 L 3.6 9.6 L 0 20.5 L -3.6 9.6 L -14.5 6 L -3.6 2.4 Z" fill="#0A0A0B"/>
+  </g>
+</svg>
