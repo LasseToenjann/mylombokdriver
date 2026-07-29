@@ -169,6 +169,7 @@ assets/logo-mark.svg     Logo, nur Lenkrad (Header, „Über uns")
 assets/favicon.svg       Browser-Icon
 images/*.webp            alle Fotos der Seite
 images/og-image.jpg      Vorschaubild fürs Teilen (1200 × 630)
+assets/qr/               QR-Codes zur Website (schlicht + gebrandet), siehe dortige README
 CREDITS.md               Bildnachweise (Pexels-Fotografen)
 robots.txt, sitemap.xml  SEO — enthalten die Live-URL
 .nojekyll                nötig, damit GitHub Pages die Dateien unverändert ausliefert
