@@ -12,14 +12,20 @@ Die Website ist **komplett auf Englisch**, mit einem Umschalter auf Deutsch.
 
 ## ⚠️ Vor dem Livegang zwingend erledigen
 
-Diese vier Punkte müssen gemacht werden, sonst ist die Seite nicht einsatzbereit:
+Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 
-| # | Was | Wo |
-|---|-----|-----|
-| 1 | **WhatsApp-Nummer** eintragen | `js/config.js` → `contact.whatsapp` |
-| 2 | **Preise** vom Fahrer bestätigen lassen | `js/content.js` → `price:` bei jeder Tour |
-| 3 | **Beispiel-Bewertungen ersetzen** | `js/content.js` → `reviews:` |
-| 4 | **Echte Fotos** einsetzen | siehe unten |
+| # | Was | Wo | Status |
+|---|-----|-----|--------|
+| 1 | **WhatsApp-Nummer** eintragen | `js/config.js` → `contact.whatsapp` | ✅ erledigt |
+| 2 | **Echte Fotos** einsetzen | `images/` | ✅ erledigt (2 eigene, 8 von Pexels) |
+| 3 | **Live-URL** eintragen | `js/config.js`, `sitemap.xml`, `robots.txt` | ✅ erledigt |
+| 4 | **Preise** vom Fahrer bestätigen lassen | `js/content.js` → `price:` bei jeder Tour | ❌ offen |
+| 5 | **Beispiel-Bewertungen ersetzen** | `js/content.js` → `reviews:` | ❌ offen |
+| 6 | **Name des Fahrers / Gründungsjahr** | `js/config.js` → `business.driverName`, `since` | ❌ offen |
+| 7 | **Facebook-Seite** verlinken (optional) | `js/config.js` → `contact.facebook` | ❌ offen |
+
+Punkt 4 und 5 sind die beiden echten Blocker: solange sie offen sind, stehen
+unbestätigte Preise und erfundene Bewertungen auf der Seite.
 
 Alle Stellen mit offener Aufgabe sind im Code mit `### TODO ###` markiert:
 
@@ -71,33 +77,37 @@ blendet die Euro-Preise komplett aus.
 
 ---
 
-## 3. Echte Fotos einsetzen
+## 3. Fotos austauschen
 
-Die Seite läuft aktuell mit **selbst gezeichneten SVG-Illustrationen** in `assets/scenes/`.
-Grund: die Fotos vom Instagram-Kanal waren technisch nicht abrufbar. Die Illustrationen
-sind bewusst so gebaut, dass die Seite sofort fertig aussieht — sie sind aber als
-Platzhalter gedacht.
+Die Seite läuft mit **echten Fotos** im Ordner `images/` (WebP). Zwei davon sind
+eigene Aufnahmen von My Lombok Driver, die übrigen acht sind lizenzfreie
+Lombok-Fotos von Pexels — die Zuordnung steht in **`CREDITS.md`**.
 
-**So tauschst du sie gegen echte Fotos:**
+**So tauschst du eins aus:**
 
-1. Foto in den Ordner `images/` legen, z. B. `images/tiu-kelep.jpg`
-2. In `js/content.js` den Dateinamen ändern:
+1. Foto in den Ordner `images/` legen, z. B. `images/tiu-kelep.webp`
+2. In `js/content.js` den Dateinamen bei der passenden Tour ändern:
 
 ```js
 // vorher
-{ id: 'waterfalls-north', scene: 'waterfall.svg', ... }
+{ id: 'waterfalls-north', scene: 'waterfall.webp', ... }
 
 // nachher
-{ id: 'waterfalls-north', scene: 'images/tiu-kelep.jpg', ... }
+{ id: 'waterfalls-north', scene: 'tiu-kelep.webp', ... }
 ```
 
-Das war's — kein CSS, kein HTML. Namen **mit** Schrägstrich werden als Pfad verwendet,
-Namen **ohne** Schrägstrich werden in `assets/scenes/` gesucht.
+Das war's — kein CSS, kein HTML. Namen **ohne** Schrägstrich werden in `images/`
+gesucht, Namen **mit** Schrägstrich (`assets/foo.svg`) direkt als Pfad verwendet.
 
-Details zu Bildgrössen und Zuschnitt: **`images/README.md`**.
+Details zu Bildgrössen, Zuschnitt und der Tabelle „welches Bild wo erscheint":
+**`images/README.md`**.
 
-Auch das Hero-Bild und das Portrait lassen sich ersetzen — die stehen direkt in
-`index.html` (`assets/scenes/hero-sunset.svg` bzw. `assets/scenes/portrait.svg`).
+Hero-Bild und das grosse Bild im „Über uns"-Block stehen nicht in `content.js`,
+sondern direkt in `index.html` (`images/hero.webp` bzw. `images/waterfall-tall.webp`).
+
+> `gili-shallows.webp` und `gili-boat.webp` sind aus Instagram-Screenshots
+> gewonnen und deshalb nur 1176 px breit. Sobald die Originaldateien vorliegen,
+> sollten sie unter gleichem Namen ersetzt werden.
 
 ---
 
@@ -126,14 +136,16 @@ der englische Text angezeigt.
 
 ## Das Logo
 
-`assets/logo-badge.svg` ist eine **Vektor-Nachzeichnung** des Instagram-Logos
-(schwarzer Kreis, Lenkrad, goldener Schriftzug „MY LOMBOK DRIVER — Your journey, our priority").
-Dazu gibt es `logo-mark.svg` (nur das Lenkrad, für den Header) und `favicon.svg`.
+`assets/logo-lockup.svg` ist eine **Vektor-Nachzeichnung** des Instagram-Logos
+(Lenkrad mit goldenem Schriftzug „MY LOMBOK DRIVER — Your journey, our priority").
+Dazu gibt es `logo-mark.svg` (nur das Lenkrad, für Header und „Über uns") und
+`favicon.svg` (Browser-Icon).
 
-Wenn die Original-Datei vom Fahrer vorliegt (idealerweise PNG mit transparentem
-Hintergrund oder das originale Vektorformat), einfach in `assets/` ablegen und die
-Verweise in `index.html` ersetzen. Danach in `assets/og-image.svg` denselben Schriftzug
-anpassen — das ist das Vorschaubild beim Teilen in WhatsApp und Facebook.
+Wenn die Original-Datei vom Fahrer vorliegt (idealerweise SVG oder PNG mit
+transparentem Hintergrund), einfach in `assets/` ablegen und die Verweise in
+`index.html` ersetzen (Zeilen mit `logo-lockup.svg` bzw. `logo-mark.svg`).
+Danach `images/og-image.jpg` neu anlegen — das ist das Vorschaubild beim Teilen
+in WhatsApp und Facebook, exakt 1200 × 630 px als JPEG.
 
 ---
 
@@ -142,16 +154,18 @@ anpassen — das ist das Vorschaubild beim Teilen in WhatsApp und Facebook.
 ```
 index.html               alle Sektionen, sprachneutral (data-i18n-Attribute)
 css/style.css            Design-System (Farben, Typografie, alle Komponenten)
-js/config.js             ← Kontaktdaten, Umrechnungskurs, Feature-Schalter
+js/config.js             ← Kontaktdaten, Live-URL, Umrechnungskurs, Feature-Schalter
 js/content.js            ← Touren, Preise, Galerie, Bewertungen, FAQ (EN + DE)
 js/i18n.js               ← Oberflächentexte EN + DE, WhatsApp-Nachrichtenvorlage
 js/app.js                Rendering, Sprachumschalter, Modals, Lightbox, Formular
-assets/logo-badge.svg    Logo, volle Badge-Variante
-assets/logo-mark.svg     Logo, nur Lenkrad (Header)
+assets/logo-lockup.svg   Logo mit Schriftzug (Hero und Footer)
+assets/logo-mark.svg     Logo, nur Lenkrad (Header, „Über uns")
 assets/favicon.svg       Browser-Icon
-assets/og-image.svg      Vorschaubild fürs Teilen
-assets/scenes/*.svg      Bild-Illustrationen (durch Fotos ersetzbar)
-images/                  ← hier echte Fotos ablegen
+images/*.webp            alle Fotos der Seite
+images/og-image.jpg      Vorschaubild fürs Teilen (1200 × 630)
+CREDITS.md               Bildnachweise (Pexels-Fotografen)
+robots.txt, sitemap.xml  SEO — enthalten die Live-URL
+.nojekyll                nötig, damit GitHub Pages die Dateien unverändert ausliefert
 ```
 
 ## Funktionen
@@ -181,15 +195,17 @@ Ein einfacher Doppelklick auf `index.html` funktioniert auch, nur die
 
 ## Veröffentlichen (GitHub Pages, kostenlos)
 
-1. Repository auf GitHub anlegen (public)
-2. Diese Dateien pushen
-3. **Settings → Pages → Branch: `main`, Ordner: `/ (root)` → Save**
-4. Nach ~1 Minute erreichbar unter `https://<benutzer>.github.io/mylombokdriver/`
-5. Die finale Adresse in `js/config.js` → `site.url` eintragen
-   (sonst fehlen Canonical-URL und Open-Graph-Bild) und in `sitemap.xml` und `robots.txt`
+Die Dateien liegen bereits im Repository `LasseToenjann/mylombokdriver` auf `main`,
+und die Live-Adresse ist in `js/config.js`, `sitemap.xml` und `robots.txt` eingetragen.
+Offen ist nur noch der Schalter bei GitHub:
 
-Eigene Domain: A-Records auf GitHub Pages zeigen lassen, Domain unter Settings → Pages
-eintragen und eine Datei `CNAME` mit der Domain im Repository-Root anlegen.
+1. **Settings → Pages → Branch: `main`, Ordner: `/ (root)` → Save**
+2. Nach ~1 Minute erreichbar unter **https://lassetoenjann.github.io/mylombokdriver/**
+
+**Eigene Domain später:** A-Records auf GitHub Pages zeigen lassen, Domain unter
+Settings → Pages eintragen und eine Datei `CNAME` mit der Domain im Repository-Root
+anlegen. Danach die Adresse an genau drei Stellen ändern: `js/config.js` → `site.url`,
+`sitemap.xml` und `robots.txt`.
 
 ---
 

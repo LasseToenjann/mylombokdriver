@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Nach dem Livegang die Beispiel-Domain unten durch die echte Adresse ersetzen
-  (z. B. https://lassetoenjann.github.io/mylombokdriver/) und dieselbe Adresse
-  in js/config.js -> site.url sowie in robots.txt eintragen.
+  Die Adresse unten muss mit js/config.js -> site.url und der Sitemap-Zeile in
+  robots.txt übereinstimmen. Kommt später eine eigene Domain dazu, sind das die
+  drei Stellen, die geändert werden müssen.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://mylombokdriver.com/</loc>
+    <loc>https://lassetoenjann.github.io/mylombokdriver/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://mylombokdriver.com/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://mylombokdriver.com/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mylombokdriver.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lassetoenjann.github.io/mylombokdriver/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://lassetoenjann.github.io/mylombokdriver/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lassetoenjann.github.io/mylombokdriver/"/>
   </url>
 </urlset>

@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Nach dem Livegang die echte Domain eintragen:
-# Sitemap: https://mylombokdriver.com/sitemap.xml
+Sitemap: https://lassetoenjann.github.io/mylombokdriver/sitemap.xml

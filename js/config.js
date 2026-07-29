@@ -44,8 +44,10 @@ window.MLD_CONFIG = {
 
   site: {
     /* Full public URL, no trailing slash. Used for SEO tags and sitemap.
-       Example: 'https://mylombokdriver.com' */
-    url: '',                                               // ### TODO ###
+       This is the GitHub Pages address of this repository. If a custom domain
+       is added later (e.g. 'https://mylombokdriver.com'), change it here and
+       in sitemap.xml and robots.txt — those are the only three places. */
+    url: 'https://lassetoenjann.github.io/mylombokdriver',
     defaultLang: 'en'
   },
 
