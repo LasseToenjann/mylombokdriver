@@ -235,7 +235,10 @@
     if (hasWa())   rows.push(`<a href="${waLink('Hello My Lombok Driver! I would like to ask about a trip.')}" target="_blank" rel="noopener">WhatsApp${c.whatsappDisplay ? ' · ' + esc(c.whatsappDisplay) : ''}</a>`);
     if (c.email)   rows.push(`<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>`);
     rows.push(`<a href="${esc(c.instagram)}" target="_blank" rel="noopener">Instagram ${esc(c.instagramHandle)}</a>`);
-    if (c.facebook)   rows.push(`<a href="${esc(c.facebook)}" target="_blank" rel="noopener">Facebook</a>`);
+    /* Facebook stays deliberately quiet: one footer row, no icon, and none of
+       the places Instagram appears (gallery panel, booking chips, DM fallback).
+       The row only exists once contact.facebook is filled in. */
+    if (c.facebook)   rows.push(`<a href="${esc(c.facebook)}" target="_blank" rel="noopener">Facebook${c.facebookName ? ' · ' + esc(c.facebookName) : ''}</a>`);
     if (c.googleMaps) rows.push(`<a href="${esc(c.googleMaps)}" target="_blank" rel="noopener">Google Maps</a>`);
     rows.push(`<address>${esc(b.address)}</address>`);
     const contactHost = $('#footContact');

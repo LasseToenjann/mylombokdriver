@@ -37,9 +37,14 @@ window.MLD_CONFIG = {
     instagramDm: 'https://ig.me/m/mylombokdriver',
     /* Google Business Profile taken from the Instagram bio. */
     googleMaps: 'https://g.co/kgs/VWJeLQ',
-    /* Facebook page is called "Al Akhtar Lombok Tours". Paste the full page
-       URL here and it appears in the footer automatically. */
-    facebook: ''                                           // ### TODO ###
+    /* Facebook. Paste the full page URL here and a single, quiet row appears
+       in the footer — nowhere else, so it stays behind Instagram.
+       Example: 'https://www.facebook.com/AlAkhtarLombokTours'
+       Leave empty and nothing is rendered at all. */
+    facebook: '',                                          // ### TODO ###
+    /* Optional: shown after "Facebook ·" in that row. Ignored while the URL
+       above is empty. */
+    facebookName: 'Al Akhtar Lombok Tours'
   },
 
   site: {
