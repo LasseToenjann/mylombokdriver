@@ -180,25 +180,31 @@
     const list = DATA.reviews || [];
     if (CFG.features.reviews === false || !list.length) { bar.remove(); return; }
 
-    const avg = list.reduce((s, r) => s + r.rating, 0) / list.length;
+    /* The rating and the count come from the Google profile, not from the six
+       quotes below them — quoting six and claiming six would undersell a
+       profile that actually holds far more. Falls back to the quotes if the
+       figures are not configured. */
+    const stats = CFG.reviewStats || {};
+    const avg = stats.rating || list.reduce((s, r) => s + r.rating, 0) / list.length;
+    const count = stats.count || list.length;
     const rounded = Math.round(avg);
-    const guides = list.filter(r => /local guide/i.test(r.origin || '')).length;
 
     /* Initials rather than photos: Google does not hand out reviewer avatars,
        and inventing faces for real people is not on. */
     const initials = n => n.trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
 
-    bar.setAttribute('aria-label', t('proof.aria').replace('{avg}', avg.toFixed(1)).replace('{n}', list.length));
+    const src = stats.source ? ` ${t('proof.on')} ${stats.source}` : '';
+    bar.setAttribute('aria-label', t('proof.aria').replace('{avg}', avg.toFixed(1)).replace('{n}', count));
     bar.innerHTML = `
       <span class="proof-rating">
         <span class="proof-stars" aria-hidden="true">${STAR.repeat(rounded)}</span>
-        <span class="proof-score"><strong>${avg.toFixed(1)}</strong><span class="proof-src">${esc(t('proof.onGoogle'))}</span></span>
+        <span class="proof-score"><strong>${avg.toFixed(1)}</strong><span class="proof-src">${esc(src.trim())}</span></span>
       </span>
       <span class="proof-people" aria-hidden="true">
         ${list.slice(0, 5).map(r => `<span class="proof-av">${esc(initials(r.name))}</span>`).join('')}
       </span>
       <span class="proof-facts">
-        <strong>${list.length} ${esc(t('proof.reviews'))}</strong>${guides ? `<span>${guides} ${esc(t('proof.guides'))}</span>` : ''}
+        <strong>${count} ${esc(t('proof.reviews'))}</strong>
       </span>
       <span class="proof-cta">${esc(t('proof.cta'))}</span>`;
   }

@@ -137,11 +137,10 @@ window.MLD_I18N = {
   'footer.built':    'Prices are guide prices and confirmed on booking.',
   'footer.top':      'Back to top',
 
-  'proof.onGoogle': 'on Google',
-  'proof.reviews':  'guest reviews',
-  'proof.guides':   'from Local Guides',
-  'proof.cta':      'Read them',
-  'proof.aria':     'Rated {avg} out of 5 by {n} guests on Google — read the reviews',
+  'proof.on':      'on',
+  'proof.reviews': 'guest reviews',
+  'proof.cta':     'Read them',
+  'proof.aria':    'Rated {avg} out of 5 from {n} guest reviews on Google — read the reviews',
 
   'a11y.logo':  'My Lombok Driver — home'
 };

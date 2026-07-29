@@ -37,14 +37,32 @@ window.MLD_CONFIG = {
     instagramDm: 'https://ig.me/m/mylombokdriver',
     /* Google Business Profile taken from the Instagram bio. */
     googleMaps: 'https://g.co/kgs/VWJeLQ',
-    /* Facebook. Paste the full page URL here and a single, quiet row appears
-       in the footer — nowhere else, so it stays behind Instagram.
-       Example: 'https://www.facebook.com/AlAkhtarLombokTours'
-       Leave empty and nothing is rendered at all. */
-    facebook: '',                                          // ### TODO ###
-    /* Optional: shown after "Facebook ·" in that row. Ignored while the URL
-       above is empty. */
+    /* Facebook. One quiet row in the footer, nowhere else, so it stays behind
+       Instagram. Empty renders nothing at all.
+       This is Facebook's short share link. If the page has a proper vanity URL
+       (facebook.com/SomeName), prefer that — it is stabler and a better signal
+       for Google when it links the business's profiles together. */
+    facebook: 'https://www.facebook.com/share/1AtEDdNNih/',
+    /* Optional: shown after "Facebook ·" in that row. */
     facebookName: 'Al Akhtar Lombok Tours'
+  },
+
+  /* --------------------------------------------------------------------- */
+  /* Google Business Profile figures                                        */
+  /* --------------------------------------------------------------------- */
+  /* The trust strip under the hero shows these, NOT a count of the quotes in
+     content.js. Six quotes are shown on the page; the profile itself holds far
+     more, and the honest number is the one guests can go and verify.
+
+     These are typed in by hand because the site has no backend — see the
+     "Live-Bewertungen" section in README.md for why, and what it would take.
+     Check them against the Google profile now and then; they only move when a
+     new review comes in. */
+  reviewStats: {
+    rating: 5.0,
+    count: 41,
+    /* Set to '' to hide the strip's source label. */
+    source: 'Google'
   },
 
   site: {

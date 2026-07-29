@@ -23,7 +23,7 @@ Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 | 4 | **Preise** vom Fahrer bestätigen lassen | `js/content.js` → `price:` bei jeder Tour | ❌ offen |
 | 5 | **Bewertungen** | `js/content.js` → `reviews:` | ✅ echte Google-Bewertungen |
 | 6 | **Name des Fahrers / Gründungsjahr** | `js/config.js` → `business.driverName`, `since` | ❌ offen |
-| 7 | **Facebook-Seite** verlinken (optional) | `js/config.js` → `contact.facebook` | ❌ offen |
+| 7 | **Facebook-Seite** verlinken | `js/config.js` → `contact.facebook` | ✅ erledigt (Share-Link) |
 
 Punkt 4 ist der letzte echte Blocker: solange er offen ist, stehen unbestätigte
 Preise auf der Seite.
@@ -134,9 +134,37 @@ ist besser als jede Rückübersetzung.
 }
 ```
 
-Der Vertrauens-Streifen unter dem Hero speist sich komplett aus diesem Feld:
-Schnitt, Anzahl, die Initialen-Kreise und die Zahl der Local Guides werden
-berechnet. Eine Bewertung ergänzen reicht — der Streifen zieht automatisch nach.
+Der Vertrauens-Streifen unter dem Hero zeigt **nicht** die Anzahl der Zitate,
+sondern die echten Zahlen des Google-Profils aus `js/config.js` → `reviewStats`
+(aktuell 5,0 aus 41 Bewertungen). Sechs Zitate auf der Seite, 41 im Profil —
+die ehrliche Zahl ist die, die ein Gast nachprüfen kann.
+
+```js
+reviewStats: { rating: 5.0, count: 41, source: 'Google' }
+```
+
+Diese beiden Zahlen ab und zu gegen das Google-Profil abgleichen. Sie ändern
+sich nur, wenn eine neue Bewertung dazukommt.
+
+---
+
+## Live-Bewertungen — warum sie hier nicht automatisch kommen
+
+Kurz: **ohne Backend geht es nicht seriös.** Die Seite ist reines HTML auf
+GitHub Pages, es gibt keinen Server, der etwas abrufen könnte.
+
+Was theoretisch ginge und warum es jeweils nicht passt:
+
+| Weg | Problem |
+|---|---|
+| **Google Places API direkt aus dem Browser** | Der API-Schlüssel steht im JavaScript und ist damit für jeden lesbar. Wer ihn kopiert, verbraucht das Kontingent auf Kosten des Profilinhabers. Ausserdem liefert die Places API nur **fünf** Bewertungen, von Google ausgewählt — nicht die besten, nicht alle 41. |
+| **Fertige Widgets** (Elfsight, Trustindex …) | Laden fremdes JavaScript, setzen Cookies, kosten monatlich und machen die Seite langsamer. Widerspricht dem Grundsatz „kein Tracking, keine externen Anfragen ausser Google Fonts". |
+| **Eigene Serverless-Funktion** (Cloudflare Worker, Netlify Function) | Funktioniert wirklich: Der Schlüssel bleibt geheim, das Ergebnis lässt sich zwischenspeichern. Kostet nichts in der Gratisstufe, ist aber ein zweiter Dienst, der eingerichtet und gepflegt werden muss. Auch hier gilt das Limit von fünf Bewertungen. |
+
+**Empfehlung:** so lassen. Zwei Zahlen von Hand pflegen, die sich alle paar
+Wochen um eins ändern, ist weniger Aufwand als ein Worker — und die
+handverlesenen Zitate sind ohnehin besser als das, was die API zurückgibt.
+Wenn es später doch automatisch sein soll, ist der Cloudflare Worker der Weg.
 
 ---
 
