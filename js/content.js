@@ -8,6 +8,13 @@
    unit: 'car'    -> price is per vehicle (up to 6 guests)
          'person' -> price is per person
          'ask'    -> no price shown, "on request" instead
+
+   ### TODO ###  UNCONFIRMED PRICES
+   Every price below is a typical market rate researched for Lombok, NOT a rate
+   quoted by the driver. They have not been confirmed yet. Before the site is
+   advertised to guests, go through them with the driver and correct them.
+   If a price cannot be confirmed in time, set that tour to unit: 'ask' — the
+   card then reads "on request" instead of promising a figure.
    ========================================================================== */
 
 window.MLD_CONTENT = {
