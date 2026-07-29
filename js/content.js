@@ -264,43 +264,46 @@ window.MLD_CONTENT = {
   /* --------------------------------------------------------------------- */
   /* Reviews                                                                */
   /* --------------------------------------------------------------------- */
-  /*  ### TODO ###  NOT YET REAL CUSTOMER QUOTES
-      These were written to fill the section, not collected from guests. They
-      are shown without any placeholder marking, so to a visitor they read as
-      genuine reviews. Swap them for real quotes from Google or Instagram as
-      soon as you have them: publishing invented reviews is misleading, and in
-      the EU it is specifically prohibited (UWG, Anhang Nr. 23b).
-      Replacing one means editing name, origin and text below — nothing else. */
+  /*  Real reviews from the Google Business Profile — names and ratings as
+      published there.
+
+      A note on the wording: Google had translated all of these into Indonesian
+      in the screenshots they were taken from, so the text here is a careful
+      translation back into English, not a byte-for-byte copy. Angeline's and
+      Mathilde's originals are French, so English is a translation either way.
+      Hugo's, Aimee's and Norman's originals are already in English — tapping
+      "See original (English)" on Google gives the exact wording, and pasting
+      that in here is better than any translation.                            */
   reviews: [
     {
-      name: 'Marieke & Joost',
-      origin: 'Netherlands',
+      name: 'Angeline Billiard',
+      origin: 'Local Guide · Google',
       rating: 5,
-      text: 'Our flight landed two hours late and he was still standing there with the sign, completely relaxed about it. Cold water in the car, help with the bags, and exactly the price we had agreed on WhatsApp days earlier. After a very long day of flying that meant a lot.'
+      text: 'The two of us were on a short break in Lombok and Al was with us every day, driving us and putting our tours together. We saw rice fields, waterfalls and made a trip out to the quieter Gili islands. He is friendly and completely dependable, his English is excellent — and there is a little French now too. He always kept things flexible, waited while we stopped to eat or shop, and told us to take our time. He is the reason we miss Lombok.'
     },
     {
-      name: 'Sarah T.',
-      origin: 'United Kingdom',
+      name: 'Aimee Atkinson',
+      origin: 'Google review',
       rating: 5,
-      text: 'We booked the waterfall day and ended up staying nearly an hour longer at Tiu Kelep because we did not want to leave. No sighing, no looking at the watch — he just waited and told us about the village on the way back. That flexibility is what you are actually paying for.'
+      text: 'Al is the best guide on Lombok. He knows every part of the island and took us to places we would never have found on our own. We booked him for two days, one for the north and one for the south, and saw a great deal in a short time. Always punctual, always reachable, excellent English and a good sense of humour. Nothing was ever rushed.'
     },
     {
-      name: 'Daniel R.',
-      origin: 'Germany',
+      name: 'Mathilde Rousselot',
+      origin: 'Local Guide · Google',
       rating: 5,
-      text: 'Messaged at 11 at night about a boat to Gili Air for the next morning and had an answer in ten minutes. Ticket sorted, no haggling at the pier, no porters grabbing our bags. Easily the smoothest part of three weeks in Indonesia.'
+      text: 'Two wonderful days with Al, the perfect guide. A waterfall, the rice fields, the monkey forest, up Mount Pergasingan for the sunrise, picking strawberries and plenty more. He has no shortage of ideas for exploring Lombok, he is always enthusiastic, full of stories — and a fantastic photographer for your memories.'
     },
     {
-      name: 'Camille & Théo',
-      origin: 'France',
+      name: 'Hugo Kleine',
+      origin: 'Google review',
       rating: 5,
-      text: 'Two turtles at the Meno snorkelling stop, and he noticed our daughter was nervous in the water and stayed near her the whole time. Careful driver too — never once felt rushed on those mountain roads.'
+      text: 'We went snorkelling with Al. He speaks good English, which matters, because not everyone on Lombok does. Our children took to him as well, the crew and the boat captain were excellent, and we came home with really good underwater video. We would recommend booking a trip here without hesitation.'
     },
     {
-      name: 'Anna & Michael',
-      origin: 'Australia',
+      name: 'Norman',
+      origin: 'Local Guide · Google',
       rating: 5,
-      text: 'We used him four separate days and each one was planned around what we felt like that morning. The south coast day with Merese hill at sunset was the highlight of the trip. Honest about what was worth seeing and what was not, which we appreciated.'
+      text: 'We did a tour with Al that took us to a waterfall and then on to a weaving village, and afterwards up to the Merese hills near Kuta. A thoroughly enjoyable day out — and he is genuinely funny. Thanks again!'
     }
   ],
 

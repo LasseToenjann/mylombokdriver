@@ -182,13 +182,25 @@
 
     const avg = list.reduce((s, r) => s + r.rating, 0) / list.length;
     const rounded = Math.round(avg);
-    const shown = list[Math.floor(Math.random() * list.length)];
+    const guides = list.filter(r => /local guide/i.test(r.origin || '')).length;
+
+    /* Initials rather than photos: Google does not hand out reviewer avatars,
+       and inventing faces for real people is not on. */
+    const initials = n => n.trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
 
     bar.setAttribute('aria-label', t('proof.aria').replace('{avg}', avg.toFixed(1)).replace('{n}', list.length));
     bar.innerHTML = `
-      <span class="proof-stars" aria-hidden="true">${STAR.repeat(rounded)}</span>
-      <span class="proof-score"><strong>${avg.toFixed(1)}</strong> ${esc(t('proof.of'))} ${list.length} ${esc(t('proof.reviews'))}</span>
-      <span class="proof-quote">“${esc(shown.text.split('. ')[0])}.” <em>— ${esc(shown.name)}</em></span>`;
+      <span class="proof-rating">
+        <span class="proof-stars" aria-hidden="true">${STAR.repeat(rounded)}</span>
+        <span class="proof-score"><strong>${avg.toFixed(1)}</strong><span class="proof-src">${esc(t('proof.onGoogle'))}</span></span>
+      </span>
+      <span class="proof-people" aria-hidden="true">
+        ${list.slice(0, 5).map(r => `<span class="proof-av">${esc(initials(r.name))}</span>`).join('')}
+      </span>
+      <span class="proof-facts">
+        <strong>${list.length} ${esc(t('proof.reviews'))}</strong>${guides ? `<span>${guides} ${esc(t('proof.guides'))}</span>` : ''}
+      </span>
+      <span class="proof-cta">${esc(t('proof.cta'))}</span>`;
   }
 
   function renderReviews() {
@@ -365,10 +377,12 @@
       });
     }
 
-    /* Deliberately NOT emitted: aggregateRating / Review markup. The quotes in
-       content.js were written, not collected. Feeding invented ratings to
-       Google is a spam-policy violation and risks a manual action against the
-       whole property. Add it once the reviews are real. */
+    /* Still deliberately NOT emitted: aggregateRating / Review markup — even
+       though the quotes are now genuine Google reviews. Google does not show
+       review rich results for self-serving reviews, meaning a business
+       publishing reviews about itself on its own site. Marking them up buys no
+       stars in search and only invites a structured-data warning. The stars
+       that do count already live on the Google Business Profile. */
 
     const s = document.createElement('script');
     s.type = 'application/ld+json';

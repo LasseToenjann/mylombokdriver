@@ -286,28 +286,53 @@ ul, ol { list-style: none; padding: 0; }
 
 /* ---------- 7. Marquee ---------------------------------------------------- */
 /* ---------- 7b. Social proof bar ------------------------------------------ */
-/* Phone layout first: stars and score on one line, the quote wrapping under
-   it. From 640px up the three parts sit on a single row. */
+/* A trust strip, not a pull quote: rating, who left it, and a way in. Phone
+   layout first — the four parts stack and centre, and from 720px up they sit
+   on one line with the call to action pushed to the right. */
 .proof {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-  gap: .5rem .9rem; padding: 14px clamp(16px, 5vw, 32px);
+  gap: .55rem 1.15rem; padding: 15px clamp(16px, 5vw, 32px);
   background: var(--ink-1); border-bottom: 1px solid var(--line-d);
-  color: var(--tx-light); text-align: center;
-  transition: background .2s;
+  color: var(--tx-light); transition: background .2s;
 }
 .proof:hover { background: var(--ink-2); }
-.proof-stars { display: inline-flex; gap: 2px; flex: none; }
+
+.proof-rating { display: inline-flex; align-items: center; gap: .55rem; flex: none; }
+.proof-stars { display: inline-flex; gap: 2px; }
 .proof-stars svg { width: 16px; height: 16px; fill: var(--gold); stroke: none; }
-.proof-score { font-size: .92rem; flex: none; }
-.proof-score strong { color: var(--gold-hi); font-weight: 700; }
-.proof-quote {
-  font-size: .88rem; color: var(--tx-light-2); font-style: italic;
-  flex: 1 1 100%; max-width: 62ch;
+.proof-score { display: inline-flex; align-items: baseline; gap: .4rem; }
+.proof-score strong { font-size: 1.12rem; font-weight: 700; color: var(--gold-hi); line-height: 1; }
+.proof-src { font-size: .78rem; color: var(--tx-light-2); }
+
+/* Overlapping initial discs, the way a review widget shows its people. */
+.proof-people { display: inline-flex; flex: none; padding-left: 6px; }
+.proof-av {
+  width: 27px; height: 27px; border-radius: 50%; margin-left: -6px;
+  display: grid; place-items: center;
+  font-size: .66rem; font-weight: 700; letter-spacing: .01em;
+  background: var(--ink-3); color: var(--gold-hi);
+  border: 1.5px solid var(--ink-1);
 }
-.proof-quote em { font-style: normal; color: var(--tx-light); }
-@media (min-width: 640px) {
-  .proof-quote { flex: 0 1 auto; }
-  .proof-quote::before { content: '·'; margin-right: .9rem; color: var(--tx-light-2); }
+
+.proof-facts { display: inline-flex; align-items: baseline; gap: .45rem; font-size: .85rem; flex: none; }
+.proof-facts strong { font-weight: 600; color: var(--tx-light); }
+.proof-facts span { color: var(--tx-light-2); }
+.proof-facts span::before { content: '· '; }
+
+.proof-cta {
+  font-size: .85rem; font-weight: 600; color: var(--gold);
+  border-bottom: 1px solid rgba(212,165,68,.45); padding-bottom: 1px; flex: none;
+}
+.proof:hover .proof-cta { border-bottom-color: var(--gold); }
+.proof-cta::after { content: ' →'; }
+
+@media (max-width: 719px) {
+  .proof { gap: .5rem .8rem; }
+  /* Keep rating and people on one line, facts and link on the next. */
+  .proof-facts { font-size: .8rem; }
+}
+@media (min-width: 720px) {
+  .proof { justify-content: center; gap: 1.4rem; }
 }
 
 .marquee { background: var(--ink); border-block: 1px solid var(--line-d); overflow: hidden; padding: 15px 0; }

@@ -21,12 +21,12 @@ Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 | 2 | **Echte Fotos** einsetzen | `images/` | ✅ erledigt (2 eigene, 8 von Pexels) |
 | 3 | **Live-URL** eintragen | `js/config.js`, `sitemap.xml`, `robots.txt` | ✅ erledigt |
 | 4 | **Preise** vom Fahrer bestätigen lassen | `js/content.js` → `price:` bei jeder Tour | ❌ offen |
-| 5 | **Bewertungen durch echte ersetzen** | `js/content.js` → `reviews:` | ⚠️ Texte vorhanden, aber erfunden |
+| 5 | **Bewertungen** | `js/content.js` → `reviews:` | ✅ echte Google-Bewertungen |
 | 6 | **Name des Fahrers / Gründungsjahr** | `js/config.js` → `business.driverName`, `since` | ❌ offen |
 | 7 | **Facebook-Seite** verlinken (optional) | `js/config.js` → `contact.facebook` | ❌ offen |
 
-Punkt 4 und 5 sind die beiden echten Blocker: solange sie offen sind, stehen
-unbestätigte Preise und erfundene Bewertungen auf der Seite.
+Punkt 4 ist der letzte echte Blocker: solange er offen ist, stehen unbestätigte
+Preise auf der Seite.
 
 Alle Stellen mit offener Aufgabe sind im Code mit `### TODO ###` markiert:
 
@@ -112,28 +112,31 @@ sondern direkt in `index.html` (`images/hero.webp` bzw. `images/waterfall-tall.w
 
 ---
 
-## 4. Bewertungen ersetzen
+## 4. Bewertungen pflegen
 
-Die fünf Bewertungen in `js/content.js` sind **geschrieben, nicht gesammelt**.
-Sie stehen ohne Platzhalter-Markierung auf der Seite, wirken für Besucher also
-wie echte Bewertungen — und sie speisen auch den Bewertungs-Streifen direkt
-unter dem Hero (Schnitt und Anzahl werden daraus berechnet).
+Die fünf Bewertungen in `js/content.js` sind **echte Google-Bewertungen** aus dem
+Unternehmensprofil, mit den dort veröffentlichten Namen und Sternen.
 
-**Sie sollten ersetzt werden, sobald echte Zitate vorliegen.** Erfundene
-Bewertungen zu veröffentlichen ist irreführend und in der EU nach dem UWG
-(Anhang Nr. 23b) untersagt.
+Ein Hinweis zum Wortlaut: die Vorlagen lagen als Screenshots vor, in denen Google
+alles ins Indonesische übersetzt hatte. Der Text hier ist also eine sorgfältige
+Rückübersetzung ins Englische, kein wörtliches Zitat. Bei **Angeline** und
+**Mathilde** sind die Originale französisch — Englisch ist so oder so eine
+Übersetzung. Bei **Hugo, Aimee und Norman** ist das Original bereits englisch:
+Auf Google auf „Original ansehen" tippen und den exakten Wortlaut hier einsetzen
+ist besser als jede Rückübersetzung.
 
 ```js
 {
   name: 'Sarah T.',
-  origin: 'United Kingdom',
+  origin: 'Google review',      // oder 'Local Guide · Google'
   rating: 5,
-  text: 'Zwei bis drei Sätze. Das konkrete Detail überzeugt die nächste Leserin.'
+  text: 'Wortlaut der Bewertung.'
 }
 ```
 
-Mehr braucht es nicht — `name`, `origin`, `rating`, `text` überschreiben, fertig.
-Der Streifen oben rechnet Schnitt und Anzahl automatisch neu.
+Der Vertrauens-Streifen unter dem Hero speist sich komplett aus diesem Feld:
+Schnitt, Anzahl, die Initialen-Kreise und die Zahl der Local Guides werden
+berechnet. Eine Bewertung ergänzen reicht — der Streifen zieht automatisch nach.
 
 ---
 
@@ -227,10 +230,12 @@ anlegen. Danach die Adresse an genau drei Stellen ändern: `js/config.js` → `s
   mit Adresse, Koordinaten, Einzugsgebiet und allen 8 Touren als `Offer`, plus
   eine eigene `FAQPage` aus `content.js`. Prüfen unter
   [search.google.com/test/rich-results](https://search.google.com/test/rich-results).
-- **Kein `aggregateRating`/`Review`-Markup.** Bewusst weggelassen: die Bewertungen
-  sind geschrieben, nicht gesammelt. Erfundene Bewertungen als Schema an Google
-  zu melden verstößt gegen die Spam-Richtlinien und riskiert eine manuelle
-  Maßnahme gegen die ganze Domain. Sobald echte Bewertungen da sind, kann es rein.
+- **Kein `aggregateRating`/`Review`-Markup** — auch jetzt nicht, wo die
+  Bewertungen echt sind. Google zeigt keine Bewertungs-Rich-Results für
+  „self-serving reviews", also für ein Unternehmen, das Bewertungen über sich
+  selbst auf der eigenen Seite veröffentlicht. Das Markup brächte keine Sterne
+  in der Suche und provoziert nur eine Warnung. Die Sterne, die zählen, stehen
+  ohnehin im Google-Unternehmensprofil.
 - **Tour-Deeplinks**: jede Tour hat eine eigene Adresse (`#tour-airport-transfer`),
   teilbar und mit funktionierender Zurück-Taste.
 - `sitemap.xml`, `robots.txt`, `canonical`, Open Graph, `google-site-verification`.
