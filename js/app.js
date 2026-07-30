@@ -102,12 +102,11 @@
 
   function renderValues() {
     $('#valueGrid').innerHTML = DATA.values.map(v => `
-      <article class="value-card reveal">
+      <article class="value-card">
         <div class="value-icon"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[v.icon] || ICONS.shield}</svg></div>
         <h3>${esc(v.title)}</h3>
         <p>${esc(v.text)}</p>
       </article>`).join('');
-    revealGroup($$('#valueGrid .value-card'));
   }
 
   function priceBlock(tour) {
@@ -153,7 +152,6 @@
           </div>
         </div>
       </article>`).join('');
-    revealGroup($$('#tourGrid .tour-card'));
   }
 
   function renderFilters() {
@@ -171,7 +169,6 @@
         <img src="${img(g.scene)}" alt="${esc(g.caption)}" loading="lazy" width="800" height="600">
         <span class="gal-cap">${esc(g.caption)}</span>
       </button>`).join('');
-    revealGroup($$('#galGrid .gal-item'), { size: 'sm', step: 70 });
   }
 
   /* Filled in by loadReviewStats() once assets/review-stats.json arrives. Null
@@ -271,7 +268,6 @@
           <span>${esc(r.origin)}</span>
         </div>
       </article>`).join('');
-    revealGroup($$('#reviewGrid .review-card'));
     const more = $('#reviewsMore');
     if (!more) return;
     if (CFG.contact.googleMaps) more.href = CFG.contact.googleMaps;
@@ -707,21 +703,6 @@
     $$('.reveal:not(.in)', root).forEach(el => revealObserver.observe(el));
   }
 
-  /* Rule 4: within one group each item waits 70ms longer than the last, and
-     the wait stops growing after the sixth. Without the cap a twelve-item
-     gallery would leave the last tile arriving almost a second late. */
-  function stagger(els, step = 90, cap = 5) {
-    els.forEach((el, i) => el.style.setProperty('--delay', Math.min(i, cap) * step + 'ms'));
-  }
-
-  /* Marks a freshly rendered group as revealable and staggers it in one go. */
-  function revealGroup(els, opts = {}) {
-    const list = Array.from(els);
-    list.forEach(el => el.classList.add('reveal', ...(opts.size ? ['reveal-' + opts.size] : [])));
-    stagger(list, opts.step, opts.cap);
-    observeReveals();
-  }
-
   /* The rating counts up the first time the bar is seen. It is the one number
      on the page worth drawing an eye to, and counting is cheap: one rAF loop,
      under a second, no layout. */
@@ -753,10 +734,11 @@
     io.observe(el);
   }
 
+  /* Block level only. Marking individual cards is what produced the sequence
+     of little arrivals that read as cheap; a grid now fades as one thing. */
   function markReveal() {
-    $$('.sec-head, .about-media, .about-copy, .book-form')
-      .forEach(el => el.classList.add('reveal', 'reveal-lg'));
-    $$('.custom-panel, .ig-panel, .direct, .faq-list')
+    $$('.sec-head, #tourGrid, #valueGrid, #galGrid, #reviewGrid, .custom-panel, '
+      + '.ig-panel, .about-media, .about-copy, .faq-list, .book-form, .direct')
       .forEach(el => el.classList.add('reveal'));
   }
 

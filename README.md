@@ -275,56 +275,45 @@ in WhatsApp und Facebook, exakt 1200 × 630 px als JPEG.
 
 ## Bewegung und Animationen
 
-Das Konzept steht als Kommentar oben im Abschnitt `MOTION` in `css/style.css`.
-Kurzfassung: Der Fahrer verkauft **ruhiges, unaufgeregtes Fahren** — die
-Bewertungen sagen wörtlich „nothing was ever rushed". Die Bewegung auf der Seite
-muss dasselbe sagen, sonst widerspricht sie dem Produkt.
+Das Konzept steht als Kommentar im Abschnitt `MOTION` in `css/style.css`.
 
-Sechs Regeln, an die sich alles hält:
+**Nichts bewegt sich.** Zwei frühere Fassungen ließen Elemente beim Scrollen
+10–26 px aufsteigen. Beide wirkten billig, und der Grund steckt in der Methode,
+nicht in den Werten: Was sich bewegt, steht vorher woanders als nachher. Auf dem
+Handy, wo die Scrollgeschwindigkeit nie gleichmäßig ist, erwischt man es
+regelmäßig mitten in der Bewegung — und dann steht es schief. Keine
+Beschleunigungskurve behebt das.
 
-1. **Eine Kurve** (`--ease`, verzögernd). Nichts federt, nichts schießt über.
-2. **Eine Richtung: nach oben.** Inhalte steigen und blenden ein. Kein seitliches
-   Schieben, kein Drehen, kein Aufploppen — Ausnahme sind die beiden Overlays,
-   wo etwas Skalierung sagt „das liegt über der Seite".
-3. **Weg umgekehrt proportional zur Größe:** kleine Dinge 10 px, Karten 18 px,
-   ganze Blöcke 26 px. Ein großer Block, der weit reist, wirkt schlampig.
-4. **Staffelung innerhalb einer Gruppe, nie zwischen Gruppen.** Karten folgen
-   sich im Abstand von 90 ms, gedeckelt nach der fünften — sonst käme die
-   letzte Kachel einer großen Galerie fast eine Sekunde zu spät.
-5. **Einmal.** Nichts animiert erneut, wenn man zurückscrollt.
-6. **Lesen wird nie verzögert:** die Deckkraft ist nach 0,75 s fertig, während
-   die Bewegung noch 1,15 s nachläuft. Text ist also lesbar, bevor die letzten
-   Pixel sitzen.
-7. **Auslösen, bevor man es sieht.** Der Beobachter vergrößert seinen Bereich
-   um ein Fünftel Bildschirmhöhe nach unten. Ein Element beginnt sich zu
-   bewegen, während es noch unter der Kante liegt, und ist praktisch fertig,
-   wenn man hinsieht.
+Deshalb wird jetzt nur noch **die Deckkraft** animiert. Eine Einblendung kann
+man nicht an der falschen Stelle erwischen: Das Element ist in jedem Moment
+genau dort, wo es hingehört, nur blasser.
 
-Konkret bedeutet das:
+Drei weitere Entscheidungen in derselben Richtung:
 
-| Wo | Was |
-|---|---|
-| Hero | Einmalige Sequenz beim Laden: Logo, Zeile, Überschrift, Text, Buttons, Häkchen — je 90 ms versetzt. Der einzige gescriptete Auftritt, weil es das Einzige ist, was ohne Scrollen sichtbar ist |
-| Bewertungsleiste | Zählt beim ersten Sichtbarwerden von 0,0 auf 5,0 hoch |
-| Touren, Vorteile, Galerie, Bewertungen | Gestaffeltes Aufsteigen beim Scrollen |
-| Tourkarten | Beim Filtern erscheinen die neuen Karten erneut gestaffelt |
-| FAQ | Höhe animiert beim Aufklappen (die einzige bewusste Ausnahme von „nur Transform und Deckkraft") |
-| Karten-Hover | Anheben plus leichter Bildzoom |
+- **Ganze Blöcke, nicht ihre Teile.** Das Tour-Raster blendet als eine Einheit
+  ein, nicht als acht Karten nacheinander. Diese Staffelung war die
+  Hauptursache des „Aufploppens" — eine Reihe nacheinander eintreffender Karten
+  lenkt auf den Mechanismus statt auf den Inhalt.
+- **23 animierte Elemente** statt ursprünglich 51.
+- **Auslösen ein Fünftel Bildschirmhöhe früher**, sodass die Einblendung
+  praktisch fertig ist, bevor man den Block ansieht.
 
-Es werden ausschließlich `opacity` und `transform` animiert, damit alles auf dem
-Compositor bleibt — wichtig, weil viele Gäste auf älteren Handys und
-indonesischem Mobilfunk unterwegs sind. **Kein `will-change`:** es auf 50
-Elemente gleichzeitig zu setzen fordert 50 Compositor-Ebenen an und erzeugt auf
-Mittelklasse-Handys genau das Ruckeln, das es verhindern soll.
+Bewusst weiterhin animiert: Hover-Zustände, das FAQ-Aufklappen, die beiden
+Overlays, das Laufband und der Zähler auf der Bewertung. Alle davon sind eine
+Antwort auf etwas, das die Besucherin getan hat, und werden deshalb nie
+halbfertig angetroffen. Scrollen ist keine Handlung — darauf gehört keine
+Choreografie.
 
-> **Erste Fassung war zu hektisch.** Sie löste erst aus, wenn ein Element schon
-> auf dem Schirm war, bewegte es 18–26 px in 600 ms und setzte `will-change`
-> überall. Das wirkte wie eine Seite, die noch lädt. Die Werte oben sind die
-> Korrektur: früher auslösen, weniger Weg, längere Dauer, keine Layer-Flut.
+Der Hero blendet beim Laden als ein Block ein, nicht gestaffelt: ein Hero, der
+sich Stück für Stück zusammensetzt, erzeugt genau den Eindruck einer noch
+ladenden Seite. Das Hintergrundbild driftet sehr langsam (46 s pro Durchlauf).
 
-**`prefers-reduced-motion` schaltet alles ab.** Wer das im Betriebssystem
-gesetzt hat, sieht die Seite vollständig und sofort, ohne jede Bewegung.
-Getestet.
+Es wird ausschließlich `opacity` animiert, das bleibt auf dem Compositor. **Kein
+`will-change`:** es auf Dutzende Elemente zu setzen fordert Dutzende
+Compositor-Ebenen an und erzeugt auf Mittelklasse-Handys genau das Ruckeln, das
+es verhindern soll.
+
+**`prefers-reduced-motion` schaltet alles ab.** Getestet.
 
 ---
 

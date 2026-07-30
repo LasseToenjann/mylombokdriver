@@ -241,9 +241,12 @@ ul, ol { list-style: none; padding: 0; }
 }
 .hero-bg {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-  animation: heroDrift 34s ease-in-out infinite alternate;
+  /* A very slow drift, halved from what it was: the point is that the hero is
+     alive, not that anyone notices it moving. One pass takes three quarters of
+     a minute, so over a normal visit it travels a few pixels. */
+  animation: heroDrift 46s ease-in-out infinite alternate;
 }
-@keyframes heroDrift { from { transform: scale(1.04) translateY(0); } to { transform: scale(1.12) translateY(-16px); } }
+@keyframes heroDrift { from { transform: scale(1.04); } to { transform: scale(1.08) translateY(-8px); } }
 /* The hero photo is a bright daylight aerial, so the veil has to work hard —
    white display type and gold rules both sit on top of it. */
 .hero-veil {
@@ -481,7 +484,7 @@ ul, ol { list-style: none; padding: 0; }
 .review-card.is-sample { border-style: dashed; border-color: rgba(212,165,68,.34); }
 
 /* ---------- 12. About ----------------------------------------------------- */
-.about-grid { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.about-grid { display: grid; grid-template-columns: minmax(0, .62fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
 /* Grid children default to min-width:auto and then refuse to shrink below
    their min-content — the same trap the booking form fell into. Every single
    column track here has to be minmax(0, …) or the page grows sideways. */
@@ -509,11 +512,28 @@ ul, ol { list-style: none; padding: 0; }
 .about-grid--nophoto .about-stats { margin-inline: auto; }
 .about-grid--nophoto .about-stats div { border-top: 0; border-bottom: 2px solid var(--gold); padding: 0 0 .7rem; }
 
+/* The portrait was dominating the section — full width at 9:11 is close to
+   half a phone screen of one photo. Narrower column on desktop, capped width
+   and a squarer crop on a phone, so it reads as a portrait of the driver
+   rather than a hero image. */
 .about-media { margin: 0; }
-.about-photo { position: relative; }
+/* width:100% alongside max-width: as a centred flex child it would otherwise
+   size to its content, and its content is an image sized at 100% of it — the
+   circular case resolves to zero. */
+.about-photo { position: relative; width: 100%; max-width: 360px; }
 .about-photo > img:first-child {
-  width: 100%; aspect-ratio: 9 / 11; max-height: 620px; object-fit: cover; object-position: center 22%;
-  border-radius: var(--r-xl); box-shadow: var(--sh-lg);
+  /* height:auto is load-bearing. The img carries width/height attributes for
+     layout stability, and those act as presentational hints — overriding only
+     the width leaves height:1100px standing, which silently disables
+     aspect-ratio and rendered the portrait as a 268x1100 strip. */
+  width: 100%; height: auto; aspect-ratio: 4 / 5;
+  object-fit: cover; object-position: center 20%;
+  border-radius: var(--r-lg); box-shadow: var(--sh-lg);
+}
+@media (max-width: 900px) {
+  .about-photo { max-width: 268px; }
+  .about-cap { text-align: center; align-items: center; }
+  .about-media { display: flex; flex-direction: column; align-items: center; }
 }
 /* Name plate under the portrait, so a face on the page comes with a name. */
 .about-cap {
@@ -713,81 +733,54 @@ ul, ol { list-style: none; padding: 0; }
 /* ============================================================================
    MOTION
    ----------------------------------------------------------------------------
-   The business sells unhurried driving — "safe, unhurried", "nothing was ever
-   rushed" is what the reviews say. The motion has to agree with that, so the
-   whole site follows six rules:
+   Two earlier versions of this moved things: elements rose 10–26px as they
+   came into view. Both felt cheap, and the reason is structural rather than a
+   matter of tuning. Anything that moves is in a different place before and
+   after, so on a phone — where scroll speed is never constant — you routinely
+   catch it mid-flight and see it sitting wrong. No easing curve fixes that.
 
-   1. One curve, --ease, a decelerating one. Nothing springs, nothing overshoots.
-   2. One direction: up. Content rises and fades in. No sideways slides, no
-      rotation, no scale pops — except the two overlays, where a little scale
-      is what says "this sits above the page".
-   3. Travel scales inversely with the element: small things 10px, cards 18px,
-      whole blocks 26px. A large block moving far reads as sloppy.
-   4. Stagger inside a group, never between groups. Cards follow each other by
-      70ms, capped after six so the last card is never noticeably late. One
-      section never waits for another to finish.
-   5. Once. Nothing re-animates when you scroll back up.
-   6. Reading is never delayed: everything is legible within ~600ms of coming
-      into view, and no delay exceeds 420ms.
+   So nothing moves any more. Content fades, and only fades. A fade cannot be
+   caught in the wrong position: at every instant the element is exactly where
+   it belongs, just dimmer. That is the whole idea, and it is why this reads
+   calm where the previous versions read like a page still loading.
 
-   Only opacity and transform are animated, so everything stays on the
-   compositor. The FAQ height is the one deliberate exception and it is short.
-   prefers-reduced-motion switches all of it off, near the top of this file.
+   Three further decisions in the same spirit:
+
+   - Whole blocks, not their parts. The tour grid fades as one thing, not as
+     eight cards in sequence. Staggering was the single biggest source of the
+     "popping" — a row of cards arriving one after another draws attention to
+     the mechanism instead of the content.
+   - Roughly fifteen animated elements on the page, down from fifty-one.
+   - Triggered a fifth of a screen early, so the fade is essentially finished
+     before the block is looked at.
+
+   What is deliberately still animated: hover states, the FAQ panel, the two
+   overlays, the marquee and the rating count-up. Every one of those is a
+   response to something the visitor did, so it is never encountered
+   half-finished. Scroll is not an action — it should not be answered with
+   choreography.
+
+   Only opacity is animated here, which stays on the compositor. No
+   will-change: setting it on dozens of elements asks for dozens of layers and
+   causes the stutter it is meant to avoid.
    ========================================================================== */
 
-/* The first version of this popped. Three reasons, all fixed here:
-
-   - It triggered too late. The observer shrank its root by 6%, so an element
-     had to be ON SCREEN before it started moving — you sat and watched things
-     appear, which reads as a page still loading. It now triggers a fifth of a
-     screen BEFORE the element arrives, so motion is nearly over by the time
-     you look at it.
-   - It was too fast over too much distance: 18–26px in 600ms is a jump. Now
-     10–16px over a second, on a curve with a long tail.
-   - It set will-change on all 51 elements at once, which asks the browser for
-     51 compositor layers. On a mid-range phone that is the very stutter it was
-     supposed to prevent. Dropped — opacity and transform are composited anyway.
-
-   Opacity finishes well before the movement does, so text is readable while
-   the last few pixels are still settling. Nobody waits to read. */
 .reveal {
   opacity: 0;
-  transform: translateY(var(--rise, 14px));
-  transition: opacity .75s var(--ease-reveal), transform 1.15s var(--ease-reveal);
-  transition-delay: var(--delay, 0ms);
+  transition: opacity .9s var(--ease-reveal);
 }
-.reveal.in { opacity: 1; transform: none; }
+.reveal.in { opacity: 1; }
 
-/* Rule 3 — travel by element size. */
-.reveal-sm { --rise: 10px; }
-.reveal-lg { --rise: 16px; }
-
-/* The hero is the only thing on screen before a scroll happens, so it runs a
-   scripted entrance on load instead of waiting for an observer. */
-@keyframes riseIn { to { opacity: 1; transform: none; } }
-.hero-inner > * {
-  opacity: 0; transform: translateY(14px);
-  animation: riseIn 1.1s var(--ease-reveal) forwards;
+/* The hero is the only thing on screen before any scrolling, so it fades in as
+   one block on load. Not staggered: a hero assembling itself piece by piece is
+   exactly the "still loading" impression this is trying to avoid. */
+.hero-inner {
+  animation: heroIn .8s var(--ease-reveal) both;
 }
-.hero-inner > *:nth-child(1) { animation-delay: .10s; }
-.hero-inner > *:nth-child(2) { animation-delay: .22s; }
-.hero-inner > *:nth-child(3) { animation-delay: .32s; }
-.hero-inner > *:nth-child(4) { animation-delay: .42s; }
-.hero-inner > *:nth-child(5) { animation-delay: .52s; }
-.hero-inner > *:nth-child(6) { animation-delay: .60s; }
+@keyframes heroIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* Each badge arrives just after the row it belongs to. */
-.hero-badges li {
-  opacity: 0; transform: translateY(8px);
-  animation: riseIn .9s var(--ease-reveal) forwards;
-}
-.hero-badges li:nth-child(1) { animation-delay: .66s; }
-.hero-badges li:nth-child(2) { animation-delay: .74s; }
-.hero-badges li:nth-child(3) { animation-delay: .82s; }
-
-/* Reduced motion: no travel, no waiting, everything simply present. */
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
-  .hero-inner > *, .hero-badges li { opacity: 1; transform: none; animation: none; }
+  .reveal { opacity: 1; transition: none; }
+  .hero-inner { animation: none; }
 }
 body.no-scroll { overflow: hidden; }
