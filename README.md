@@ -289,11 +289,16 @@ Sechs Regeln, an die sich alles hält:
 3. **Weg umgekehrt proportional zur Größe:** kleine Dinge 10 px, Karten 18 px,
    ganze Blöcke 26 px. Ein großer Block, der weit reist, wirkt schlampig.
 4. **Staffelung innerhalb einer Gruppe, nie zwischen Gruppen.** Karten folgen
-   sich im Abstand von 70 ms, gedeckelt nach der sechsten — sonst käme die
+   sich im Abstand von 90 ms, gedeckelt nach der fünften — sonst käme die
    letzte Kachel einer großen Galerie fast eine Sekunde zu spät.
 5. **Einmal.** Nichts animiert erneut, wenn man zurückscrollt.
-6. **Lesen wird nie verzögert:** alles ist ~600 ms nach dem Sichtbarwerden
-   lesbar, keine Verzögerung über 420 ms.
+6. **Lesen wird nie verzögert:** die Deckkraft ist nach 0,75 s fertig, während
+   die Bewegung noch 1,15 s nachläuft. Text ist also lesbar, bevor die letzten
+   Pixel sitzen.
+7. **Auslösen, bevor man es sieht.** Der Beobachter vergrößert seinen Bereich
+   um ein Fünftel Bildschirmhöhe nach unten. Ein Element beginnt sich zu
+   bewegen, während es noch unter der Kante liegt, und ist praktisch fertig,
+   wenn man hinsieht.
 
 Konkret bedeutet das:
 
@@ -308,7 +313,14 @@ Konkret bedeutet das:
 
 Es werden ausschließlich `opacity` und `transform` animiert, damit alles auf dem
 Compositor bleibt — wichtig, weil viele Gäste auf älteren Handys und
-indonesischem Mobilfunk unterwegs sind.
+indonesischem Mobilfunk unterwegs sind. **Kein `will-change`:** es auf 50
+Elemente gleichzeitig zu setzen fordert 50 Compositor-Ebenen an und erzeugt auf
+Mittelklasse-Handys genau das Ruckeln, das es verhindern soll.
+
+> **Erste Fassung war zu hektisch.** Sie löste erst aus, wenn ein Element schon
+> auf dem Schirm war, bewegte es 18–26 px in 600 ms und setzte `will-change`
+> überall. Das wirkte wie eine Seite, die noch lädt. Die Werte oben sind die
+> Korrektur: früher auslösen, weniger Weg, längere Dauer, keine Layer-Flut.
 
 **`prefers-reduced-motion` schaltet alles ab.** Wer das im Betriebssystem
 gesetzt hat, sieht die Seite vollständig und sofort, ohne jede Bewegung.

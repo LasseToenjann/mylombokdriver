@@ -50,6 +50,8 @@
 
   --head-h: 76px;
   --ease:   cubic-bezier(.22,.61,.36,1);
+  /* Longer tail than --ease: reveals decelerate almost to a stop. */
+  --ease-reveal: cubic-bezier(.2,.7,.24,1);
 }
 
 /* ---------- 2. Reset ------------------------------------------------------ */
@@ -733,41 +735,55 @@ ul, ol { list-style: none; padding: 0; }
    prefers-reduced-motion switches all of it off, near the top of this file.
    ========================================================================== */
 
+/* The first version of this popped. Three reasons, all fixed here:
+
+   - It triggered too late. The observer shrank its root by 6%, so an element
+     had to be ON SCREEN before it started moving — you sat and watched things
+     appear, which reads as a page still loading. It now triggers a fifth of a
+     screen BEFORE the element arrives, so motion is nearly over by the time
+     you look at it.
+   - It was too fast over too much distance: 18–26px in 600ms is a jump. Now
+     10–16px over a second, on a curve with a long tail.
+   - It set will-change on all 51 elements at once, which asks the browser for
+     51 compositor layers. On a mid-range phone that is the very stutter it was
+     supposed to prevent. Dropped — opacity and transform are composited anyway.
+
+   Opacity finishes well before the movement does, so text is readable while
+   the last few pixels are still settling. Nobody waits to read. */
 .reveal {
   opacity: 0;
-  transform: translateY(var(--rise, 18px));
-  transition: opacity .6s var(--ease), transform .6s var(--ease);
+  transform: translateY(var(--rise, 14px));
+  transition: opacity .75s var(--ease-reveal), transform 1.15s var(--ease-reveal);
   transition-delay: var(--delay, 0ms);
-  will-change: opacity, transform;
 }
-.reveal.in { opacity: 1; transform: none; will-change: auto; }
+.reveal.in { opacity: 1; transform: none; }
 
 /* Rule 3 — travel by element size. */
 .reveal-sm { --rise: 10px; }
-.reveal-lg { --rise: 26px; }
+.reveal-lg { --rise: 16px; }
 
 /* The hero is the only thing on screen before a scroll happens, so it runs a
    scripted entrance on load instead of waiting for an observer. */
 @keyframes riseIn { to { opacity: 1; transform: none; } }
 .hero-inner > * {
-  opacity: 0; transform: translateY(16px);
-  animation: riseIn .75s var(--ease) forwards;
+  opacity: 0; transform: translateY(14px);
+  animation: riseIn 1.1s var(--ease-reveal) forwards;
 }
-.hero-inner > *:nth-child(1) { animation-delay: .08s; }
-.hero-inner > *:nth-child(2) { animation-delay: .17s; }
-.hero-inner > *:nth-child(3) { animation-delay: .26s; }
-.hero-inner > *:nth-child(4) { animation-delay: .35s; }
-.hero-inner > *:nth-child(5) { animation-delay: .44s; }
-.hero-inner > *:nth-child(6) { animation-delay: .53s; }
+.hero-inner > *:nth-child(1) { animation-delay: .10s; }
+.hero-inner > *:nth-child(2) { animation-delay: .22s; }
+.hero-inner > *:nth-child(3) { animation-delay: .32s; }
+.hero-inner > *:nth-child(4) { animation-delay: .42s; }
+.hero-inner > *:nth-child(5) { animation-delay: .52s; }
+.hero-inner > *:nth-child(6) { animation-delay: .60s; }
 
 /* Each badge arrives just after the row it belongs to. */
 .hero-badges li {
-  opacity: 0; transform: translateY(10px);
-  animation: riseIn .6s var(--ease) forwards;
+  opacity: 0; transform: translateY(8px);
+  animation: riseIn .9s var(--ease-reveal) forwards;
 }
-.hero-badges li:nth-child(1) { animation-delay: .60s; }
-.hero-badges li:nth-child(2) { animation-delay: .68s; }
-.hero-badges li:nth-child(3) { animation-delay: .76s; }
+.hero-badges li:nth-child(1) { animation-delay: .66s; }
+.hero-badges li:nth-child(2) { animation-delay: .74s; }
+.hero-badges li:nth-child(3) { animation-delay: .82s; }
 
 /* Reduced motion: no travel, no waiting, everything simply present. */
 @media (prefers-reduced-motion: reduce) {

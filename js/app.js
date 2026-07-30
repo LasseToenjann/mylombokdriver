@@ -171,7 +171,7 @@
         <img src="${img(g.scene)}" alt="${esc(g.caption)}" loading="lazy" width="800" height="600">
         <span class="gal-cap">${esc(g.caption)}</span>
       </button>`).join('');
-    revealGroup($$('#galGrid .gal-item'), { size: 'sm', step: 55 });
+    revealGroup($$('#galGrid .gal-item'), { size: 'sm', step: 70 });
   }
 
   /* Filled in by loadReviewStats() once assets/review-stats.json arrives. Null
@@ -697,7 +697,12 @@
           en.target.classList.add('in');
           obs.unobserve(en.target);
         });
-      }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
+        /* The root is grown a fifth of a screen downwards, so an element
+           starts moving while it is still below the fold and has all but
+           finished by the time it scrolls into view. Shrinking the root
+           instead — which is what this did before — meant you watched every
+           element appear after it was already on screen. */
+      }, { rootMargin: '0px 0px 20% 0px', threshold: 0 });
     }
     $$('.reveal:not(.in)', root).forEach(el => revealObserver.observe(el));
   }
@@ -705,7 +710,7 @@
   /* Rule 4: within one group each item waits 70ms longer than the last, and
      the wait stops growing after the sixth. Without the cap a twelve-item
      gallery would leave the last tile arriving almost a second late. */
-  function stagger(els, step = 70, cap = 6) {
+  function stagger(els, step = 90, cap = 5) {
     els.forEach((el, i) => el.style.setProperty('--delay', Math.min(i, cap) * step + 'ms'));
   }
 
@@ -751,9 +756,8 @@
   function markReveal() {
     $$('.sec-head, .about-media, .about-copy, .book-form')
       .forEach(el => el.classList.add('reveal', 'reveal-lg'));
-    $$('.custom-panel, .ig-panel, .direct, .faq-item')
+    $$('.custom-panel, .ig-panel, .direct, .faq-list')
       .forEach(el => el.classList.add('reveal'));
-    stagger($$('.faq-item'), 45, 8);
   }
 
   function initDelegates() {
