@@ -226,6 +226,35 @@
       <span class="proof-cta">${esc(t('proof.cta'))}</span>`;
   }
 
+  /* "About" carries a portrait of the driver — the one place on the page where
+     a face belongs. Until that photo exists the section runs without a picture
+     rather than showing a frame with a landscape shot in it, which is what used
+     to be there and told a visitor nothing about who drives them. */
+  function renderAbout() {
+    const media = $('#aboutMedia');
+    const grid = $('#aboutGrid');
+    if (!media || !grid) return;
+    const b = CFG.business;
+
+    if (!b.driverPhoto) {
+      media.remove();
+      grid.classList.add('about-grid--nophoto');
+      return;
+    }
+
+    const caption = b.driverName
+      ? `<figcaption class="about-cap"><strong>${esc(b.driverName)}</strong>${
+          b.driverRole ? `<span>${esc(b.driverRole)}</span>` : ''}</figcaption>`
+      : '';
+    media.hidden = false;
+    media.innerHTML = `
+      <img src="${esc(img(b.driverPhoto))}" alt="${esc(b.driverName
+        ? b.driverName + ' — ' + (b.driverRole || 'driver') + ' on Lombok'
+        : 'Your driver on Lombok')}" width="900" height="1100" loading="lazy">
+      <img class="about-badge" src="assets/logo-mark.svg" alt="" width="200" height="200" loading="lazy">
+      ${caption}`;
+  }
+
   function renderReviews() {
     if (CFG.features.reviews === false) { $('#reviews')?.remove(); return; }
     const host = $('#reviewGrid');
@@ -279,9 +308,10 @@
     const contactHost = $('#footContact');
     if (contactHost) contactHost.innerHTML = rows.join('');
 
-    /* direct contact chips in the booking section */
+    /* Alternatives under the booking form. WhatsApp is deliberately absent —
+       the green button directly above is WhatsApp, and listing it twice makes
+       the row read as a menu rather than a fallback. */
     const chips = [];
-    if (hasWa())      chips.push(`<a href="${waLink('Hello My Lombok Driver! I would like to ask about a trip.')}" target="_blank" rel="noopener">${contactIcon.wa}WhatsApp</a>`);
     chips.push(`<a href="${esc(c.instagram)}" target="_blank" rel="noopener">${contactIcon.ig}${esc(c.instagramHandle)}</a>`);
     if (c.email)      chips.push(`<a href="mailto:${esc(c.email)}">${contactIcon.mail}${esc(c.email)}</a>`);
     if (c.googleMaps) chips.push(`<a href="${esc(c.googleMaps)}" target="_blank" rel="noopener">${contactIcon.map}${esc(b.base)}</a>`);
@@ -537,18 +567,13 @@
     });
   }
 
-  function updatePreview() {
-    $('#preview').textContent = composeMessage();
-  }
-
   function initBooking() {
     const form = $('#bookForm');
     const err  = $('#formError');
 
     $('#f-date').min = new Date().toISOString().slice(0, 10);
 
-    form.addEventListener('input', () => { updatePreview(); err.hidden = true; });
-    form.addEventListener('change', updatePreview);
+    form.addEventListener('input', () => { err.hidden = true; });
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
@@ -568,15 +593,6 @@
       window.open(waLink(msg), '_blank', 'noopener');
     });
 
-    $('#copyBtn').addEventListener('click', async e => {
-      try {
-        await navigator.clipboard.writeText(composeMessage());
-        const b = e.currentTarget;
-        b.textContent = t('book.copied');
-        setTimeout(() => { b.textContent = t('book.copy'); }, 1800);
-      } catch (_) { /* clipboard unavailable */ }
-    });
-
     /* "Book this" buttons preselect the service */
     document.addEventListener('click', e => {
       const trigger = e.target.closest('[data-book-service]');
@@ -584,7 +600,6 @@
       const val = trigger.dataset.bookService;
       const sel = $('#f-service');
       if ([...sel.options].some(o => o.value === val)) sel.value = val;
-      updatePreview();
       setTimeout(() => $('#f-name').focus({ preventScroll: true }), 620);
     });
   }
@@ -671,7 +686,7 @@
   }
 
   function markReveal() {
-    $$('.sec-head, .custom-panel, .about-media, .about-copy, .ig-panel, .book-form, .book-intro')
+    $$('.sec-head, .custom-panel, .about-media, .about-copy, .ig-panel, .book-form, .direct')
       .forEach(el => el.classList.add('reveal'));
   }
 
@@ -746,13 +761,13 @@
     renderTours($('#filters button[aria-selected="true"]')?.dataset.cat || 'all');
     renderValues();
     renderGallery();
+    renderAbout();
     renderReviews();
     renderFaq();
     renderFooter();
     renderServiceSelect();
     renderStructuredData();
     applyWaState();
-    updatePreview();
     markReveal();
     initReveal();
   }
@@ -762,7 +777,6 @@
     initDelegates();
     initHeader();
     initBooking();
-    updatePreview();
     window.addEventListener('popstate', syncTourFromHash);
     syncTourFromHash();
     loadReviewStats();

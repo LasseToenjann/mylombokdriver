@@ -12,9 +12,19 @@ window.MLD_CONFIG = {
   business: {
     name: 'My Lombok Driver',
     claim: 'Your journey, our priority',
-    /* The driver's first name. Shown in the "About" section and in the
-       WhatsApp greeting. Leave as an empty string to keep it generic. */
+    /* The driver's first name. Shown under the portrait in "About".
+       Leave empty to keep the section generic. */
     driverName: '',                                        // ### TODO ###
+    /* Printed under the name. Only shown when driverName is filled in. */
+    driverRole: 'Driver & guide',
+    /* Portrait for the "About" section. A file in images/, ideally a real
+       photo of the driver, portrait format, roughly 900 x 1100.
+
+       While this is empty the section renders WITHOUT a picture — the text and
+       the facts simply take the full width. That is deliberate: an empty frame
+       or a stand-in landscape shot looks worse than no photo at all. Drop the
+       file in, name it here, and the portrait column appears. */
+    driverPhoto: '',                                       // ### TODO ###
     /* Year the business started — shown as "since ...". Empty = hidden. */
     since: '',                                             // ### TODO ###
     base: 'Senggigi, West Lombok',
@@ -43,8 +53,10 @@ window.MLD_CONFIG = {
        (facebook.com/SomeName), prefer that — it is stabler and a better signal
        for Google when it links the business's profiles together. */
     facebook: 'https://www.facebook.com/share/1AtEDdNNih/',
-    /* Optional: shown after "Facebook ·" in that row. */
-    facebookName: 'Al Akhtar Lombok Tours'
+    /* Optional: shown after "Facebook ·" in that row. Left empty on purpose —
+       the page still carries a former driver's name, so the row just reads
+       "Facebook" until the page is renamed. */
+    facebookName: ''
   },
 
   /* --------------------------------------------------------------------- */

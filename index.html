@@ -168,11 +168,11 @@
 
 <!-- ══════════════════════════════════════════ ABOUT ═══════════════════════ -->
 <section class="sec" id="about">
-  <div class="wrap about-grid">
-    <div class="about-media">
-      <img src="images/waterfall-tall.webp" alt="Tiu Kelep waterfall in the rainforest of north Lombok" width="1000" height="1250" loading="lazy">
-      <img class="about-badge" src="assets/logo-mark.svg" alt="" width="200" height="200" loading="lazy">
-    </div>
+  <div class="wrap about-grid" id="aboutGrid">
+    <!-- Portrait of the driver. Rendered by app.js only when
+         config.business.driverPhoto points at a file — otherwise this stays
+         empty and the copy takes the full width. -->
+    <figure class="about-media" id="aboutMedia" hidden></figure>
     <div class="about-copy">
       <p class="eyebrow" data-i18n="about.eyebrow">About</p>
       <h2 data-i18n="about.title">Behind the wheel on Lombok</h2>
@@ -203,26 +203,12 @@
 
 <!-- ══════════════════════════════════════════ BOOKING ═════════════════════ -->
 <section class="sec sec-book" id="book">
-  <div class="wrap book-grid">
-    <div class="book-intro">
+  <div class="wrap book-wrap">
+    <header class="sec-head book-head">
       <p class="eyebrow" data-i18n="book.eyebrow">Booking</p>
       <h2 data-i18n="book.title">Tell me about your trip</h2>
-      <p class="sec-sub" data-i18n="book.sub">Fill this in and it writes a complete WhatsApp message for you. Nothing is sent automatically — you see the message first and press send yourself.</p>
-
-      <div class="preview">
-        <div class="preview-head">
-          <span data-i18n="book.preview">Your message</span>
-          <button type="button" class="copy-btn" id="copyBtn" data-i18n="book.copy">Copy message</button>
-        </div>
-        <pre class="preview-body" id="preview"></pre>
-        <p class="preview-note" data-i18n="book.previewNote">The message is always written in English so your driver can read and answer it straight away.</p>
-      </div>
-
-      <div class="direct" id="directContact">
-        <p class="direct-label" data-i18n="book.orCall">Or contact directly</p>
-        <div class="direct-links" id="directLinks"></div>
-      </div>
-    </div>
+      <p class="sec-sub" data-i18n="book.sub">Fill this in and WhatsApp opens with the whole enquiry already written. Nothing is sent automatically — you read it over and press send yourself.</p>
+    </header>
 
     <form class="book-form" id="bookForm" novalidate>
       <div class="field">
@@ -262,6 +248,13 @@
       </button>
       <p class="wa-hint" id="waHint" hidden data-i18n="book.noWhatsapp">WhatsApp number not configured yet — this button opens an Instagram direct message instead.</p>
     </form>
+
+    <!-- Deliberately quiet, and deliberately below the green button: WhatsApp
+         is the path that works, these are for guests who cannot use it. -->
+    <div class="direct" id="directContact">
+      <p class="direct-label" data-i18n="book.orCall">Or reach me directly</p>
+      <div class="direct-links" id="directLinks"></div>
+    </div>
   </div>
 </section>
 </main>

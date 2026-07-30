@@ -22,7 +22,7 @@ Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 | 3 | **Live-URL** eintragen | `js/config.js`, `sitemap.xml`, `robots.txt` | ✅ erledigt |
 | 4 | **Preise & Touren** an die Vorlagen-Websites angleichen | `js/content.js` | ❌ offen — Websites nicht abrufbar, siehe unten |
 | 5 | **Bewertungen** | `js/content.js` → `reviews:` | ✅ echte Google-Bewertungen |
-| 6 | **Name des Fahrers / Gründungsjahr** | `js/config.js` → `business.driverName`, `since` | ❌ offen |
+| 6 | **Fahrer-Foto, Name, Gründungsjahr** | `js/config.js` → `business.driverPhoto`, `driverName`, `since` | ❌ offen |
 | 7 | **Facebook-Seite** verlinken | `js/config.js` → `contact.facebook` | ✅ erledigt (Share-Link) |
 
 Punkt 4 ist der letzte echte Blocker: solange er offen ist, stehen unbestätigte
@@ -33,6 +33,12 @@ Preise auf der Seite. Die beiden als Vorlage genannten Websites liegen hinter
 Ebenfalls noch zu klären: das Fahrzeug. Die Seite sagt jetzt **bis 4 Gäste**;
 die Beschreibung nennt nur noch „car" statt „MPV", weil das Modell nicht
 bestätigt ist.
+
+**Der Name des früheren Fahrers ist überall entfernt** — er stand in allen sechs
+Google-Bewertungen und stimmt nicht mehr. In den Zitaten steht jetzt „our
+driver" bzw. ein Pronomen; inhaltlich ist nichts verändert. Auch der
+Facebook-Seitenname wird nicht mehr angezeigt, solange er den alten Namen
+trägt (`contact.facebookName` ist leer).
 
 Alle Stellen mit offener Aufgabe sind im Code mit `### TODO ###` markiert:
 
@@ -146,6 +152,10 @@ exakten Wortlaut hier einsetzen ist besser als jede Rückübersetzung.
 
 Vier bis sechs auf der Seite sind ideal; mehr liest ohnehin niemand.
 
+Der Name des früheren Fahrers wurde in allen sechs Texten durch „our driver"
+bzw. ein Pronomen ersetzt — er stimmt nicht mehr. Sonst ist an den Bewertungen
+nichts verändert.
+
 Der Vertrauens-Streifen unter dem Hero zeigt **nicht** die Anzahl der Zitate,
 sondern die echten Zahlen des Google-Profils — sechs Zitate auf der Seite, 41
 im Profil. Woher die Zahlen kommen und wie sie sich selbst aktualisieren, steht
@@ -214,6 +224,35 @@ Wenn es später doch automatisch sein soll, ist der Cloudflare Worker der Weg.
 
 ---
 
+## Foto des Fahrers einsetzen
+
+Der „About"-Bereich ist die Stelle für ein Porträt — es ist der einzige Platz
+auf der Seite, an dem ein Gesicht hingehört. Vorher stand dort ein Wasserfall,
+was über die Person nichts aussagte.
+
+**Solange kein Foto hinterlegt ist, läuft der Bereich ohne Bild:** Text und
+Eckdaten nehmen die volle Breite ein, zentriert. Das ist Absicht — ein leerer
+Rahmen oder ein Platzhalterbild sieht schlechter aus als gar kein Bild.
+
+So kommt das Foto rein, drei Zeilen in `js/config.js`:
+
+```js
+business: {
+  driverName:  'Vorname',
+  driverRole:  'Driver & guide',      // steht klein unter dem Namen
+  driverPhoto: 'driver.webp',          // Datei in images/
+}
+```
+
+Sobald `driverPhoto` gefüllt ist, erscheint die Bildspalte automatisch, mit
+Namensschild darunter und dem Lenkrad-Emblem in der Bildecke. Das Bild wird
+auf **9:11 hochkant** zugeschnitten (`object-position: center 22%`, also auf
+Kopfhöhe) — am besten ein Porträt mit etwa 900 × 1100 px, als WebP unter 250 KB.
+
+Ohne `driverName` erscheint kein Namensschild, das Foto steht dann allein.
+
+---
+
 ## Das Logo
 
 `assets/logo-lockup.svg` ist eine **Vektor-Nachzeichnung** des Instagram-Logos
@@ -243,6 +282,7 @@ assets/logo-mark.svg     Logo, nur Lenkrad (Header, „Über uns")
 assets/favicon.svg       Browser-Icon
 images/*.webp            alle Fotos der Seite
 images/og-image.jpg      Vorschaubild fürs Teilen (1200 × 630)
+images/driver.webp       ← hier das Porträt des Fahrers ablegen (noch nicht vorhanden)
 assets/qr/               QR-Codes zur Website (schlicht + gebrandet), siehe dortige README
 assets/review-stats.json Schnitt + Anzahl vom Google-Profil, taeglich per Action aktualisiert
 scripts/                 Hilfsskript fuer den Action-Cron

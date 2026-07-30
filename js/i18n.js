@@ -103,7 +103,7 @@ window.MLD_I18N = {
 
   'book.eyebrow':  'Booking',
   'book.title':    'Tell me about your trip',
-  'book.sub':      'Fill this in and it writes a complete WhatsApp message for you. Nothing is sent automatically — you see the message first and press send yourself.',
+  'book.sub':      'Fill this in and WhatsApp opens with the whole enquiry already written. Nothing is sent automatically — you read it over and press send yourself.',
   'book.name':     'Your name',
   'book.namePh':   'e.g. Anna Schmidt',
   'book.service':  'What do you need?',
@@ -120,12 +120,8 @@ window.MLD_I18N = {
   'book.messagePh':'Children and their ages, surfboards, a place you have read about, the time you would like to start…',
   'book.submit':   'Open WhatsApp with this message',
   'book.submitIg': 'Send this on Instagram',
-  'book.preview':  'Your message',
-  'book.previewNote': 'The message is always written in English so your driver can read and answer it straight away.',
   'book.required': 'Please fill in your name, the service and a date.',
-  'book.copy':     'Copy message',
-  'book.copied':   'Copied',
-  'book.orCall':   'Or contact directly',
+  'book.orCall':   'Or reach me directly',
   'book.noWhatsapp': 'WhatsApp number not configured yet — this button opens an Instagram direct message instead.',
 
   'footer.tagline':  'Private driver, airport transfers and tours across Lombok and the Gili Islands.',

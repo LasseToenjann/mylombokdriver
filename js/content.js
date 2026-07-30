@@ -271,6 +271,10 @@ window.MLD_CONTENT = {
       in the screenshots they were taken from, so the text here is a careful
       translation back into English, not a byte-for-byte copy. Angeline's and
       Mathilde's originals are French, so English is a translation either way.
+      The reviewers name a driver who no longer drives for the business, so
+      that name has been replaced with "our driver" or a pronoun throughout.
+      Everything else about each review is unchanged.
+
       Only Angeline's and Mathilde's originals are French; the rest were
       written in English — tapping "See original (English)" on Google gives the
       exact wording, and pasting that in here beats any translation.
@@ -284,37 +288,37 @@ window.MLD_CONTENT = {
       name: 'Miss Rani Girl',
       origin: 'Local Guide · Google',
       rating: 5,
-      text: 'I have just come back from Lombok, where I spent six days going round the island with five girlfriends. As women travelling Lombok by scooter, we wanted a guide who could show us the island, speak the local language on our behalf when needed, and above all keep us safe. Al built the itinerary with me personally, around the places we wanted to see, and suggested others we would never have found on our own. He also sorted out the scooter hire. His English is excellent and I would recommend him for any tour you want to book, by car or by scooter.'
+      text: 'I have just come back from Lombok, where I spent six days going round the island with five girlfriends. As women travelling Lombok by scooter, we wanted a guide who could show us the island, speak the local language on our behalf when needed, and above all keep us safe. Our driver built the itinerary with me personally, around the places we wanted to see, and suggested others we would never have found on our own. He also sorted out the scooter hire. His English is excellent and I would recommend him for any tour you want to book, by car or by scooter.'
     },
     {
       name: 'Martin Ville Borg Andersen',
       origin: 'Google review',
       rating: 5,
-      text: 'Al took us on two wonderful trips during our stay in Lombok — the market, the rice fields, a waterfall and a snorkelling day. Most importantly, he was fantastic with our children and made them feel comfortable and safe. According to our daughter, Al deserves a million stars. Thank you Al for your kindness.'
+      text: 'Our driver took us on two wonderful trips during our stay in Lombok — the market, the rice fields, a waterfall and a snorkelling day. Most importantly, he was fantastic with our children and made them feel comfortable and safe. According to our daughter, he deserves a million stars. Thank you for your kindness.'
     },
     {
       name: 'Robert Chomicz',
       origin: 'Google review',
       rating: 5,
-      text: 'I am very happy to recommend Al. He knows the island inside out, speaks good English, and is very fair in what he charges for the transport and the guiding. A thoroughly good person.'
+      text: 'I am very happy to recommend this service. Our driver knew the island inside out, speaks good English, and is very fair in what he charges for the transport and the guiding. A thoroughly good person.'
     },
     {
       name: 'Angeline Billiard',
       origin: 'Local Guide · Google',
       rating: 5,
-      text: 'The two of us were on a short break in Lombok and Al was with us every day, driving us and putting our tours together. We saw rice fields, waterfalls and made a trip out to the quieter Gili islands. He is friendly and completely dependable, his English is excellent — and there is a little French now too. He always kept things flexible, waited while we stopped to eat or shop, and told us to take our time. He is the reason we miss Lombok.'
+      text: 'The two of us were on a short break in Lombok and our driver was with us every day, driving us and putting our tours together. We saw rice fields, waterfalls and made a trip out to the quieter Gili islands. He is friendly and completely dependable, his English is excellent — and there is a little French now too. He always kept things flexible, waited while we stopped to eat or shop, and told us to take our time. He is the reason we miss Lombok.'
     },
     {
       name: 'Aimee Atkinson',
       origin: 'Google review',
       rating: 5,
-      text: 'Al is the best guide on Lombok. He knows every part of the island and took us to places we would never have found on our own. We booked him for two days, one for the north and one for the south, and saw a great deal in a short time. Always punctual, always reachable, excellent English and a good sense of humour. Nothing was ever rushed.'
+      text: 'The best guide on Lombok. He knows every part of the island and took us to places we would never have found on our own. We booked him for two days, one for the north and one for the south, and saw a great deal in a short time. Always punctual, always reachable, excellent English and a good sense of humour. Nothing was ever rushed.'
     },
     {
       name: 'Mathilde Rousselot',
       origin: 'Local Guide · Google',
       rating: 5,
-      text: 'Two wonderful days with Al, the perfect guide. A waterfall, the rice fields, the monkey forest, up Mount Pergasingan for the sunrise, picking strawberries and plenty more. He has no shortage of ideas for exploring Lombok, he is always enthusiastic, full of stories — and a fantastic photographer for your memories.'
+      text: 'Two wonderful days with the perfect guide. A waterfall, the rice fields, the monkey forest, up Mount Pergasingan for the sunrise, picking strawberries and plenty more. He has no shortage of ideas for exploring Lombok, he is always enthusiastic, full of stories — and a fantastic photographer for your memories.'
     }
   ],
 
