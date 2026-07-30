@@ -14,7 +14,7 @@ window.MLD_CONFIG = {
     claim: 'Your journey, our priority',
     /* The driver's first name. Shown under the portrait in "About".
        Leave empty to keep the section generic. */
-    driverName: '',                                        // ### TODO ###
+    driverName: 'Suhar',
     /* Printed under the name. Only shown when driverName is filled in. */
     driverRole: 'Driver & guide',
     /* Portrait for the "About" section. A file in images/, ideally a real
@@ -24,7 +24,7 @@ window.MLD_CONFIG = {
        the facts simply take the full width. That is deliberate: an empty frame
        or a stand-in landscape shot looks worse than no photo at all. Drop the
        file in, name it here, and the portrait column appears. */
-    driverPhoto: '',                                       // ### TODO ###
+    driverPhoto: 'driver.webp',
     /* Year the business started — shown as "since ...". Empty = hidden. */
     since: '',                                             // ### TODO ###
     base: 'Senggigi, West Lombok',

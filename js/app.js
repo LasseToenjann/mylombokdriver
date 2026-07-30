@@ -246,11 +246,15 @@
           b.driverRole ? `<span>${esc(b.driverRole)}</span>` : ''}</figcaption>`
       : '';
     media.hidden = false;
+    /* No logo badge on top of the portrait. It sat on his shoulder and read as
+       a watermark; the mark is already in the header, the hero and the footer,
+       and a photograph of a person is the one place it does not belong. */
     media.innerHTML = `
-      <img src="${esc(img(b.driverPhoto))}" alt="${esc(b.driverName
-        ? b.driverName + ' — ' + (b.driverRole || 'driver') + ' on Lombok'
-        : 'Your driver on Lombok')}" width="900" height="1100" loading="lazy">
-      <img class="about-badge" src="assets/logo-mark.svg" alt="" width="200" height="200" loading="lazy">
+      <div class="about-photo">
+        <img src="${esc(img(b.driverPhoto))}" alt="${esc(b.driverName
+          ? b.driverName + ' — ' + (b.driverRole || 'driver') + ' on Lombok'
+          : 'Your driver on Lombok')}" width="900" height="1100" loading="lazy">
+      </div>
       ${caption}`;
   }
 

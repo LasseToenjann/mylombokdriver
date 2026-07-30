@@ -22,8 +22,9 @@ Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 | 3 | **Live-URL** eintragen | `js/config.js`, `sitemap.xml`, `robots.txt` | ✅ erledigt |
 | 4 | **Preise & Touren** an die Vorlagen-Websites angleichen | `js/content.js` | ❌ offen — Websites nicht abrufbar, siehe unten |
 | 5 | **Bewertungen** | `js/content.js` → `reviews:` | ✅ echte Google-Bewertungen |
-| 6 | **Fahrer-Foto, Name, Gründungsjahr** | `js/config.js` → `business.driverPhoto`, `driverName`, `since` | ❌ offen |
-| 7 | **Facebook-Seite** verlinken | `js/config.js` → `contact.facebook` | ✅ erledigt (Share-Link) |
+| 6 | **Fahrer-Foto und Name** | `js/config.js` → `business.driverPhoto`, `driverName` | ✅ erledigt (Suhar) |
+| 7 | **Gründungsjahr** | `js/config.js` → `business.since` | ❌ offen |
+| 8 | **Facebook-Seite** verlinken | `js/config.js` → `contact.facebook` | ✅ erledigt (Share-Link) |
 
 Punkt 4 ist der letzte echte Blocker: solange er offen ist, stehen unbestätigte
 Preise auf der Seite. Die beiden als Vorlage genannten Websites liegen hinter
@@ -230,17 +231,21 @@ Der „About"-Bereich ist die Stelle für ein Porträt — es ist der einzige Pl
 auf der Seite, an dem ein Gesicht hingehört. Vorher stand dort ein Wasserfall,
 was über die Person nichts aussagte.
 
-**Solange kein Foto hinterlegt ist, läuft der Bereich ohne Bild:** Text und
-Eckdaten nehmen die volle Breite ein, zentriert. Das ist Absicht — ein leerer
-Rahmen oder ein Platzhalterbild sieht schlechter aus als gar kein Bild.
+**Aktuell hinterlegt:** `images/driver.webp` — Suhar vor dem Wagen, 900 × 1100,
+58 KB. Bewusst **ohne Logo-Emblem** darauf: es lag auf der Schulter und wirkte
+wie ein Wasserzeichen. Das Logo steht ohnehin im Header, im Hero und im Footer.
 
-So kommt das Foto rein, drei Zeilen in `js/config.js`:
+**Ist kein Foto hinterlegt, läuft der Bereich ohne Bild:** Text und Eckdaten
+nehmen die volle Breite ein, zentriert. Ein leerer Rahmen oder ein
+Platzhalterbild sieht schlechter aus als gar kein Bild.
+
+Die Einstellungen dazu in `js/config.js`:
 
 ```js
 business: {
-  driverName:  'Vorname',
+  driverName:  'Suhar',
   driverRole:  'Driver & guide',      // steht klein unter dem Namen
-  driverPhoto: 'driver.webp',          // Datei in images/
+  driverPhoto: 'driver.webp',         // Datei in images/
 }
 ```
 
@@ -325,7 +330,7 @@ assets/logo-mark.svg     Logo, nur Lenkrad (Header, „Über uns")
 assets/favicon.svg       Browser-Icon
 images/*.webp            alle Fotos der Seite
 images/og-image.jpg      Vorschaubild fürs Teilen (1200 × 630)
-images/driver.webp       ← hier das Porträt des Fahrers ablegen (noch nicht vorhanden)
+images/driver.webp       Porträt von Suhar (About-Abschnitt)
 assets/qr/               QR-Codes zur Website (schlicht + gebrandet), siehe dortige README
 assets/review-stats.json Schnitt + Anzahl vom Google-Profil, taeglich per Action aktualisiert
 scripts/                 Hilfsskript fuer den Action-Cron

@@ -507,8 +507,9 @@ ul, ol { list-style: none; padding: 0; }
 .about-grid--nophoto .about-stats { margin-inline: auto; }
 .about-grid--nophoto .about-stats div { border-top: 0; border-bottom: 2px solid var(--gold); padding: 0 0 .7rem; }
 
-.about-media { position: relative; margin: 0; }
-.about-media > img:first-child {
+.about-media { margin: 0; }
+.about-photo { position: relative; }
+.about-photo > img:first-child {
   width: 100%; aspect-ratio: 9 / 11; max-height: 620px; object-fit: cover; object-position: center 22%;
   border-radius: var(--r-xl); box-shadow: var(--sh-lg);
 }
@@ -519,13 +520,6 @@ ul, ol { list-style: none; padding: 0; }
 }
 .about-cap strong { font-family: var(--ff-display); font-size: 1.25rem; font-weight: 600; letter-spacing: -.01em; }
 .about-cap span { font-size: .78rem; letter-spacing: .13em; text-transform: uppercase; color: var(--tx-dark-2); }
-/* Sits inside the portrait, not hanging off its edge: the name plate now
-   occupies the space below the image, and the old negative offset put the
-   badge straight on top of it. */
-.about-badge {
-  position: absolute; right: 14px; bottom: 14px; width: clamp(72px, 10vw, 104px); height: auto;
-  border-radius: 50%; box-shadow: 0 0 0 3px rgba(248,244,236,.9), 0 14px 30px rgba(0,0,0,.35);
-}
 .about-copy h2 { font-family: var(--ff-display); font-size: clamp(2rem, 4vw, 3.05rem); font-weight: 600; letter-spacing: -.015em; line-height: 1.08; margin-bottom: 1.1rem; }
 .about-copy p { color: var(--tx-dark-2); margin-bottom: 1rem; max-width: 60ch; }
 .about-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.1rem; margin-top: 2rem; }
