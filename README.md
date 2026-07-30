@@ -268,6 +268,49 @@ in WhatsApp und Facebook, exakt 1200 × 630 px als JPEG.
 
 ---
 
+## Bewegung und Animationen
+
+Das Konzept steht als Kommentar oben im Abschnitt `MOTION` in `css/style.css`.
+Kurzfassung: Der Fahrer verkauft **ruhiges, unaufgeregtes Fahren** — die
+Bewertungen sagen wörtlich „nothing was ever rushed". Die Bewegung auf der Seite
+muss dasselbe sagen, sonst widerspricht sie dem Produkt.
+
+Sechs Regeln, an die sich alles hält:
+
+1. **Eine Kurve** (`--ease`, verzögernd). Nichts federt, nichts schießt über.
+2. **Eine Richtung: nach oben.** Inhalte steigen und blenden ein. Kein seitliches
+   Schieben, kein Drehen, kein Aufploppen — Ausnahme sind die beiden Overlays,
+   wo etwas Skalierung sagt „das liegt über der Seite".
+3. **Weg umgekehrt proportional zur Größe:** kleine Dinge 10 px, Karten 18 px,
+   ganze Blöcke 26 px. Ein großer Block, der weit reist, wirkt schlampig.
+4. **Staffelung innerhalb einer Gruppe, nie zwischen Gruppen.** Karten folgen
+   sich im Abstand von 70 ms, gedeckelt nach der sechsten — sonst käme die
+   letzte Kachel einer großen Galerie fast eine Sekunde zu spät.
+5. **Einmal.** Nichts animiert erneut, wenn man zurückscrollt.
+6. **Lesen wird nie verzögert:** alles ist ~600 ms nach dem Sichtbarwerden
+   lesbar, keine Verzögerung über 420 ms.
+
+Konkret bedeutet das:
+
+| Wo | Was |
+|---|---|
+| Hero | Einmalige Sequenz beim Laden: Logo, Zeile, Überschrift, Text, Buttons, Häkchen — je 90 ms versetzt. Der einzige gescriptete Auftritt, weil es das Einzige ist, was ohne Scrollen sichtbar ist |
+| Bewertungsleiste | Zählt beim ersten Sichtbarwerden von 0,0 auf 5,0 hoch |
+| Touren, Vorteile, Galerie, Bewertungen | Gestaffeltes Aufsteigen beim Scrollen |
+| Tourkarten | Beim Filtern erscheinen die neuen Karten erneut gestaffelt |
+| FAQ | Höhe animiert beim Aufklappen (die einzige bewusste Ausnahme von „nur Transform und Deckkraft") |
+| Karten-Hover | Anheben plus leichter Bildzoom |
+
+Es werden ausschließlich `opacity` und `transform` animiert, damit alles auf dem
+Compositor bleibt — wichtig, weil viele Gäste auf älteren Handys und
+indonesischem Mobilfunk unterwegs sind.
+
+**`prefers-reduced-motion` schaltet alles ab.** Wer das im Betriebssystem
+gesetzt hat, sieht die Seite vollständig und sofort, ohne jede Bewegung.
+Getestet.
+
+---
+
 ## Struktur
 
 ```

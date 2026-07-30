@@ -107,6 +107,7 @@
         <h3>${esc(v.title)}</h3>
         <p>${esc(v.text)}</p>
       </article>`).join('');
+    revealGroup($$('#valueGrid .value-card'));
   }
 
   function priceBlock(tour) {
@@ -132,8 +133,8 @@
 
   function renderTours(filter = 'all') {
     const list = DATA.tours.filter(x => filter === 'all' || x.cats.includes(filter));
-    $('#tourGrid').innerHTML = list.map((tour, i) => `
-      <article class="tour-card" style="animation-delay:${i * 55}ms">
+    $('#tourGrid').innerHTML = list.map(tour => `
+      <article class="tour-card">
         <div class="tour-media">
           <span class="tour-tag">${esc(catLabel(tour))}</span>
           <img src="${img(tour.scene)}" alt="${esc(tour.title)}" loading="lazy" width="800" height="500">
@@ -152,6 +153,7 @@
           </div>
         </div>
       </article>`).join('');
+    revealGroup($$('#tourGrid .tour-card'));
   }
 
   function renderFilters() {
@@ -169,6 +171,7 @@
         <img src="${img(g.scene)}" alt="${esc(g.caption)}" loading="lazy" width="800" height="600">
         <span class="gal-cap">${esc(g.caption)}</span>
       </button>`).join('');
+    revealGroup($$('#galGrid .gal-item'), { size: 'sm', step: 55 });
   }
 
   /* Filled in by loadReviewStats() once assets/review-stats.json arrives. Null
@@ -213,16 +216,12 @@
     const count = stats.count || list.length;
     const rounded = Math.round(avg);
 
-    const src = stats.source ? ` ${t('proof.on')} ${stats.source}` : '';
     bar.setAttribute('aria-label', t('proof.aria').replace('{avg}', avg.toFixed(1)).replace('{n}', count));
     bar.innerHTML = `
-      <span class="proof-rating">
-        <span class="proof-stars" aria-hidden="true">${STAR.repeat(rounded)}</span>
-        <span class="proof-score"><strong>${avg.toFixed(1)}</strong><span class="proof-src">${esc(src.trim())}</span></span>
-      </span>
-      <span class="proof-facts">
-        <strong>${count} ${esc(t('proof.reviews'))}</strong>
-      </span>
+      <span class="proof-score" data-count-to="${avg.toFixed(1)}">${avg.toFixed(1)}</span>
+      <span class="proof-stars" aria-hidden="true">${STAR.repeat(rounded)}</span>
+      <span class="proof-count">${count} ${esc(t('proof.reviews'))}</span>
+      ${stats.source ? `<span class="proof-src">${esc(t('proof.on'))} ${esc(stats.source)}</span>` : ''}
       <span class="proof-cta">${esc(t('proof.cta'))}</span>`;
   }
 
@@ -268,6 +267,7 @@
           <span>${esc(r.origin)}</span>
         </div>
       </article>`).join('');
+    revealGroup($$('#reviewGrid .review-card'));
     const more = $('#reviewsMore');
     if (!more) return;
     if (CFG.contact.googleMaps) more.href = CFG.contact.googleMaps;
@@ -676,18 +676,80 @@
     map.forEach((_, sec) => io.observe(sec));
   }
 
-  function initReveal() {
+  /* ------------------------------------------------------------ motion */
+
+  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let revealObserver = null;
+
+  /* One observer for the whole page, reusable: sections rendered later — the
+     tour grid after a filter change — call this again and their new elements
+     join in. Unobserving on first hit is what keeps rule 5, animate once. */
+  function observeReveals(root = document) {
+    if (REDUCED.matches) { $$('.reveal', root).forEach(el => el.classList.add('in')); return; }
+    if (!revealObserver) {
+      revealObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(en => {
+          if (!en.isIntersecting) return;
+          en.target.classList.add('in');
+          obs.unobserve(en.target);
+        });
+      }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
+    }
+    $$('.reveal:not(.in)', root).forEach(el => revealObserver.observe(el));
+  }
+
+  /* Rule 4: within one group each item waits 70ms longer than the last, and
+     the wait stops growing after the sixth. Without the cap a twelve-item
+     gallery would leave the last tile arriving almost a second late. */
+  function stagger(els, step = 70, cap = 6) {
+    els.forEach((el, i) => el.style.setProperty('--delay', Math.min(i, cap) * step + 'ms'));
+  }
+
+  /* Marks a freshly rendered group as revealable and staggers it in one go. */
+  function revealGroup(els, opts = {}) {
+    const list = Array.from(els);
+    list.forEach(el => el.classList.add('reveal', ...(opts.size ? ['reveal-' + opts.size] : [])));
+    stagger(list, opts.step, opts.cap);
+    observeReveals();
+  }
+
+  /* The rating counts up the first time the bar is seen. It is the one number
+     on the page worth drawing an eye to, and counting is cheap: one rAF loop,
+     under a second, no layout. */
+  function countUp(el) {
+    const to = parseFloat(el.dataset.countTo);
+    if (!isFinite(to)) return;
+    if (REDUCED.matches) { el.textContent = to.toFixed(1); return; }
+    const dur = 850;
+    const t0 = performance.now();
+    const tick = now => {
+      const p = Math.min(1, (now - t0) / dur);
+      el.textContent = (to * (1 - Math.pow(1 - p, 3))).toFixed(1);
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    el.textContent = '0.0';
+    requestAnimationFrame(tick);
+  }
+
+  function initCountUp() {
+    const el = $('.proof-score');
+    if (!el) return;
     const io = new IntersectionObserver((entries, obs) => {
       entries.forEach(en => {
-        if (en.isIntersecting) { en.target.classList.add('in'); obs.unobserve(en.target); }
+        if (!en.isIntersecting) return;
+        countUp(en.target);
+        obs.unobserve(en.target);
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
-    $$('.reveal').forEach(el => io.observe(el));
+    }, { threshold: 0.6 });
+    io.observe(el);
   }
 
   function markReveal() {
-    $$('.sec-head, .custom-panel, .about-media, .about-copy, .ig-panel, .book-form, .direct')
+    $$('.sec-head, .about-media, .about-copy, .book-form')
+      .forEach(el => el.classList.add('reveal', 'reveal-lg'));
+    $$('.custom-panel, .ig-panel, .direct, .faq-item')
       .forEach(el => el.classList.add('reveal'));
+    stagger($$('.faq-item'), 45, 8);
   }
 
   function initDelegates() {
@@ -769,7 +831,8 @@
     renderStructuredData();
     applyWaState();
     markReveal();
-    initReveal();
+    observeReveals();
+    initCountUp();
   }
 
   function init() {

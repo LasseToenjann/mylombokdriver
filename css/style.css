@@ -262,9 +262,7 @@ ul, ol { list-style: none; padding: 0; }
 .hero-lockup {
   width: clamp(268px, 40vw, 480px); height: auto; margin-bottom: 1.5rem;
   filter: drop-shadow(0 6px 18px rgba(0,0,0,.7)) drop-shadow(0 0 46px rgba(212,165,68,.18));
-  animation: badgeIn 1s var(--ease) both;
 }
-@keyframes badgeIn { from { opacity: 0; transform: translateY(18px) scale(.94); } to { opacity: 1; transform: none; } }
 
 .hero-title {
   font-family: var(--ff-display); font-weight: 600; color: var(--white);
@@ -290,44 +288,38 @@ ul, ol { list-style: none; padding: 0; }
 
 /* ---------- 7. Marquee ---------------------------------------------------- */
 /* ---------- 7b. Social proof bar ------------------------------------------ */
-/* A trust strip, not a pull quote: rating, who left it, and a way in. Phone
-   layout first — the four parts stack and centre, and from 720px up they sit
-   on one line with the call to action pushed to the right. */
+/* Stacked, not a single line. Crammed side by side the five pieces read as one
+   run-on sentence; stacked they read as a rating card and each line gets its
+   own weight. Same layout at every width — there is no version of this that
+   benefits from going horizontal. */
 .proof {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-  gap: .55rem 1.15rem; padding: 15px clamp(16px, 5vw, 32px);
+  display: flex; flex-direction: column; align-items: center;
+  gap: .3rem; padding: clamp(26px, 5vw, 34px) clamp(16px, 5vw, 32px);
   background: var(--ink-1); border-bottom: 1px solid var(--line-d);
-  color: var(--tx-light); transition: background .2s;
+  color: var(--tx-light); text-align: center; transition: background .25s var(--ease);
 }
 .proof:hover { background: var(--ink-2); }
 
-.proof-rating { display: inline-flex; align-items: center; gap: .55rem; flex: none; }
-.proof-stars { display: inline-flex; gap: 2px; }
-.proof-stars svg { width: 16px; height: 16px; fill: var(--gold); stroke: none; }
-.proof-score { display: inline-flex; align-items: baseline; gap: .4rem; }
-.proof-score strong { font-size: 1.12rem; font-weight: 700; color: var(--gold-hi); line-height: 1; }
-.proof-src { font-size: .78rem; color: var(--tx-light-2); }
-
-.proof-facts { display: inline-flex; align-items: baseline; gap: .45rem; font-size: .85rem; flex: none; }
-.proof-facts strong { font-weight: 600; color: var(--tx-light); }
-.proof-facts span { color: var(--tx-light-2); }
-.proof-facts span::before { content: '· '; }
-
+.proof-score {
+  font-family: var(--ff-display); font-weight: 700;
+  font-size: clamp(2.6rem, 8vw, 3.4rem); line-height: 1;
+  background: var(--gold-grad); -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  /* Tabular figures stop the number jittering while it counts up. */
+  font-variant-numeric: tabular-nums;
+}
+.proof-stars { display: inline-flex; gap: 4px; margin-top: .35rem; }
+.proof-stars svg { width: 19px; height: 19px; fill: var(--gold); stroke: none; }
+.proof-count { margin-top: .55rem; font-size: 1rem; font-weight: 600; color: var(--tx-light); }
+.proof-src { font-size: .82rem; letter-spacing: .13em; text-transform: uppercase; color: var(--tx-light-2); }
 .proof-cta {
-  font-size: .85rem; font-weight: 600; color: var(--gold);
-  border-bottom: 1px solid rgba(212,165,68,.45); padding-bottom: 1px; flex: none;
+  margin-top: .9rem; font-size: .88rem; font-weight: 600; color: var(--gold);
+  border-bottom: 1px solid rgba(212,165,68,.45); padding-bottom: 2px;
+  transition: border-color .2s;
 }
 .proof:hover .proof-cta { border-bottom-color: var(--gold); }
-.proof-cta::after { content: ' →'; }
-
-@media (max-width: 719px) {
-  .proof { gap: .5rem .8rem; }
-  /* Keep rating and people on one line, facts and link on the next. */
-  .proof-facts { font-size: .8rem; }
-}
-@media (min-width: 720px) {
-  .proof { justify-content: center; gap: 1.4rem; }
-}
+.proof-cta::after { content: ' →'; display: inline-block; transition: transform .25s var(--ease); }
+.proof:hover .proof-cta::after { transform: translateX(4px); }
 
 .marquee { background: var(--ink); border-block: 1px solid var(--line-d); overflow: hidden; padding: 15px 0; }
 .marquee-track { display: flex; gap: 0; width: max-content; animation: slide 42s linear infinite; }
@@ -360,9 +352,7 @@ ul, ol { list-style: none; padding: 0; }
   border: 1px solid rgba(16,17,21,.07); box-shadow: var(--sh);
   display: flex; flex-direction: column;
   transition: transform .3s var(--ease), box-shadow .3s var(--ease);
-  animation: cardIn .45s var(--ease) both;
 }
-@keyframes cardIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 .tour-card:hover { transform: translateY(-6px); box-shadow: var(--sh-lg); }
 
 .tour-media { position: relative; aspect-ratio: 16/10; overflow: hidden; background: var(--ink-2); }
@@ -724,6 +714,70 @@ ul, ol { list-style: none; padding: 0; }
 @media (max-width: 560px) { .wa-float { width: 52px; height: 52px; right: 14px; bottom: 14px; } .wa-float svg { width: 27px; height: 27px; } }
 
 /* ---------- 19. Reveal on scroll ----------------------------------------- */
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal.in { opacity: 1; transform: none; }
+/* ============================================================================
+   MOTION
+   ----------------------------------------------------------------------------
+   The business sells unhurried driving — "safe, unhurried", "nothing was ever
+   rushed" is what the reviews say. The motion has to agree with that, so the
+   whole site follows six rules:
+
+   1. One curve, --ease, a decelerating one. Nothing springs, nothing overshoots.
+   2. One direction: up. Content rises and fades in. No sideways slides, no
+      rotation, no scale pops — except the two overlays, where a little scale
+      is what says "this sits above the page".
+   3. Travel scales inversely with the element: small things 10px, cards 18px,
+      whole blocks 26px. A large block moving far reads as sloppy.
+   4. Stagger inside a group, never between groups. Cards follow each other by
+      70ms, capped after six so the last card is never noticeably late. One
+      section never waits for another to finish.
+   5. Once. Nothing re-animates when you scroll back up.
+   6. Reading is never delayed: everything is legible within ~600ms of coming
+      into view, and no delay exceeds 420ms.
+
+   Only opacity and transform are animated, so everything stays on the
+   compositor. The FAQ height is the one deliberate exception and it is short.
+   prefers-reduced-motion switches all of it off, near the top of this file.
+   ========================================================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--rise, 18px));
+  transition: opacity .6s var(--ease), transform .6s var(--ease);
+  transition-delay: var(--delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.in { opacity: 1; transform: none; will-change: auto; }
+
+/* Rule 3 — travel by element size. */
+.reveal-sm { --rise: 10px; }
+.reveal-lg { --rise: 26px; }
+
+/* The hero is the only thing on screen before a scroll happens, so it runs a
+   scripted entrance on load instead of waiting for an observer. */
+@keyframes riseIn { to { opacity: 1; transform: none; } }
+.hero-inner > * {
+  opacity: 0; transform: translateY(16px);
+  animation: riseIn .75s var(--ease) forwards;
+}
+.hero-inner > *:nth-child(1) { animation-delay: .08s; }
+.hero-inner > *:nth-child(2) { animation-delay: .17s; }
+.hero-inner > *:nth-child(3) { animation-delay: .26s; }
+.hero-inner > *:nth-child(4) { animation-delay: .35s; }
+.hero-inner > *:nth-child(5) { animation-delay: .44s; }
+.hero-inner > *:nth-child(6) { animation-delay: .53s; }
+
+/* Each badge arrives just after the row it belongs to. */
+.hero-badges li {
+  opacity: 0; transform: translateY(10px);
+  animation: riseIn .6s var(--ease) forwards;
+}
+.hero-badges li:nth-child(1) { animation-delay: .60s; }
+.hero-badges li:nth-child(2) { animation-delay: .68s; }
+.hero-badges li:nth-child(3) { animation-delay: .76s; }
+
+/* Reduced motion: no travel, no waiting, everything simply present. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero-inner > *, .hero-badges li { opacity: 1; transform: none; animation: none; }
+}
 body.no-scroll { overflow: hidden; }
