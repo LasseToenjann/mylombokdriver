@@ -171,9 +171,30 @@
       </button>`).join('');
   }
 
-  /* Compact rating bar under the hero. Everything in it is derived from the
-     reviews array, so the count and the average can never drift away from the
-     quotes actually shown further down the page. */
+  /* Filled in by loadReviewStats() once assets/review-stats.json arrives. Null
+     until then, which is what makes config.js the fallback rather than a
+     placeholder the visitor might see. */
+  let liveStats = null;
+
+  /* assets/review-stats.json is written by the scheduled workflow in
+     .github/workflows/review-stats.yml. Same origin, roughly 90 bytes, and
+     every failure path — offline, 404, malformed, absurd numbers — simply
+     leaves the configured figures in place. */
+  function loadReviewStats() {
+    if (!$('#proofBar')) return;
+    fetch('assets/review-stats.json', { cache: 'no-cache' })
+      .then(r => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then(d => {
+        if (typeof d.rating !== 'number' || typeof d.count !== 'number' || d.count < 1) return;
+        const cur = CFG.reviewStats || {};
+        if (d.rating === cur.rating && d.count === cur.count) return;
+        liveStats = d;
+        renderProof();
+      })
+      .catch(() => { /* configured figures stand */ });
+  }
+
+  /* Compact rating bar under the hero. */
   function renderProof() {
     const bar = $('#proofBar');
     if (!bar) return;
@@ -182,9 +203,12 @@
 
     /* The rating and the count come from the Google profile, not from the six
        quotes below them — quoting six and claiming six would undersell a
-       profile that actually holds far more. Falls back to the quotes if the
-       figures are not configured. */
-    const stats = CFG.reviewStats || {};
+       profile that actually holds far more.
+
+       Three sources, in order: the JSON a scheduled GitHub Action refreshes,
+       then the figures typed into config.js, then the quotes themselves. The
+       page therefore never waits on a request and never shows nothing. */
+    const stats = liveStats || CFG.reviewStats || {};
     const avg = stats.rating || list.reduce((s, r) => s + r.rating, 0) / list.length;
     const count = stats.count || list.length;
     const rounded = Math.round(avg);
@@ -748,6 +772,7 @@
     updatePreview();
     window.addEventListener('popstate', syncTourFromHash);
     syncTourFromHash();
+    loadReviewStats();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

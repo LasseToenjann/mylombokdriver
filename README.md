@@ -114,16 +114,20 @@ sondern direkt in `index.html` (`images/hero.webp` bzw. `images/waterfall-tall.w
 
 ## 4. Bewertungen pflegen
 
-Die fünf Bewertungen in `js/content.js` sind **echte Google-Bewertungen** aus dem
-Unternehmensprofil, mit den dort veröffentlichten Namen und Sternen.
+Die sechs Bewertungen in `js/content.js` sind **echte Google-Bewertungen** aus
+dem Unternehmensprofil, mit den dort veröffentlichten Namen und Sternen. Aus
+neun vorliegenden wurden sie so ausgewählt, dass jede eine andere Frage
+beantwortet, die ein Gast tatsächlich hat: Sicherheit (Rani), Kinder (Martin),
+fairer Preis (Robert), Flexibilität auf Mehrtagestour (Angeline), Ortskenntnis
+(Aimee), Bandbreite der Ziele (Mathilde).
 
-Ein Hinweis zum Wortlaut: die Vorlagen lagen als Screenshots vor, in denen Google
-alles ins Indonesische übersetzt hatte. Der Text hier ist also eine sorgfältige
-Rückübersetzung ins Englische, kein wörtliches Zitat. Bei **Angeline** und
-**Mathilde** sind die Originale französisch — Englisch ist so oder so eine
-Übersetzung. Bei **Hugo, Aimee und Norman** ist das Original bereits englisch:
-Auf Google auf „Original ansehen" tippen und den exakten Wortlaut hier einsetzen
-ist besser als jede Rückübersetzung.
+Ein Hinweis zum Wortlaut: die Vorlagen lagen als Screenshots vor, in denen
+Google alles ins Indonesische übersetzt hatte. Der Text hier ist also eine
+sorgfältige Rückübersetzung ins Englische, kein wörtliches Zitat. Bei
+**Angeline** und **Mathilde** sind die Originale französisch — Englisch ist so
+oder so eine Übersetzung. Bei **Martin, Robert, Aimee und Rani** ist das
+Original bereits englisch: auf Google auf „Original ansehen" tippen und den
+exakten Wortlaut hier einsetzen ist besser als jede Rückübersetzung.
 
 ```js
 {
@@ -134,29 +138,65 @@ ist besser als jede Rückübersetzung.
 }
 ```
 
+Vier bis sechs auf der Seite sind ideal; mehr liest ohnehin niemand.
+
 Der Vertrauens-Streifen unter dem Hero zeigt **nicht** die Anzahl der Zitate,
-sondern die echten Zahlen des Google-Profils aus `js/config.js` → `reviewStats`
-(aktuell 5,0 aus 41 Bewertungen). Sechs Zitate auf der Seite, 41 im Profil —
-die ehrliche Zahl ist die, die ein Gast nachprüfen kann.
-
-```js
-reviewStats: { rating: 5.0, count: 41, source: 'Google' }
-```
-
-Diese beiden Zahlen ab und zu gegen das Google-Profil abgleichen. Sie ändern
-sich nur, wenn eine neue Bewertung dazukommt.
+sondern die echten Zahlen des Google-Profils — sechs Zitate auf der Seite, 41
+im Profil. Woher die Zahlen kommen und wie sie sich selbst aktualisieren, steht
+im nächsten Abschnitt.
 
 ---
 
-## Live-Bewertungen — warum sie hier nicht automatisch kommen
+## Bewertungszahlen automatisch aktualisieren
 
-Kurz: **ohne Backend geht es nicht seriös.** Die Seite ist reines HTML auf
-GitHub Pages, es gibt keinen Server, der etwas abrufen könnte.
+Der Vertrauens-Streifen zieht Schnitt und Anzahl aus **`assets/review-stats.json`**.
+Diese Datei wird von einem **GitHub-Action-Cron** (`.github/workflows/review-stats.yml`)
+einmal täglich aus dem Google-Profil aktualisiert und eingecheckt — Pages baut
+danach automatisch neu.
 
-Was theoretisch ginge und warum es jeweils nicht passt:
+Der API-Schlüssel liegt als Repository-Secret und landet **nie** im Browser.
+Das ist der Unterschied zu einem Aufruf aus dem JavaScript heraus, wo der
+Schlüssel für jeden lesbar wäre.
 
-| Weg | Problem |
-|---|---|
+### Einrichten (einmalig, ~10 Minuten)
+
+1. **Place ID** der Firma holen:
+   [Place ID Finder](https://developers.google.com/maps/documentation/places/web-service/place-id)
+   — Firma suchen, die `ChIJ…`-Kennung kopieren.
+2. In der [Google Cloud Console](https://console.cloud.google.com/) ein Projekt
+   anlegen, **Places API (New)** aktivieren, unter *Anmeldedaten* einen
+   **API-Schlüssel** erstellen. Den Schlüssel auf die Places API beschränken.
+3. Im Repository unter **Settings → Secrets and variables → Actions** zwei
+   Secrets anlegen:
+   - `PLACE_ID` → die Kennung aus Schritt 1
+   - `GOOGLE_MAPS_KEY` → der Schlüssel aus Schritt 2
+4. Unter **Actions → Refresh Google review stats → Run workflow** einmal von
+   Hand starten und prüfen, dass die Ausgabe die richtigen Zahlen zeigt.
+
+Danach läuft es allein. Ein Aufruf pro Tag sind ~30 im Monat; das Kontingent
+der Places API liegt weit darüber, und die Feldmaske fragt nur `rating` und
+`userRatingCount` ab — die günstigste Abfrage, die es gibt.
+
+### Wenn etwas schiefgeht
+
+Nichts. Der Streifen fällt der Reihe nach zurück auf: JSON-Datei → die Zahlen
+in `js/config.js` → `reviewStats` → die Anzahl der Zitate. Fehlende Datei,
+kaputtes JSON, HTTP 403 wegen falschem Schlüssel, unplausible Werte wie `0` —
+alles getestet, in jedem Fall stehen weiter die Zahlen aus `config.js`. Die
+Werte dort sollten daher gepflegt bleiben, sie sind das Sicherheitsnetz.
+
+Das Skript bricht bei einer unplausiblen Antwort bewusst mit Fehler ab und
+lässt die alte Datei stehen, statt „0 guest reviews" zu veröffentlichen. Ein
+fehlgeschlagener Lauf ist in der Actions-Übersicht rot sichtbar.
+
+### Was damit *nicht* geht
+
+Die **Bewertungstexte** bleiben handverlesen in `content.js`. Die Places API
+gibt maximal fünf zurück, von Google ausgewählt — nicht die aussagekräftigsten.
+Die sechs auf der Seite sind gezielt nach Nutzen für Gäste ausgewählt, das ist
+besser als alles, was eine API liefern würde.
+
+---|---|
 | **Google Places API direkt aus dem Browser** | Der API-Schlüssel steht im JavaScript und ist damit für jeden lesbar. Wer ihn kopiert, verbraucht das Kontingent auf Kosten des Profilinhabers. Ausserdem liefert die Places API nur **fünf** Bewertungen, von Google ausgewählt — nicht die besten, nicht alle 41. |
 | **Fertige Widgets** (Elfsight, Trustindex …) | Laden fremdes JavaScript, setzen Cookies, kosten monatlich und machen die Seite langsamer. Widerspricht dem Grundsatz „kein Tracking, keine externen Anfragen ausser Google Fonts". |
 | **Eigene Serverless-Funktion** (Cloudflare Worker, Netlify Function) | Funktioniert wirklich: Der Schlüssel bleibt geheim, das Ergebnis lässt sich zwischenspeichern. Kostet nichts in der Gratisstufe, ist aber ein zweiter Dienst, der eingerichtet und gepflegt werden muss. Auch hier gilt das Limit von fünf Bewertungen. |
@@ -198,6 +238,9 @@ assets/favicon.svg       Browser-Icon
 images/*.webp            alle Fotos der Seite
 images/og-image.jpg      Vorschaubild fürs Teilen (1200 × 630)
 assets/qr/               QR-Codes zur Website (schlicht + gebrandet), siehe dortige README
+assets/review-stats.json Schnitt + Anzahl vom Google-Profil, taeglich per Action aktualisiert
+scripts/                 Hilfsskript fuer den Action-Cron
+.github/workflows/       Cron, der die Bewertungszahlen holt
 CREDITS.md               Bildnachweise (Pexels-Fotografen)
 robots.txt, sitemap.xml  SEO — enthalten die Live-URL
 .nojekyll                nötig, damit GitHub Pages die Dateien unverändert ausliefert

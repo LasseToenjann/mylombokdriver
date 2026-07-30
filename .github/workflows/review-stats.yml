@@ -1,0 +1,45 @@
+name: Refresh Google review stats
+
+# Once a day is plenty for a number that moves a few times a month, and it keeps
+# the call count at ~30 per month. workflow_dispatch is there so the numbers can
+# be pulled on demand after a new review comes in.
+on:
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+
+# Needed so the job can commit the refreshed JSON back to main.
+permissions:
+  contents: write
+
+concurrency:
+  group: review-stats
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch rating and review count
+        env:
+          PLACE_ID: ${{ secrets.PLACE_ID }}
+          GOOGLE_MAPS_KEY: ${{ secrets.GOOGLE_MAPS_KEY }}
+        run: node scripts/fetch-review-stats.mjs
+
+      - name: Commit if the numbers moved
+        run: |
+          if git diff --quiet -- assets/review-stats.json; then
+            echo "No change, nothing to commit."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/review-stats.json
+          git commit -m "Refresh Google review stats"
+          git push
