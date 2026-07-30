@@ -250,7 +250,11 @@ ul, ol { list-style: none; padding: 0; }
     radial-gradient(135% 105% at 50% 108%, rgba(6,6,9,.94) 0%, rgba(6,6,9,.50) 54%, rgba(6,6,9,.14) 100%),
     linear-gradient(180deg, rgba(6,6,9,.80) 0%, rgba(6,6,9,.52) 38%, rgba(6,6,9,.74) 100%);
 }
-.hero-fade { position: absolute; inset: auto 0 0 0; height: 190px; background: linear-gradient(180deg, transparent, var(--sand)); }
+/* There used to be a 190px fade to sand at the bottom of the hero. It made
+   sense when a light section followed; now the dark rating bar does, so the
+   page went dark → light → dark within one screen. The hero's own veil is
+   already near-black at the bottom, so dropping the fade lets it run straight
+   into the bar with no seam. */
 .hero-inner { position: relative; z-index: 2; text-align: center; display: flex; flex-direction: column; align-items: center; }
 .hero-inner .eyebrow { justify-content: center; color: var(--gold-hi); }
 .hero-inner .eyebrow::before { content: ''; flex: 0 0 46px; height: 1px; background: linear-gradient(270deg, var(--gold), transparent); }
@@ -303,16 +307,6 @@ ul, ol { list-style: none; padding: 0; }
 .proof-score { display: inline-flex; align-items: baseline; gap: .4rem; }
 .proof-score strong { font-size: 1.12rem; font-weight: 700; color: var(--gold-hi); line-height: 1; }
 .proof-src { font-size: .78rem; color: var(--tx-light-2); }
-
-/* Overlapping initial discs, the way a review widget shows its people. */
-.proof-people { display: inline-flex; flex: none; padding-left: 6px; }
-.proof-av {
-  width: 27px; height: 27px; border-radius: 50%; margin-left: -6px;
-  display: grid; place-items: center;
-  font-size: .66rem; font-weight: 700; letter-spacing: .01em;
-  background: var(--ink-3); color: var(--gold-hi);
-  border: 1.5px solid var(--ink-1);
-}
 
 .proof-facts { display: inline-flex; align-items: baseline; gap: .45rem; font-size: .85rem; flex: none; }
 .proof-facts strong { font-weight: 600; color: var(--tx-light); }

@@ -20,13 +20,19 @@ Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 | 1 | **WhatsApp-Nummer** eintragen | `js/config.js` → `contact.whatsapp` | ✅ erledigt |
 | 2 | **Echte Fotos** einsetzen | `images/` | ✅ erledigt (2 eigene, 8 von Pexels) |
 | 3 | **Live-URL** eintragen | `js/config.js`, `sitemap.xml`, `robots.txt` | ✅ erledigt |
-| 4 | **Preise** vom Fahrer bestätigen lassen | `js/content.js` → `price:` bei jeder Tour | ❌ offen |
+| 4 | **Preise & Touren** an die Vorlagen-Websites angleichen | `js/content.js` | ❌ offen — Websites nicht abrufbar, siehe unten |
 | 5 | **Bewertungen** | `js/content.js` → `reviews:` | ✅ echte Google-Bewertungen |
 | 6 | **Name des Fahrers / Gründungsjahr** | `js/config.js` → `business.driverName`, `since` | ❌ offen |
 | 7 | **Facebook-Seite** verlinken | `js/config.js` → `contact.facebook` | ✅ erledigt (Share-Link) |
 
 Punkt 4 ist der letzte echte Blocker: solange er offen ist, stehen unbestätigte
-Preise auf der Seite.
+Preise auf der Seite. Die beiden als Vorlage genannten Websites liegen hinter
+`share.google`-Kurzlinks, die aus der Entwicklungsumgebung nicht abrufbar sind
+(Google ist dort geblockt) — Inhalte müssen als Text oder Screenshot vorliegen.
+
+Ebenfalls noch zu klären: das Fahrzeug. Die Seite sagt jetzt **bis 4 Gäste**;
+die Beschreibung nennt nur noch „car" statt „MPV", weil das Modell nicht
+bestätigt ist.
 
 Alle Stellen mit offener Aufgabe sind im Code mit `### TODO ###` markiert:
 
@@ -64,7 +70,7 @@ In **`js/content.js`**, bei jeder Tour:
 
 ```js
 price: 800000,      // in Indonesischen Rupiah, ohne Punkte
-unit:  'car',       // 'car' = pro Fahrzeug (bis 6 Gäste)
+unit:  'car',       // 'car' = pro Fahrzeug (bis 4 Gäste)
                     // 'person' = pro Person
                     // 'ask' = kein Preis, zeigt "on request"
 ```

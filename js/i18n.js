@@ -47,7 +47,7 @@ window.MLD_I18N = {
   'tours.title':   'Lombok tours & airport transfers',
   'tours.sub':     'Honest “from” prices, everything that is included spelled out, and every route open to change. Tell me what you would rather see and the day is rebuilt around it.',
   'tours.from':    'from',
-  'tours.perCar':  'per car · up to 6 guests',
+  'tours.perCar':  'per car · up to 4 guests',
   'tours.perPerson':'per person',
   'tours.onRequest':'on request',
   'tours.details': 'Details',

@@ -5,7 +5,7 @@
    so every text here is a plain string — edit it and it is live.
 
    Prices are in Indonesian Rupiah (IDR), as a whole number, no dots.
-   unit: 'car'    -> price is per vehicle (up to 6 guests)
+   unit: 'car'    -> price is per vehicle (up to 4 guests)
          'person' -> price is per person
          'ask'    -> no price shown, "on request" instead
 
@@ -41,7 +41,7 @@ window.MLD_CONTENT = {
     {
       icon: 'car',
       title: 'Clean, air-conditioned car',
-      text:  'A well kept MPV with real air conditioning, cold water on board, space for luggage and surfboards, and a child seat whenever you need one.'
+      text:  'A well kept car with real air conditioning, cold water on board, space for luggage and surfboards, and a child seat whenever you need one.'
     },
     {
       icon: 'chat',
@@ -78,7 +78,7 @@ window.MLD_CONTENT = {
       highlights: [
         'Flight tracked — free waiting time if you are delayed',
         'Name sign in the arrivals hall',
-        'Up to 6 guests plus luggage',
+        'Up to 4 guests plus luggage',
         'Also available for your departure, at any hour'
       ],
       includes: [
@@ -340,7 +340,7 @@ window.MLD_CONTENT = {
     },
     {
       q: 'How many people fit in the car?',
-      a: 'Up to six guests plus luggage in an air-conditioned MPV. For larger groups a second car with a second driver is arranged at the same rate — just say how many you are.'
+      a: 'Up to four guests plus luggage in an air-conditioned car. For larger groups a second car with a second driver is arranged — just say how many you are and you get one price for the whole party.'
     },
     {
       q: 'Do you have child seats?',

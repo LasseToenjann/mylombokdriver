@@ -213,19 +213,12 @@
     const count = stats.count || list.length;
     const rounded = Math.round(avg);
 
-    /* Initials rather than photos: Google does not hand out reviewer avatars,
-       and inventing faces for real people is not on. */
-    const initials = n => n.trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
-
     const src = stats.source ? ` ${t('proof.on')} ${stats.source}` : '';
     bar.setAttribute('aria-label', t('proof.aria').replace('{avg}', avg.toFixed(1)).replace('{n}', count));
     bar.innerHTML = `
       <span class="proof-rating">
         <span class="proof-stars" aria-hidden="true">${STAR.repeat(rounded)}</span>
         <span class="proof-score"><strong>${avg.toFixed(1)}</strong><span class="proof-src">${esc(src.trim())}</span></span>
-      </span>
-      <span class="proof-people" aria-hidden="true">
-        ${list.slice(0, 5).map(r => `<span class="proof-av">${esc(initials(r.name))}</span>`).join('')}
       </span>
       <span class="proof-facts">
         <strong>${count} ${esc(t('proof.reviews'))}</strong>
