@@ -23,7 +23,6 @@ damit nachvollziehbar bleibt, was woher kommt.
 | Datei | Fotograf:in | Verwendung |
 |---|---|---|
 | `hero.webp`, `og-image.jpg` | Luqman Hakim | Startbild, Teilen-Vorschau |
-| `kuta-coast.webp` | Javaistan | Lombok in drei Tagen |
 | `waterfall.webp` | Vincent Ma Janssen | Sendang Gile & Tiu Kelep |
 | `selong-belanak.webp` | Rizknas | Sasak & Südküste |
 | `airport-arrival.webp` | Sangadjie | Airport Transfer |

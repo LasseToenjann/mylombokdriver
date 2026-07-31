@@ -72,8 +72,10 @@ window.MLD_CONTENT = {
     { id: 'all',       label: 'Everything' },
     { id: 'transfers', label: 'Transfers' },
     { id: 'tours',     label: 'Day tours' },
-    { id: 'islands',   label: 'Islands & sea' },
-    { id: 'multi',     label: 'Multi-day' }
+    { id: 'islands',   label: 'Islands & sea' }
+    /* Es gab hier eine Kategorie "Multi-day" für die Drei-Tages-Tour. Die Tour
+       ist raus, und ein Filter, der auf eine leere Liste führt, ist schlimmer
+       als ein Filter weniger. Mehrtägiges läuft jetzt über den Custom-Block. */
   ],
 
   tours: [
@@ -401,32 +403,6 @@ window.MLD_CONTENT = {
         'Chilled water for the drive'
       ],
       note: 'Per person, from two guests. Bicycle rental, food and drinks on the island are your own. The last boats back leave in the early evening. For a private speedboat instead of the scheduled one, see the Gili transfer.'
-    },
-    {
-      id: 'lombok-3-day',
-      cats: ['multi', 'tours', 'islands'],
-      scene: 'kuta-coast.webp',
-      featured: false,
-      match: { vibe: ['green','sea','culture'], time: 'multi', who: ['couple','friends'], pace: 'active' },
-      price: 0, unit: 'ask',
-      duration: '3 days, 2 nights',
-      title:  'Lombok in Three Days',
-      short:  'North to the waterfalls, a boat day among the empty north-east islands, then the rice terraces of Tetebatu — sleeping where the next day starts.',
-      long:   'The nicest way to see Lombok, and the only way to reach the far corners without spending the whole time in the car. Day one runs north along the coast to Sendang Gile and Tiu Kelep, then east to Labuan Pandan for the night. Day two is on the water: the mangroves of Gili Petagan, the Gili Kapal sandbank, snorkelling and lunch on Gili Bidara, and in the afternoon inland to Tetebatu, stopping at the giant trees the Dutch planted centuries ago. Day three is the long walk through the Tetebatu rice terraces, then back to Senggigi through the weaving villages. Each night is spent where the next morning begins, so no day starts with two hours of driving.',
-      highlights: [
-        'Sendang Gile and Tiu Kelep waterfalls, day one',
-        'A private boat day among four uninhabited islands',
-        'Two nights in the countryside, not in a resort strip',
-        'The three-hour rice terrace walk at Tetebatu'
-      ],
-      includes: [
-        'Private car and driver for all three days',
-        'Two nights’ accommodation with breakfast',
-        'Private boat, snorkelling gear and lunch on day two',
-        'All entrance fees and local guides',
-        'Chilled water and soft drinks throughout'
-      ],
-      note: 'Priced with the itinerary rather than off a list, because the hotels depend on how many of you there are. As a guide, two guests in one room comes to roughly IDR 6,400,000 for the three days, everything above included; a third and fourth guest add a room. Dinners and the two lunches on days one and three are your own. Starting from Kuta or the airport, the whole thing can be run in reverse.'
     }
   ],
 
@@ -443,7 +419,7 @@ window.MLD_CONTENT = {
       because the pace matched.
 
       `who` and `pace` never rule a tour out, they only reorder. With four
-      questions and fourteen tours there is always a sensible answer, and a
+      questions and thirteen tours there is always a sensible answer, and a
       matcher that says "nothing fits" is worse than no matcher.               */
   matcher: {
     questions: [
@@ -462,8 +438,10 @@ window.MLD_CONTENT = {
         q: 'How much time do you have?',
         options: [
           { value: 'short', label: 'A couple of hours', hint: 'A ride, not a day out' },
-          { value: 'day',   label: 'A whole day',       hint: 'Out after breakfast, back for dinner' },
-          { value: 'multi', label: 'Several days',      hint: 'Sleeping somewhere new' }
+          { value: 'day',   label: 'A whole day',       hint: 'Out after breakfast, back for dinner' }
+          /* "Several days" stand hier, solange es die Drei-Tages-Tour gab. Eine
+             Antwortmöglichkeit, hinter der kein einziges Angebot liegt, führt
+             zwangsläufig zu einem Ergebnis, das die Frage nicht beantwortet. */
         ]
       },
       {

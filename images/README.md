@@ -40,9 +40,9 @@ Das Startbild steht nicht in `content.js`, sondern direkt in `../index.html`.
 | `pink-sand.webp` | Pink Beach & Gili Petelu |
 | `harbour-jetty.webp` | Hidden Paradise — the North-East Islands |
 | `gili-meno-swing.webp` | Gili Trawangan Day Trip |
-| `kuta-coast.webp` | Lombok in Three Days |
 
 **Jede Tour hat ihr eigenes Bild** — keine Datei wird zweimal verwendet.
+`kuta-coast.webp` ist mit der Drei-Tages-Tour weggefallen und gelöscht.
 
 ## Empfohlene Grössen
 

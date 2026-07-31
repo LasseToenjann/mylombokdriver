@@ -54,7 +54,7 @@ Die beiden rechnen **unterschiedlich**, das ist der wichtigste Punkt:
 | Preisniveau | rund **12 % unter A** — A hat dieselbe Positionierung wie wir |
 | Mittagessen | **nicht** enthalten, außer wo es vor Ort nichts zu kaufen gibt (Pink Beach, Nordost-Inseln) |
 | Eintritte | **enthalten**, inklusive lokaler Guides — so machen es beide Anbieter |
-| Umfang | **14 Touren**, deckt praktisch alles ab, was A und B zusammen anbieten |
+| Umfang | **13 Touren**, deckt praktisch alles ab, was A und B zusammen anbieten |
 
 **Eine Annahme, die der Fahrer prüfen sollte:** A nennt seine Fahrzeugpreise für
 **zwei** Gäste, unsere gelten für **bis zu vier**. Eine vierköpfige Familie zahlt
@@ -171,7 +171,6 @@ benachbarte Karten mit 1.300.000 und 1.400.000 beide „≈ €65" anzeigten.
 | Pink Beach & Gili Petelu | 1.000.000 | pro Person |
 | Gili Islands Snorkelling Trip | 1.050.000 | pro Person |
 | Hidden Paradise — North-East Islands | 1.100.000 | pro Person |
-| Lombok in Three Days | auf Anfrage (≈ 6.400.000 für 2) | — |
 
 Die Einzelpreise der Punkt-zu-Punkt-Transfers (Senggigi–Bangsal, Senggigi–Kuta
 und so weiter) stehen im `note`-Feld der Tour `airport-transfer`, damit die
@@ -216,12 +215,11 @@ sondern direkt in `index.html` (`images/hero.webp` bzw. `images/waterfall-tall.w
 
 ### Der Bilderstand
 
-**Jede der 14 Touren hat ihr eigenes Foto** — keine Datei wird zweimal
+**Jede der 13 Touren hat ihr eigenes Foto** — keine Datei wird zweimal
 verwendet. Welches Bild wo hängt, steht in `images/README.md`.
 
-Ein Bild ist noch ein Behelf: **`lombok-3-day`** zeigt die Kuta-Panorama-
-Aufnahme, weil es kein Motiv gibt, das drei Tage zusammenfasst. Der Bootstag
-wäre der stärkste Kandidat.
+Es gibt keinen Behelf mehr: Der letzte war die Kuta-Panorama-Aufnahme bei
+der Drei-Tages-Tour, und mit der Tour ist auch das Bild weggefallen.
 
 **Eingesetzt trotz Unsicherheit:** `coastal-town.webp` bei „City & Culture,
 West Lombok". Unten links steht eine Kirche mit Kreuz, und die Bauweise
@@ -515,7 +513,7 @@ Compositor-Ebenen an und erzeugt genau das Ruckeln, das es verhindern soll.
 
 ```
 index.html               Startseite (Texte über data-i18n aus i18n.js)
-tours.html               vollständige Tourenübersicht, alle 14
+tours.html               vollständige Tourenübersicht, alle 13
 css/style.css            Design-System (Farben, Typografie, alle Komponenten)
 js/config.js             ← Kontaktdaten, Live-URL, Umrechnungskurs, Feature-Schalter
 js/content.js            ← Touren, Preise, Matcher-Fragen, Bewertungen, FAQ
@@ -538,14 +536,14 @@ robots.txt, sitemap.xml  SEO — enthalten die Live-URL
 
 ## Zwei Seiten statt einer
 
-Mit 14 Touren wurde die Startseite zum Katalog: die Tourenliste allein war
+Mit einem Dutzend Touren wurde die Startseite zum Katalog: die Tourenliste allein war
 länger als alles darunter, und auf dem Handy war der Buchungsbereich
 unerreichbar weit unten. Deshalb jetzt:
 
 * **`index.html`** zeigt **nur die sieben beliebtesten** Touren, gefolgt von zwei
   Wegen weiter: „Find your match in 4 questions" (golden, also die primäre
-  Aktion) und „See all 14 tours" (nur umrandet).
-* **`tours.html`** zeigt **alle 14**, mit den Kategoriefiltern, die vorher auf
+  Aktion) und „See all 13 tours" (nur umrandet).
+* **`tours.html`** zeigt **alle 13**, mit den Kategoriefiltern, die vorher auf
   der Startseite saßen.
 
 Der Matcher ist bewusst der goldene Knopf. Wer sieben Karten durchgescrollt hat,
@@ -567,7 +565,7 @@ featured: true,     // erscheint auf der Startseite
 featured: false,    // nur auf tours.html
 ```
 
-Mehr braucht es nicht. Der Knopf „See all 14 tours" zählt selbst, wie viele
+Mehr braucht es nicht. Der Knopf „See all 13 tours" zählt selbst, wie viele
 Touren es insgesamt gibt, und der Footer verlinkt automatisch dieselbe Auswahl.
 
 Beide Seiten teilen sich **eine** `app.js`. Jede Render-Funktion prüft, ob ihr
@@ -629,7 +627,7 @@ auf.
   fertige Nachricht. Nichts wird automatisch versendet: der Gast sieht die
   Nachricht vorher und drückt selbst auf Senden.
 - **Mobile First** — auf 360–430 px entworfen, Touch-Flächen ab 44 px, kein horizontales Scrollen
-- **14 Touren**, sieben davon auf der Startseite, alle auf `tours.html` mit Filter nach Kategorie und Detail-Ansicht (Ablauf, Leistungen, Hinweise)
+- **13 Touren**, sieben davon auf der Startseite, alle auf `tours.html` mit Filter nach Kategorie und Detail-Ansicht (Ablauf, Leistungen, Hinweise)
 - **„Find your match"** — vier Fragen, eine Empfehlung, zwei Alternativen
 - **FAQ-Akkordeon**, Bewertungen, „Über uns"
 - **Instagram** prominent verlinkt: eigene Sektion, Header-Buchungspfad, Footer
@@ -693,7 +691,7 @@ neue Adresse laufen dann eine Weile parallel; das ist normal.
   bleiben, sonst sieht ein Crawler ohne JavaScript etwas anderes als ein Besucher.
   Faustregel: Titel bis ~60 Zeichen sichtbar, Description bis ~155.
 - **Strukturierte Daten** (`js/app.js` → `renderStructuredData`): `TravelAgency`
-  mit Adresse, Koordinaten, Einzugsgebiet und allen 14 Touren als `Offer`, plus
+  mit Adresse, Koordinaten, Einzugsgebiet und allen 13 Touren als `Offer`, plus
   eine `FAQPage` — die aber nur auf der Startseite, weil die Fragen nur dort
   sichtbar sind und Google Markup für unsichtbare Inhalte abstraft. Prüfen unter
   [search.google.com/test/rich-results](https://search.google.com/test/rich-results).
@@ -710,7 +708,7 @@ neue Adresse laufen dann eine Weile parallel; das ist normal.
 
 **Die größte verbleibende Schwäche**
 
-Das sind *zwei* Seiten für vierzehn Angebote. Google indexiert `#tour-…` nicht
+Das sind *zwei* Seiten für dreizehn Angebote. Google indexiert `#tour-…` nicht
 als eigene Seiten, also konkurrieren Startseite und Tourenübersicht um alle
 Suchbegriffe gleichzeitig. Wer für „lombok airport transfer" **und**
 „sendang gile waterfall tour" separat ranken will, braucht echte HTML-Dateien
@@ -731,7 +729,7 @@ Oberfläche der Search Console, nicht im Repository:
 2. **`tours.html` prüfen lassen:** URL-Prüfung → vollständige Adresse eingeben →
    „Indexierung beantragen". Das ist der schnellste Weg, eine neue Seite in den
    Index zu bekommen; die Sitemap allein kann Wochen dauern.
-3. **Startseite ebenfalls neu prüfen lassen** — sie hat sich mit den vierzehn
+3. **Startseite ebenfalls neu prüfen lassen** — sie hat sich mit den dreizehn
    Touren inhaltlich deutlich geändert.
 4. Nach 2–3 Tagen unter „Seiten" nachsehen, ob beide Adressen wirklich
    indexiert sind. Erwartbare Meldungen und was sie heißen:
