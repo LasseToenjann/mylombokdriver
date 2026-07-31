@@ -531,9 +531,21 @@ länger als alles darunter, und auf dem Handy war der Buchungsbereich
 unerreichbar weit unten. Deshalb jetzt:
 
 * **`index.html`** zeigt **nur die sieben beliebtesten** Touren, gefolgt von zwei
-  Wegen weiter — „See all 14 tours" und „Not sure? Find your match".
+  Wegen weiter: „Find your match in 4 questions" (golden, also die primäre
+  Aktion) und „See all 14 tours" (nur umrandet).
 * **`tours.html`** zeigt **alle 14**, mit den Kategoriefiltern, die vorher auf
   der Startseite saßen.
+
+Der Matcher ist bewusst der goldene Knopf. Wer sieben Karten durchgescrollt hat,
+ohne sich zu entscheiden, sagt damit, dass er noch nicht weiß was er will — für
+den ist eine noch längere Liste die schlechtere von zwei Antworten.
+
+**Was in diesem Bereich bewusst nicht mehr steht:** der Fließtext unter der
+Überschrift „Lombok tours & airport transfers" (die Karten darunter sagen
+dasselbe, der Absatz schob nur die erste Tour aus dem Handybild) und der Hinweis
+„The seven guests book most often are shown here". Der Block „None of these
+quite right?" ist in den Matcher-Abschnitt gewandert: er stand vorher direkt
+darüber, sodass zwei Blöcke hintereinander dieselbe Frage stellten.
 
 **Welche Touren die Startseite zeigt**, steht in `js/content.js` — jede Tour hat
 ein Feld `featured`:
@@ -584,6 +596,14 @@ Ohne das landeten regelmäßig drei Touren auf exakt derselben Punktzahl und die
 Das Ergebnis zeigt unter der Empfehlung die gewählten Antworten als Chips
 („Because you said …"). Eine Empfehlung, die niemand nachprüfen kann, glaubt
 auch niemand.
+
+**Sichtbarkeit:** Der Abschnitt hat auf der Startseite einen leicht helleren
+Untergrund (`--ink-1`), zwei Haarlinien und einen weichen Goldschimmer. Ohne
+das lief er in „Why book direct" über, das ebenfalls dunkel ist und direkt
+darauf folgt — zwei dunkle Abschnitte am Stück lasen sich als ein einziger
+langer schwarzer Block, und der Matcher verlor genau die Betonung, für die er
+dort steht. Verlinkt ist er außerdem im Hauptmenü, im Footer und als goldener
+Knopf unter der Tourenauswahl.
 
 **Eine neue Tour aufnehmen** heißt nur: das `match`-Feld ausfüllen. Fehlt es,
 kann die Tour nie empfohlen werden — sie taucht aber ganz normal in den Listen

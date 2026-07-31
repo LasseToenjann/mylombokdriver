@@ -47,7 +47,6 @@ window.MLD_I18N = {
 
   'tours.eyebrow': 'What we do',
   'tours.title':   'Lombok tours & airport transfers',
-  'tours.sub':     'Honest “from” prices, everything that is included spelled out, and every route open to change. Tell me what you would rather see and the day is rebuilt around it.',
   'tours.from':    'from',
   'tours.perCar':  'per car · up to 4 guests',
   'tours.perPerson':'per person',
@@ -57,10 +56,12 @@ window.MLD_I18N = {
   'tours.approx':  'approx.',
   'tours.capacity': 'The car takes four guests plus their luggage. If you are a larger group, or travelling with something bulky, just ask before you book — a second car and driver can usually be arranged and we will find a way that works.',
 
-  /* The home page shows a shortlist; the full catalogue lives on tours.html. */
-  'tours.allCta':   'See all {n} tours & transfers',
-  'tours.allHint':  'The seven guests book most often are shown here.',
-  'tours.matchCta': 'Not sure? Find your match',
+  /* The home page shows a shortlist; the full catalogue lives on tours.html.
+     The matcher is the gold button of the two on purpose — somebody who does
+     not already know what they want is better served by four questions than
+     by a list of fourteen. */
+  'tours.matchCta': 'Find your match in 4 questions',
+  'tours.allCta':   'See all {n} tours',
 
   'toursPage.eyebrow': 'Everything we do',
   'toursPage.title':   'All Lombok tours, transfers & island trips',
@@ -70,8 +71,8 @@ window.MLD_I18N = {
   'toursPage.metaDesc':  'Every tour and transfer on Lombok with fixed prices: airport transfers, waterfalls, Rinjani viewpoints, Sasak villages, Gili snorkelling, Pink Beach and a three-day island trip.',
 
   'match.eyebrow':  'Find your match',
-  'match.title':    'Not sure which day is yours?',
-  'match.sub':      'Four questions, about twenty seconds, and you get the trip that actually fits — with the two closest runners-up underneath.',
+  'match.title':    'Which day is yours?',
+  'match.sub':      'Four questions, twenty seconds, one trip that actually fits.',
   'match.start':    'Start',
   'match.step':     'Question {n} of {total}',
   'match.back':     'Back',

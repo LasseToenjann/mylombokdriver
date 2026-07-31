@@ -414,9 +414,6 @@ body[data-page="tours"] .site-head {
 .tours-more {
   margin-top: 2.2rem; display: flex; flex-wrap: wrap; align-items: center; gap: .8rem;
 }
-.tours-more-hint {
-  flex-basis: 100%; font-size: .87rem; color: var(--tx-dark-2); margin-top: .15rem;
-}
 @media (max-width: 560px) {
   .tours-more .btn { width: 100%; }
 }
@@ -445,7 +442,38 @@ body[data-page="tours"] .site-head {
 .custom-copy p { color: var(--tx-light-2); max-width: 62ch; font-size: .99rem; }
 .custom-panel .btn { position: relative; }
 
+/* The dark panel inside an already dark section would be a black box on
+   black. This variant borrows the matcher's outline treatment instead, which
+   also puts it a step below the questions above it in the hierarchy — which
+   is exactly where the fallback belongs. */
+.custom-panel--quiet {
+  margin-top: 1.6rem;
+  background: transparent;
+  border: 1px solid var(--line-d);
+  padding: clamp(22px, 3vw, 34px);
+}
+.custom-panel--quiet::before { display: none; }
+.custom-panel--quiet .custom-copy h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
+.custom-panel--quiet .custom-copy p { font-size: .93rem; }
+
 /* ---------- 8c. Find your match ------------------------------------------- */
+/* On the home page this section is followed straight away by "Why book
+   direct", which is also a dark section — the two ran together into one long
+   black stretch and the questions lost exactly the emphasis they were moved
+   here to get. A slightly lifted surface, two hairlines and a soft gold glow
+   set it apart without introducing a fifth colour. */
+#match {
+  background: var(--ink-1);
+  border-block: 1px solid var(--line-d);
+  overflow: hidden;
+}
+#match::before {
+  content: ''; position: absolute; inset: -30% -20% auto auto;
+  width: 620px; height: 620px; pointer-events: none;
+  background: radial-gradient(circle, rgba(212,165,68,.13), transparent 62%);
+}
+#match > .wrap { position: relative; }
+
 /* One box that is either a question or a result. It keeps a minimum height so
    the page below it does not jump every time an answer replaces a three-line
    question with a four-line one — a quiz that shifts the ground under the

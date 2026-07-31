@@ -100,8 +100,11 @@
   <div class="wrap">
     <header class="sec-head">
       <p class="eyebrow" data-i18n="tours.eyebrow">What we do</p>
+      <!-- No standfirst here on purpose: the cards below say what the prices
+           are and what is included, so a paragraph repeating it only pushed
+           the first tour further down the phone screen. tours.html keeps its
+           own intro, because there the heading is the page title. -->
       <h2 data-i18n="tours.title">Lombok tours &amp; airport transfers</h2>
-      <p class="sec-sub" data-i18n="tours.sub">Honest “from” prices, everything that is included spelled out, and every route open to change. Tell me what you would rather see and the day is rebuilt around it.</p>
     </header>
 
     <!-- Only the seven marked `featured: true` in content.js. Fourteen cards
@@ -109,23 +112,17 @@
          out of reach on a phone; the full list lives on tours.html. -->
     <div class="tour-grid" id="tourGrid"></div>
 
+    <!-- Two ways on, and the matcher is the gold one. Somebody who has just
+         scrolled seven cards without picking one is telling us they do not
+         know what they want — a longer list is the worse answer of the two. -->
     <div class="tours-more">
-      <a class="btn btn-gold" id="toursAllCta" href="tours.html">See all 14 tours &amp; transfers</a>
-      <a class="btn btn-line" href="#match" data-i18n="tours.matchCta">Not sure? Find your match</a>
-      <p class="tours-more-hint" data-i18n="tours.allHint">The seven guests book most often are shown here.</p>
+      <a class="btn btn-gold" href="#match" data-i18n="tours.matchCta">Find your match in 4 questions</a>
+      <a class="btn btn-line" id="toursAllCta" href="tours.html">See all 14 tours</a>
     </div>
 
     <!-- One car, four seats. Said once, plainly, right under the prices that
          are quoted per car — so nobody discovers it after booking. -->
     <p class="tour-capacity" data-i18n="tours.capacity">The car takes four guests plus their luggage. If you are a larger group, or travelling with something bulky, just ask before you book — a second car and driver can usually be arranged and we will find a way that works.</p>
-
-    <div class="custom-panel">
-      <div class="custom-copy">
-        <h3 data-i18n="custom.title">None of these quite right?</h3>
-        <p data-i18n="custom.text">Most guests end up with something of their own — two half tours joined together, a sunrise start before the tour buses arrive, three days around the island with the luggage in the boot. Describe your ideal day and you get a plan and a price back, usually the same day.</p>
-      </div>
-      <a class="btn btn-gold" href="#book" data-book-service="custom" data-i18n="custom.cta">Design my own day</a>
-    </div>
   </div>
 </section>
 
@@ -139,9 +136,21 @@
     <header class="sec-head">
       <p class="eyebrow" data-i18n="match.eyebrow">Find your match</p>
       <h2 data-i18n="match.title">Not sure which day is yours?</h2>
-      <p class="sec-sub" data-i18n="match.sub">Four questions, about twenty seconds, and you get the trip that actually fits — with the two closest runners-up underneath.</p>
+      <p class="sec-sub" data-i18n="match.sub">Four questions, twenty seconds, one trip that actually fits.</p>
     </header>
     <div class="match-box" id="matchBox"></div>
+
+    <!-- Moved down here from the tours section. It used to sit directly above
+         this one, so two blocks in a row asked the same question — "none of
+         these?" and "not sure?" — and the whole area read as clutter. As the
+         quiet last step after the questions it reads as the fallback it is. -->
+    <div class="custom-panel custom-panel--quiet">
+      <div class="custom-copy">
+        <h3 data-i18n="custom.title">None of these quite right?</h3>
+        <p data-i18n="custom.text">Most guests end up with something of their own — two half tours joined together, a sunrise start before the tour buses arrive, three days around the island with the luggage in the boot. Describe your ideal day and you get a plan and a price back, usually the same day.</p>
+      </div>
+      <a class="btn btn-line" href="#book" data-book-service="custom" data-i18n="custom.cta">Design my own day</a>
+    </div>
   </div>
 </section>
 
