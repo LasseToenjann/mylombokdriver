@@ -80,8 +80,7 @@ window.MLD_CONTENT = {
     {
       id: 'airport-transfer',
       cats: ['transfers'],
-      scene: 'kuta-coast.webp',
-      photoTodo: 'A pick-up shot: the car at LOP arrivals, or luggage going into the boot.',
+      scene: 'airport-arrival.webp',
       featured: true,
       match: { vibe: ['transfer'], time: 'short', who: ['couple','kids','friends'], pace: 'easy' },
       price: 350000, unit: 'car',
@@ -105,8 +104,7 @@ window.MLD_CONTENT = {
     {
       id: 'speedboat-gili',
       cats: ['transfers', 'islands'],
-      scene: 'gili-boat.webp',
-      photoTodo: 'The speedboat at Teluk Nara. Current file is a 1176 px Instagram screenshot.',
+      scene: 'gili-anchorage.webp',
       featured: true,
       match: { vibe: ['transfer','sea'], time: 'short', who: ['couple','kids','friends'], pace: 'easy' },
       price: 700000, unit: 'car',
@@ -182,8 +180,7 @@ window.MLD_CONTENT = {
     {
       id: 'tetebatu',
       cats: ['tours'],
-      scene: 'rinjani.webp',
-      photoTodo: 'The Tetebatu rice terraces. Current file shows Rinjani from the coast.',
+      scene: 'tetebatu-valley.webp',
       featured: false,
       match: { vibe: ['green','culture'], time: 'day', who: ['couple','friends'], pace: 'active' },
       price: 1500000, unit: 'car',
@@ -259,8 +256,7 @@ window.MLD_CONTENT = {
     {
       id: 'city-culture',
       cats: ['tours'],
-      scene: 'hero.webp',
-      photoTodo: 'The Islamic Centre, Kebon Roek market or Ampenan old town at dusk.',
+      scene: 'coastal-town.webp',
       featured: false,
       match: { vibe: ['culture'], time: 'day', who: ['couple','kids'], pace: 'easy' },
       price: 1200000, unit: 'car',
@@ -285,8 +281,7 @@ window.MLD_CONTENT = {
     {
       id: 'gili-snorkeling',
       cats: ['islands'],
-      scene: 'gili-shallows.webp',
-      photoTodo: 'Underwater or the turtle point. Current file is a 1176 px screenshot.',
+      scene: 'gili-turtle.webp',
       featured: true,
       match: { vibe: ['sea'], time: 'day', who: ['couple','kids','friends'], pace: 'medium' },
       price: 1050000, unit: 'person',
@@ -311,8 +306,7 @@ window.MLD_CONTENT = {
     {
       id: 'southwest-islands',
       cats: ['islands'],
-      scene: 'tanjung-aan.webp',
-      photoTodo: 'Gili Nanggu or Gili Kedis. Current file shows the south coast instead.',
+      scene: 'snorkellers.webp',
       featured: false,
       match: { vibe: ['sea'], time: 'day', who: ['couple','kids','friends'], pace: 'medium' },
       price: 800000, unit: 'person',
@@ -364,8 +358,7 @@ window.MLD_CONTENT = {
     {
       id: 'hidden-paradise',
       cats: ['islands'],
-      scene: 'gili-shallows.webp',
-      photoTodo: 'Gili Kapal, the sandbank at low tide, or the mangrove channels.',
+      scene: 'harbour-jetty.webp',
       featured: false,
       match: { vibe: ['sea'], time: 'day', who: ['couple','friends'], pace: 'active' },
       price: 1100000, unit: 'person',
@@ -391,8 +384,7 @@ window.MLD_CONTENT = {
     {
       id: 'gili-day-trip',
       cats: ['islands'],
-      scene: 'gili-boat.webp',
-      photoTodo: 'The sea swings on the west shore of Trawangan.',
+      scene: 'gili-meno-swing.webp',
       featured: false,
       match: { vibe: ['sea'], time: 'day', who: ['couple','friends'], pace: 'easy' },
       price: 650000, unit: 'person',
@@ -416,8 +408,8 @@ window.MLD_CONTENT = {
     {
       id: 'lombok-3-day',
       cats: ['multi', 'tours', 'islands'],
-      scene: 'hero.webp',
-      photoTodo: 'One frame that carries three days — the boat day is the strongest candidate.',
+      scene: 'kuta-coast.webp',
+      photoTodo: 'One frame that carries three days — the boat day is the strongest candidate. Currently borrowing the Kuta coast panorama.',
       featured: false,
       match: { vibe: ['green','sea','culture'], time: 'multi', who: ['couple','friends'], pace: 'active' },
       price: 0, unit: 'ask',

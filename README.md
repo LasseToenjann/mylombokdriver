@@ -214,10 +214,11 @@ sondern direkt in `index.html` (`images/hero.webp` bzw. `images/waterfall-tall.w
 
 ### Welche Fotos noch fehlen
 
-14 Touren, 10 Fotos. Zwölf Touren zeigen deshalb ein **Platzhalterbild** —
-entweder eins, das einer anderen Tour gehört, oder eins, das die Gegend nur
-ungefähr trifft. Die Seite sieht damit vollständig aus, aber die Bilder
-erzählen noch nicht die richtige Geschichte.
+Acht Touren haben inzwischen ein eigenes Foto bekommen. **Jede der 14 Touren
+zeigt jetzt eine andere Datei** — vorher teilten sich vier Paare ein Bild.
+
+Übrig sind **vier Platzhalter**: `benang-stokel`, `rinjani-sembalun`,
+`pink-beach` und `lombok-3-day`. Für die gibt es bisher kein passendes Motiv.
 
 Welche Tour was braucht, steht **im Code selbst**, im Feld `photoTodo` der
 jeweiligen Tour in `js/content.js`. Die Liste lässt sich jederzeit abrufen:
@@ -230,29 +231,56 @@ Beim lokalen Aufruf (`localhost`) schreibt die Seite dieselbe Liste
 zusammengeklappt in die Browser-Konsole. Auf der Live-Seite passiert das
 bewusst nicht — Besucher sollen davon nichts mitbekommen.
 
-**Nach Dringlichkeit sortiert:**
-
 | Priorität | Tour | Braucht ein Foto von |
 |---|---|---|
 | hoch | `pink-beach` | dem rosa Sand selbst, nass, damit die Farbe rauskommt |
-| hoch | `tetebatu` | den Reisterrassen (zeigt aktuell Rinjani von der Küste) |
 | hoch | `benang-stokel` | Benang Kelambu, dem „Vorhang" aus der Felswand |
-| hoch | `city-culture` | Islamic Centre, Kebon-Roek-Markt oder Ampenan bei Dämmerung |
-| mittel | `southwest-islands` | Gili Nanggu oder Gili Kedis (zeigt aktuell die Südküste) |
-| mittel | `hidden-paradise` | Gili Kapal, der Sandbank bei Ebbe, oder den Mangrovenkanälen |
-| mittel | `airport-transfer` | dem Auto an der Ankunft in LOP, Koffer im Kofferraum |
-| mittel | `lombok-3-day` | einem Bild, das die drei Tage zusammenfasst |
 | mittel | `rinjani-sembalun` | Bukit Selong oder der Serpentinenstraße |
-| niedrig | `gili-day-trip` | den Schaukeln im Wasser auf Trawangans Westseite |
-| niedrig | `speedboat-gili` | dem Speedboot in Teluk Nara (Datei nur 1176 px breit) |
-| niedrig | `gili-snorkeling` | unter Wasser oder dem Turtle Point (Datei nur 1176 px breit) |
-
-Korrekt bebildert sind nur `waterfalls-north` (Tiu Kelep) und `south-sasak`
-(Selong Belanak).
+| mittel | `lombok-3-day` | einem Bild für die drei Tage; leiht sich gerade die Kuta-Panorama-Aufnahme |
 
 Ein neues Foto einsetzen heißt: Datei nach `images/`, `scene:` bei der Tour
 ändern, und die Zeile `photoTodo:` löschen — dann verschwindet sie auch aus
 der Liste oben.
+
+### Drei Bilder, die bewusst nicht eingesetzt wurden
+
+Ein Foto der letzten Lieferung (Pexels, Rizknas: weiter Strand mit grünen
+Hügeln) ist **dieselbe Aufnahme wie `selong-belanak.webp`**, nur anders
+beschnitten — gleicher Strand, gleiche Wolken, gleiche Personen im Wasser.
+Zwei Karten damit zu bebildern hätte wie eine Dopplung ausgesehen, also ist es
+nicht eingezogen.
+
+Zwei weitere sind liegen geblieben, weil sie höchstwahrscheinlich **nicht auf
+Lombok** aufgenommen wurden:
+
+* **Mann mit Flossen am Strand** (Pexels, Kaique Nizer): Granitfelsen und
+  Atlantischer Küstenwald — das Motiv ist typisch für Santa Catarina in
+  Brasilien, nicht für Lombok.
+* **Holzschiff mit badenden Kindern** (Pexels, Picko Pictura): am Rumpf steht
+  „KAJUARA MURNI". Kajuara liegt in Süd-Sulawesi, und der Schiffstyp ist ein
+  bugineischer Pinisi.
+
+Als reine Stimmungsbilder wären beide brauchbar, aber die Galerie ist mit
+„Where the days go on Lombok" überschrieben und jede Bildunterschrift nennt
+einen Ort. Ein Foto aus Sulawesi oder Brasilien darunter wäre eine
+Ortsangabe, die nicht stimmt. Beide liegen bereit und sind in einer Minute
+eingebaut, falls die Herkunft doch geklärt ist.
+
+**Ebenfalls unsicher, aber eingesetzt:** `coastal-town.webp` bei „City &
+Culture, West Lombok". Auf dem Bild ist unten links eine Kirche mit Kreuz zu
+sehen, die Bauweise erinnert eher an Ostindonesien als an Mataram. Es steht
+dort auf ausdrücklichen Wunsch; wenn sich herausstellt, dass es nicht Lombok
+ist, gehört es getauscht.
+
+### Die Galerie
+
+Die Galerie zeigt weiterhin **zehn Stockfotos**, fünf davon teilt sie sich mit
+Tourkarten (`rinjani`, `waterfall`, `selong-belanak`, `tanjung-bloam`,
+`waterfall-tall`). Das ist der nächste Schritt, wenn eigene Aufnahmen
+vorliegen — dort fällt der Unterschied zum Instagram-Kanal am deutlichsten
+auf. Fünf Dateien werden inzwischen **nur noch** in der Galerie verwendet
+(`hero`, `gili-shallows`, `gili-boat`, `kuta-coast`, `tanjung-aan`), weil die
+Touren eigene Bilder bekommen haben.
 
 ---
 
