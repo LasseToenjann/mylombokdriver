@@ -692,26 +692,31 @@
     if (REDUCED.matches) { $$('.reveal', root).forEach(el => el.classList.add('in')); return; }
     if (!revealObserver) {
       revealObserver = new IntersectionObserver((entries, obs) => {
-        entries.forEach(en => {
-          if (!en.isIntersecting) return;
+        /* Stagger is decided HERE, not when the markup is rendered.
+
+           It used to be baked in: card seven carried --delay:660ms for its
+           whole life, so if it happened to come into view on its own it sat
+           invisible for two thirds of a second first, while card one in the
+           same grid started instantly. Same section, visibly different
+           behaviour — which is exactly how it looked.
+
+           Now the delay comes from what arrives together in this one callback:
+           a group entering at once cascades in reading order, an element
+           arriving alone starts immediately. And anything already scrolled
+           past gets no delay at all — it is being caught up with, not
+           introduced. */
+        const hits = entries.filter(e => e.isIntersecting);
+        if (!hits.length) return;
+        hits.sort((a, b) =>
+          (a.boundingClientRect.top - b.boundingClientRect.top) ||
+          (a.boundingClientRect.left - b.boundingClientRect.left));
+        hits.forEach((en, i) => {
+          const passed = en.boundingClientRect.bottom < 0;
+          en.target.style.setProperty('--delay', passed ? '0ms' : Math.min(i, 5) * 90 + 'ms');
           en.target.classList.add('in');
           obs.unobserve(en.target);
         });
-        /* Two different jobs are done by the two margins.
-
-           Bottom, +25%: an element starts moving while it is still below the
-           fold, so the quick part of the travel is over before it is looked
-           at. Shrinking the root instead — the original mistake — meant you
-           watched every element appear after it was already on screen.
-
-           Top, effectively unbounded: anything at or above the viewport counts
-           as intersecting. Without it a flick scroll leaves elements invisible
-           forever. The observer only reports *changes*, and an element that is
-           teleported from below the root to above it between two frames never
-           registers as intersecting at all — so it never gets revealed. Whole
-           sections stayed blank in testing. This is not a fast-scroll edge
-           case on a phone, it is what normal scrolling looks like. */
-      }, { rootMargin: '100000px 0px 25% 0px', threshold: 0 });
+      }, { rootMargin: '100000px 0px 35% 0px', threshold: 0 });
     }
     $$('.reveal:not(.in)', root).forEach(el => revealObserver.observe(el));
   }
@@ -732,18 +737,11 @@
     });
   }
 
-  /* 110ms between siblings. The 55–70ms of the earlier versions read as a
-     machine gun; this reads as composed. Capped after six so the last tile of
-     a long gallery is never left arriving on its own. */
-  function stagger(els, step = 110, cap = 6) {
-    els.forEach((el, i) => el.style.setProperty('--delay', Math.min(i, cap) * step + 'ms'));
-  }
-
-  /* Marks a freshly rendered group as revealable and staggers it in one go. */
+  /* Marks a freshly rendered group as revealable. No delays are assigned here
+     — the observer works those out from what actually arrives together. */
   function revealGroup(els, opts = {}) {
-    const list = Array.from(els);
-    list.forEach(el => el.classList.add('reveal', ...(opts.size ? ['reveal-' + opts.size] : [])));
-    stagger(list, opts.step, opts.cap);
+    Array.from(els).forEach(el =>
+      el.classList.add('reveal', ...(opts.size ? ['reveal-' + opts.size] : [])));
     initImageFade();
     observeReveals();
   }
@@ -784,8 +782,7 @@
     targets.forEach(el => io.observe(el));
   }
 
-  /* Section furniture. The grids are not listed here — each of them staggers
-     its own cards in when it renders.
+  /* Section furniture; the grids mark their own cards when they render.
 
      The rating bar, the filter row, the "read on Google" link and the footer
      used to be missing entirely and simply appeared with the page, which is
@@ -795,8 +792,6 @@
     $$('.custom-panel, .ig-panel, .direct, .proof, .marquee, .sec-foot, .foot-brand, .foot-col')
       .forEach(el => el.classList.add('reveal'));
     $$('.faq-item').forEach(el => el.classList.add('reveal', 'reveal-sm'));
-    stagger($$('.faq-item'), 70, 8);
-    stagger($$('.foot-brand, .foot-col'), 90, 4);
 
     /* Side by side on a wide screen, so they settle in from their own sides. */
     $('.about-media')?.classList.add('reveal', 'reveal-lg', 'reveal-from-left');
@@ -805,7 +800,6 @@
     const filters = $('#filters');
     if (filters) {
       $$('button', filters).forEach(b => b.classList.add('reveal', 'reveal-sm'));
-      stagger($$('button', filters), 70, 4);
     }
   }
 

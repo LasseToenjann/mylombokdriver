@@ -622,11 +622,18 @@ ul, ol { list-style: none; padding: 0; }
   /* iOS Safari zooms the viewport when a control below 16px takes focus, and
      never zooms back out. 16px is the threshold, not a design choice. */
   font-size: 16px;
+  /* Explicit height, because otherwise no two controls match: a text input
+     came out at 54.4px, a select at 47px (it does not inherit line-height, it
+     uses "normal"), and the date field at 56.4px. With box-sizing: border-box
+     one number settles all of them in every browser. */
+  line-height: 1.65;
+  height: 54px;
 }
+.field textarea { height: auto; }
 /* Safari gives date inputs their own intrinsic width and centred text. */
 .field input[type="date"] {
   -webkit-appearance: none; appearance: none;
-  text-align: left; min-height: 50px;
+  text-align: left;
 }
 .field textarea { resize: vertical; min-height: 96px; }
 .field input:focus, .field select:focus, .field textarea:focus {

@@ -302,9 +302,14 @@ Alles andere folgt daraus:
   Wege in kurzer Zeit sind das, was billig aussieht.
 - **Deckkraft in 0,8 s**, deutlich vor der 1,4 s langen Bewegung. Text ist
   lesbar, während die letzten Pixel noch sitzen.
-- **Staffelung 110 ms** — langsam genug, um komponiert zu wirken. Die 55–70 ms
-  früherer Fassungen waren der Maschinengewehr-Rhythmus, der auf den
-  Mechanismus statt auf den Inhalt lenkte.
+- **Staffelung entsteht im Beobachter, nicht beim Rendern.** Sie war vorher
+  fest vergeben: Karte sieben trug ihr Leben lang `--delay: 660ms`. Kam sie
+  allein in Sicht, saß sie erst zwei Drittel einer Sekunde unsichtbar da,
+  während Karte eins im selben Raster sofort startete — gleicher Bereich,
+  sichtbar unterschiedliches Verhalten. Jetzt ergibt sich die Verzögerung aus
+  dem, was **gemeinsam** eintrifft: eine Gruppe kaskadiert in Leserichtung
+  (90 ms), ein einzeln ankommendes Element startet sofort, und alles bereits
+  Vorbeigescrollte bekommt gar keine Verzögerung.
 - **Auslösen ein Viertel Bildschirmhöhe früher**, sodass der schnelle Teil der
   Bewegung vorbei ist, bevor man hinsieht.
 - Einzelne Karten animieren einzeln, Abschnitts-Überschriften und große Blöcke
