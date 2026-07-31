@@ -9,9 +9,16 @@
 <meta name="author" content="My Lombok Driver">
 <!-- Google Search Console — must stay in place or the property loses its verification. -->
 <meta name="google-site-verification" content="r995RFEp1Kif3h2Dq9Ru5ifNSIuzQ8CJ_m3xXYE5SMM">
-<link rel="canonical" href="" id="canonical-link">
+<!-- Canonical und og:url stehen ausgeschrieben da, damit ein Crawler sie sieht,
+     bevor irgendein JavaScript gelaufen ist. js/app.js überschreibt beide aus
+     config.site.url — eine eigene Domain wird also weiterhin nur an einer
+     Stelle gepflegt. Vorher stand hier href="", was auf die gerade aufgerufene
+     Adresse zeigt: bei index.html?service=… also auf eine Adresse mit
+     Query-String, die es als eigene Seite nicht geben soll. -->
+<link rel="canonical" href="https://lassetoenjann.github.io/mylombokdriver/" id="canonical-link">
 
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://lassetoenjann.github.io/mylombokdriver/">
 <meta property="og:site_name" content="My Lombok Driver">
 <meta property="og:title" data-i18n-attr="content:meta.title" content="Private Driver in Lombok — Airport Transfers &amp; Day Tours | My Lombok Driver">
 <meta property="og:description" data-i18n-attr="content:meta.description" content="English-speaking private driver on Lombok: airport transfers from LOP, day tours, Gili snorkelling and fast boats. Fixed prices, book on WhatsApp.">

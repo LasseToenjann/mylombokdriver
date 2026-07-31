@@ -662,8 +662,25 @@ bleiben — wird es entfernt, verliert die Property ihre Bestätigung.
 
 **Eigene Domain später:** A-Records auf GitHub Pages zeigen lassen, Domain unter
 Settings → Pages eintragen und eine Datei `CNAME` mit der Domain im Repository-Root
-anlegen. Danach die Adresse an genau drei Stellen ändern: `js/config.js` → `site.url`,
-`sitemap.xml` und `robots.txt`.
+anlegen. Danach die Adresse an fünf Stellen ändern:
+
+| Datei | Was |
+|---|---|
+| `js/config.js` | `site.url` |
+| `sitemap.xml` | beide `<loc>` |
+| `robots.txt` | die `Sitemap:`-Zeile |
+| `index.html` | `<link rel="canonical">` und `og:url` im `<head>` |
+| `tours.html` | dieselben zwei Zeilen |
+
+Die letzten beiden standen früher leer und wurden erst von JavaScript gefüllt.
+Sie stehen jetzt ausgeschrieben da, damit ein Crawler sie ohne JavaScript sieht —
+der Preis dafür sind genau diese zwei zusätzlichen Stellen. `js/app.js`
+überschreibt sie weiterhin aus `site.url`, eine vergessene Zeile fällt also nur
+im Quelltext auf, nicht im gerenderten Ergebnis.
+
+In der Search Console ist eine neue Domain eine **neue Property** — sie muss
+frisch bestätigt und die Sitemap dort noch einmal eingereicht werden. Alte und
+neue Adresse laufen dann eine Weile parallel; das ist normal.
 
 ---
 
@@ -676,8 +693,9 @@ anlegen. Danach die Adresse an genau drei Stellen ändern: `js/config.js` → `s
   bleiben, sonst sieht ein Crawler ohne JavaScript etwas anderes als ein Besucher.
   Faustregel: Titel bis ~60 Zeichen sichtbar, Description bis ~155.
 - **Strukturierte Daten** (`js/app.js` → `renderStructuredData`): `TravelAgency`
-  mit Adresse, Koordinaten, Einzugsgebiet und allen 8 Touren als `Offer`, plus
-  eine eigene `FAQPage` aus `content.js`. Prüfen unter
+  mit Adresse, Koordinaten, Einzugsgebiet und allen 14 Touren als `Offer`, plus
+  eine `FAQPage` — die aber nur auf der Startseite, weil die Fragen nur dort
+  sichtbar sind und Google Markup für unsichtbare Inhalte abstraft. Prüfen unter
   [search.google.com/test/rich-results](https://search.google.com/test/rich-results).
 - **Kein `aggregateRating`/`Review`-Markup** — auch jetzt nicht, wo die
   Bewertungen echt sind. Google zeigt keine Bewertungs-Rich-Results für
@@ -687,27 +705,53 @@ anlegen. Danach die Adresse an genau drei Stellen ändern: `js/config.js` → `s
   ohnehin im Google-Unternehmensprofil.
 - **Tour-Deeplinks**: jede Tour hat eine eigene Adresse (`#tour-airport-transfer`),
   teilbar und mit funktionierender Zurück-Taste.
-- `sitemap.xml`, `robots.txt`, `canonical`, Open Graph, `google-site-verification`.
+- `sitemap.xml` mit `lastmod`, `robots.txt`, `canonical`, Open Graph,
+  `google-site-verification`.
 
 **Die größte verbleibende Schwäche**
 
-Das ist *eine* Seite. Google indexiert `#tour-…` nicht als eigene Seiten, also
-konkurriert die Startseite mit sich selbst um alle Suchbegriffe gleichzeitig.
-Wer für „lombok airport transfer" **und** „sendang gile waterfall tour" separat
-ranken will, braucht echte HTML-Dateien pro Tour (`/airport-transfer/`,
-`/waterfalls/` …) mit eigenem Titel, eigener Description und eigenem Text.
-Das ist der mit Abstand größte Hebel, wenn die Seite ernsthaft Traffic bringen soll.
+Das sind *zwei* Seiten für vierzehn Angebote. Google indexiert `#tour-…` nicht
+als eigene Seiten, also konkurrieren Startseite und Tourenübersicht um alle
+Suchbegriffe gleichzeitig. Wer für „lombok airport transfer" **und**
+„sendang gile waterfall tour" separat ranken will, braucht echte HTML-Dateien
+pro Tour (`/airport-transfer/`, `/waterfalls/` …) mit eigenem Titel, eigener
+Description und eigenem Text. Das ist der mit Abstand größte Hebel, wenn die
+Seite ernsthaft Traffic bringen soll — und `tours.html` zeigt, dass eine
+zweite Seite mit demselben Skript keine Doppelpflege bedeutet.
 
-**Search Console — Reihenfolge**
+### Search Console — was zu tun ist
 
-1. Sitemap einreichen: `sitemap.xml` unter „Sitemaps".
-2. Startseite über „URL-Prüfung" → „Indexierung beantragen" anstoßen.
-3. Nach 2–3 Tagen unter „Seiten" prüfen, ob die URL wirklich indexiert ist.
-4. Nach ~2 Wochen unter „Leistung" die Suchanfragen ansehen — daraus ergeben
+Die Property ist bestätigt (Meta-Tag in `index.html`). Der Rest läuft in der
+Oberfläche der Search Console, nicht im Repository:
+
+1. **Sitemap (neu) einreichen** unter „Sitemaps". In eine URL-Präfix-Property
+   wird der Pfad **relativ** eingetragen, also `sitemap.xml` — nicht die volle
+   Adresse. Steht sie schon drin, genügt „Erneut einreichen"; die Sitemap
+   enthält jetzt zwei Adressen statt einer.
+2. **`tours.html` prüfen lassen:** URL-Prüfung → vollständige Adresse eingeben →
+   „Indexierung beantragen". Das ist der schnellste Weg, eine neue Seite in den
+   Index zu bekommen; die Sitemap allein kann Wochen dauern.
+3. **Startseite ebenfalls neu prüfen lassen** — sie hat sich mit den vierzehn
+   Touren inhaltlich deutlich geändert.
+4. Nach 2–3 Tagen unter „Seiten" nachsehen, ob beide Adressen wirklich
+   indexiert sind. Erwartbare Meldungen und was sie heißen:
+   * *„Gecrawlt – zurzeit nicht indexiert"* → normal bei neuen Seiten, abwarten.
+   * *„Alternative Seite mit richtigem kanonischen Tag"* → Google hat sich für
+     die jeweils andere Adresse entschieden. Dann prüfen, ob sich die Texte der
+     beiden Seiten zu stark ähneln.
+   * *„Seite mit Weiterleitung"* → tritt hier nicht auf; wenn doch, stimmt etwas
+     mit den Pages-Einstellungen nicht.
+5. Nach ~2 Wochen unter „Leistung" die Suchanfragen ansehen — daraus ergeben
    sich die echten Keywords, nicht aus Vermutungen.
-5. Das **Google-Unternehmensprofil** ist für einen lokalen Fahrer wichtiger als
+6. Das **Google-Unternehmensprofil** ist für einen lokalen Fahrer wichtiger als
    die Website: vollständig ausfüllen, Fotos hochladen, Gäste um echte
    Bewertungen bitten, Website-Link auf diese Adresse setzen.
+
+**Ohne JavaScript im Quelltext sichtbar** sind Titel, Description, Canonical,
+og:url und das Verification-Tag. Titel, Preise und die strukturierten Daten
+schreibt `js/app.js`. Google rendert JavaScript, das funktioniert also — es
+dauert nur einen Crawl länger als reines HTML. Wenn in der URL-Prüfung unter
+„Gerendertes HTML" die Touren auftauchen, ist alles in Ordnung.
 
 ---
 

@@ -9,15 +9,23 @@
   Fragmente nicht als eigene Seiten, sie gehören deshalb NICHT hier hinein.
   Sollen Touren einzeln ranken, brauchen sie echte HTML-Dateien (siehe README,
   Abschnitt SEO).
+
+  lastmod ist das einzige Feld hier, das Google tatsächlich auswertet —
+  changefreq und priority ignoriert es seit Jahren. Bitte das Datum mitziehen,
+  wenn sich an Texten oder Preisen etwas Wesentliches ändert; ein Datum, das
+  bei jedem Deploy hochspringt, obwohl sich nichts geändert hat, wird
+  dagegen schnell nicht mehr geglaubt.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lassetoenjann.github.io/mylombokdriver/</loc>
+    <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://lassetoenjann.github.io/mylombokdriver/tours.html</loc>
+    <lastmod>2026-07-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
