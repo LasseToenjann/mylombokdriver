@@ -776,9 +776,9 @@ ul, ol { list-style: none; padding: 0; }
 
 .reveal {
   opacity: 0;
-  transform: translateY(var(--rise, 24px));
-  transition: opacity .8s var(--ease-fade),
-              transform 1.4s var(--ease-reveal);
+  transform: translateY(var(--rise, 30px));
+  transition: opacity 1s var(--ease-fade),
+              transform 1.5s var(--ease-reveal);
   transition-delay: var(--delay, 0ms);
 }
 .reveal.in { opacity: 1; transform: none; }
@@ -816,8 +816,8 @@ img.fade-img.img-in { opacity: 1; }
 
 /* Travel by element size: a whole section moving as far as a small card looks
    heavy, so the big blocks move less, not more. */
-.reveal-sm { --rise: 16px; }
-.reveal-lg { --rise: 20px; }
+.reveal-sm { --rise: 20px; }
+.reveal-lg { --rise: 24px; }
 
 /* The hero is the only thing visible before any scrolling, so it runs its own
    sequence on load — same curve, same rhythm as everything below it. */

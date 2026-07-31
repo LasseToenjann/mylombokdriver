@@ -716,7 +716,22 @@
           en.target.classList.add('in');
           obs.unobserve(en.target);
         });
-      }, { rootMargin: '100000px 0px 35% 0px', threshold: 0 });
+        /* Two margins, two jobs.
+
+           Bottom, 0: an element starts exactly as its top edge crosses the
+           bottom of the screen — the first instant it is visible at all. This
+           has been wrong in both directions. Shrinking the root (-6% at first)
+           meant an element was already sitting on screen before it began, so
+           you watched it appear. Growing it (+35% later) meant it had finished
+           before it came into view, so there was nothing left to see. Zero is
+           the one value where the movement happens while it is being watched.
+
+           Top, effectively unbounded: anything at or above the viewport counts
+           as intersecting. Without it a flick scroll leaves elements invisible
+           forever — the observer only reports *changes*, and an element
+           teleported from below the root to above it between two frames never
+           registers at all. Whole sections stayed blank in testing. */
+      }, { rootMargin: '100000px 0px 0px 0px', threshold: 0 });
     }
     $$('.reveal:not(.in)', root).forEach(el => revealObserver.observe(el));
   }

@@ -310,8 +310,24 @@ Alles andere folgt daraus:
   dem, was **gemeinsam** eintrifft: eine Gruppe kaskadiert in Leserichtung
   (90 ms), ein einzeln ankommendes Element startet sofort, und alles bereits
   Vorbeigescrollte bekommt gar keine Verzögerung.
-- **Auslösen ein Viertel Bildschirmhöhe früher**, sodass der schnelle Teil der
-  Bewegung vorbei ist, bevor man hinsieht.
+- **Auslösen exakt an der Sichtkante.** Dieser Wert war in beide Richtungen
+  falsch: erst zu spät (der Beobachter verkleinerte seinen Bereich um 6 %, ein
+  Element saß also schon auf dem Schirm bevor es losging — man sah ihm beim
+  Erscheinen zu), dann zu früh (35 % Vorlauf, alles war fertig bevor man
+  hinsah — man sah gar nichts mehr). Null ist der einzige Wert, bei dem die
+  Bewegung im Sichtbaren stattfindet. Gemessen, ±2 px genau.
+
+Wie viel man tatsächlich sieht, gemessen bei ruhigem Scrollen:
+
+| Element steht … im Bild | Deckkraft | Restweg |
+|---|---|---|
+| 15 px | 14 % | 24 px |
+| 45 px | 49 % | 12 px |
+| 76 px | 78 % | 5 px |
+| 119 px | 97 % | 1 px |
+
+Die Animation läuft also über die ersten ~120 px ab, die ein Element ins Bild
+kommt — vollständig sichtbar, und die letzten Pixel gleiten aus statt zu stoppen.
 - Einzelne Karten animieren einzeln, Abschnitts-Überschriften und große Blöcke
   reisen kürzer (16–20 px) als kleine Elemente.
 
