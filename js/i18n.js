@@ -21,7 +21,6 @@ window.MLD_I18N = {
   'nav.match':    'Find your tour',
   'nav.allTours': 'All tours',
   'nav.why':      'Why me',
-  'nav.gallery':  'Lombok',
   'nav.reviews':  'Reviews',
   'nav.about':    'About',
   'nav.faq':      'FAQ',
@@ -100,13 +99,8 @@ window.MLD_I18N = {
   'why.title':   'A driver, not a call centre',
   'why.sub':     'Booking here reaches the person who will be behind the wheel. Nothing is resold, nothing is subcontracted, and the price you agree is the price that is paid.',
 
-  'gallery.eyebrow': 'The island',
-  'gallery.title':   'Where the days go on Lombok',
-  'gallery.sub':     'Volcano, waterfalls, coral and a coastline that changes every twenty minutes. This is the Lombok guests come back for.',
-  'gallery.ig':      'See the real photos on Instagram',
-  'gallery.igSub':   'Every trip is posted on the account — guests, reefs, sunsets and the occasional flat tyre.',
-  'gallery.prev':    'Previous image',
-  'gallery.next':    'Next image',
+  'instagram.title': 'See the real photos on Instagram',
+  'instagram.text':  'Every trip is posted on the account — guests, reefs, sunsets and the occasional flat tyre.',
 
   'reviews.eyebrow': 'Guests',
   'reviews.title':   'What people say afterwards',

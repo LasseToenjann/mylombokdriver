@@ -201,18 +201,6 @@
       `<button type="button" role="tab" data-cat="${c.id}" aria-selected="${i === 0}">${esc(c.label)}</button>`).join('');
   }
 
-  function renderGallery() {
-    if (CFG.features.gallery === false) { $('#gallery')?.remove(); return; }
-    const host = $('#galGrid');
-    if (!host) return;
-    host.innerHTML = DATA.gallery.map((g, i) => `
-      <button class="gal-item" type="button" data-index="${i}">
-        <img src="${img(g.scene)}" alt="${esc(g.caption)}" loading="lazy" width="800" height="600">
-        <span class="gal-cap">${esc(g.caption)}</span>
-      </button>`).join('');
-    revealGroup($$('#galGrid .gal-item'), { size: 'sm', step: 85 });
-  }
-
   /* Filled in by loadReviewStats() once assets/review-stats.json arrives. Null
      until then, which is what makes config.js the fallback rather than a
      placeholder the visitor might see. */
@@ -351,7 +339,7 @@
     if (c.email)   rows.push(`<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>`);
     rows.push(`<a href="${esc(c.instagram)}" target="_blank" rel="noopener">Instagram ${esc(c.instagramHandle)}</a>`);
     /* Facebook stays deliberately quiet: one footer row, no icon, and none of
-       the places Instagram appears (gallery panel, booking chips, DM fallback).
+       the places Instagram appears (its own band, booking chips, DM fallback).
        The row only exists once contact.facebook is filled in. */
     if (c.facebook)   rows.push(`<a href="${esc(c.facebook)}" target="_blank" rel="noopener">Facebook${c.facebookName ? ' · ' + esc(c.facebookName) : ''}</a>`);
     if (c.googleMaps) rows.push(`<a href="${esc(c.googleMaps)}" target="_blank" rel="noopener">Google Maps</a>`);
@@ -734,25 +722,6 @@
     else if (open) closeModal(true);
   }
 
-  /* ------------------------------------------------------------ lightbox */
-
-  let lbIndex = 0;
-
-  function openLightbox(i) {
-    lbIndex = (i + DATA.gallery.length) % DATA.gallery.length;
-    const g = DATA.gallery[lbIndex];
-    $("#lbImg").src = img(g.scene);
-    $('#lbImg').alt = g.caption;
-    $('#lbCap').textContent = g.caption;
-    $('#lightbox').hidden = false;
-    document.body.classList.add('no-scroll');
-    $('.lb-x').focus();
-  }
-  const closeLightbox = () => {
-    $('#lightbox').hidden = true;
-    document.body.classList.remove('no-scroll');
-  };
-
   /* ------------------------------------------------------------- booking */
 
   function serviceLabel(value) {
@@ -1096,18 +1065,6 @@
     /* modal */
     $('#tourModal')?.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeModal(); });
 
-    /* gallery */
-    $('#galGrid')?.addEventListener('click', e => {
-      const b = e.target.closest('[data-index]');
-      if (b) openLightbox(Number(b.dataset.index));
-    });
-    const lb = $('#lightbox');
-    lb?.addEventListener('click', e => {
-      if (e.target.closest('[data-lb-close]') || e.target === lb) closeLightbox();
-      if (e.target.closest('[data-lb-prev]')) openLightbox(lbIndex - 1);
-      if (e.target.closest('[data-lb-next]')) openLightbox(lbIndex + 1);
-    });
-
     /* FAQ accordion */
     $('#faqList')?.addEventListener('click', e => {
       const q = e.target.closest('.faq-q');
@@ -1121,16 +1078,8 @@
 
     /* keyboard */
     document.addEventListener('keydown', e => {
-      const lbOpen    = lb && !lb.hidden;
-      const modalOpen = $('#tourModal') && !$('#tourModal').hidden;
-      if (e.key === 'Escape') {
-        if (lbOpen) closeLightbox();
-        else if (modalOpen) closeModal();
-      }
-      if (lbOpen) {
-        if (e.key === 'ArrowLeft')  openLightbox(lbIndex - 1);
-        if (e.key === 'ArrowRight') openLightbox(lbIndex + 1);
-      }
+      const modal = $('#tourModal');
+      if (e.key === 'Escape' && modal && !modal.hidden) closeModal();
     });
   }
 
@@ -1144,7 +1093,6 @@
     renderFilters();
     renderTours($('#filters button[aria-selected="true"]')?.dataset.cat || 'all');
     renderValues();
-    renderGallery();
     renderAbout();
     renderReviews();
     renderFaq();
@@ -1158,18 +1106,6 @@
     initCountUp();
   }
 
-  /* A quiet note for whoever maintains the site, never for a visitor. Several
-     tours currently borrow a photo from another tour because no picture of
-     their own exists yet; content.js records what each one still needs, and
-     this prints that list where the owner will actually trip over it. */
-  function reportPhotoTodos() {
-    const open = DATA.tours.filter(x => x.photoTodo);
-    if (!open.length || !/localhost|127\.0\.0\.1/.test(location.hostname)) return;
-    console.groupCollapsed(`[My Lombok Driver] ${open.length} tours are still using a stand-in photo`);
-    open.forEach(x => console.info(`${x.id} (${x.scene}) — ${x.photoTodo}`));
-    console.groupEnd();
-  }
-
   function init() {
     renderAll();
     initDelegates();
@@ -1179,7 +1115,6 @@
     window.addEventListener('popstate', syncTourFromHash);
     syncTourFromHash();
     loadReviewStats();
-    reportPhotoTodos();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

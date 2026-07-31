@@ -101,7 +101,6 @@ window.MLD_CONFIG = {
   /* Sections can be switched off without touching the HTML. */
   features: {
     reviews: true,
-    gallery: true,
     faq: true
   }
 };

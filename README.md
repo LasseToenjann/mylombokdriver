@@ -18,7 +18,7 @@ Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 | # | Was | Wo | Status |
 |---|-----|-----|--------|
 | 1 | **WhatsApp-Nummer** eintragen | `js/config.js` → `contact.whatsapp` | ✅ erledigt |
-| 2 | **Echte Fotos** einsetzen | `images/` | ⚠️ 12 Touren zeigen ein Platzhalterbild, siehe unten |
+| 2 | **Echte Fotos** einsetzen | `images/` | ✅ jede Tour hat ihr eigenes Bild |
 | 3 | **Live-URL** eintragen | `js/config.js`, `sitemap.xml`, `robots.txt` | ✅ erledigt |
 | 4 | **Preise & Touren** an die Vorlagen-Websites angleichen | `js/content.js` | ⚠️ eingebaut, muss vom Fahrer bestätigt werden |
 | 5 | **Bewertungen** | `js/content.js` → `reviews:` | ✅ echte Google-Bewertungen |
@@ -212,75 +212,57 @@ sondern direkt in `index.html` (`images/hero.webp` bzw. `images/waterfall-tall.w
 > gewonnen und deshalb nur 1176 px breit. Sobald die Originaldateien vorliegen,
 > sollten sie unter gleichem Namen ersetzt werden.
 
-### Welche Fotos noch fehlen
+### Der Bilderstand
 
-Acht Touren haben inzwischen ein eigenes Foto bekommen. **Jede der 14 Touren
-zeigt jetzt eine andere Datei** — vorher teilten sich vier Paare ein Bild.
+**Jede der 14 Touren hat ihr eigenes Foto** — keine Datei wird zweimal
+verwendet. Welches Bild wo hängt, steht in `images/README.md`.
 
-Übrig sind **vier Platzhalter**: `benang-stokel`, `rinjani-sembalun`,
-`pink-beach` und `lombok-3-day`. Für die gibt es bisher kein passendes Motiv.
+Ein Bild ist noch ein Behelf: **`lombok-3-day`** zeigt die Kuta-Panorama-
+Aufnahme, weil es kein Motiv gibt, das drei Tage zusammenfasst. Der Bootstag
+wäre der stärkste Kandidat.
 
-Welche Tour was braucht, steht **im Code selbst**, im Feld `photoTodo` der
-jeweiligen Tour in `js/content.js`. Die Liste lässt sich jederzeit abrufen:
-
-```bash
-grep -n "photoTodo" js/content.js
-```
-
-Beim lokalen Aufruf (`localhost`) schreibt die Seite dieselbe Liste
-zusammengeklappt in die Browser-Konsole. Auf der Live-Seite passiert das
-bewusst nicht — Besucher sollen davon nichts mitbekommen.
-
-| Priorität | Tour | Braucht ein Foto von |
-|---|---|---|
-| hoch | `pink-beach` | dem rosa Sand selbst, nass, damit die Farbe rauskommt |
-| hoch | `benang-stokel` | Benang Kelambu, dem „Vorhang" aus der Felswand |
-| mittel | `rinjani-sembalun` | Bukit Selong oder der Serpentinenstraße |
-| mittel | `lombok-3-day` | einem Bild für die drei Tage; leiht sich gerade die Kuta-Panorama-Aufnahme |
-
-Ein neues Foto einsetzen heißt: Datei nach `images/`, `scene:` bei der Tour
-ändern, und die Zeile `photoTodo:` löschen — dann verschwindet sie auch aus
-der Liste oben.
+**Eingesetzt trotz Unsicherheit:** `coastal-town.webp` bei „City & Culture,
+West Lombok". Unten links steht eine Kirche mit Kreuz, und die Bauweise
+erinnert eher an Ostindonesien als an Mataram. Es steht dort auf ausdrücklichen
+Wunsch; wenn sich herausstellt, dass es nicht Lombok ist, gehört es getauscht.
 
 ### Drei Bilder, die bewusst nicht eingesetzt wurden
 
-Ein Foto der letzten Lieferung (Pexels, Rizknas: weiter Strand mit grünen
-Hügeln) ist **dieselbe Aufnahme wie `selong-belanak.webp`**, nur anders
-beschnitten — gleicher Strand, gleiche Wolken, gleiche Personen im Wasser.
-Zwei Karten damit zu bebildern hätte wie eine Dopplung ausgesehen, also ist es
-nicht eingezogen.
+Ein geliefertes Foto (Pexels, Rizknas: weiter Strand mit grünen Hügeln) ist
+**dieselbe Aufnahme wie `selong-belanak.webp`**, nur anders beschnitten —
+gleicher Strand, gleiche Wolken, gleiche Personen im Wasser. Zwei Karten damit
+zu bebildern hätte wie eine Dopplung ausgesehen.
 
 Zwei weitere sind liegen geblieben, weil sie höchstwahrscheinlich **nicht auf
 Lombok** aufgenommen wurden:
 
 * **Mann mit Flossen am Strand** (Pexels, Kaique Nizer): Granitfelsen und
-  Atlantischer Küstenwald — das Motiv ist typisch für Santa Catarina in
-  Brasilien, nicht für Lombok.
+  atlantischer Küstenwald — typisch für Santa Catarina in Brasilien.
 * **Holzschiff mit badenden Kindern** (Pexels, Picko Pictura): am Rumpf steht
   „KAJUARA MURNI". Kajuara liegt in Süd-Sulawesi, und der Schiffstyp ist ein
   bugineischer Pinisi.
 
-Als reine Stimmungsbilder wären beide brauchbar, aber die Galerie ist mit
-„Where the days go on Lombok" überschrieben und jede Bildunterschrift nennt
-einen Ort. Ein Foto aus Sulawesi oder Brasilien darunter wäre eine
-Ortsangabe, die nicht stimmt. Beide liegen bereit und sind in einer Minute
-eingebaut, falls die Herkunft doch geklärt ist.
+Sie liegen bereit und sind in einer Minute eingebaut, falls die Herkunft doch
+geklärt ist.
 
-**Ebenfalls unsicher, aber eingesetzt:** `coastal-town.webp` bei „City &
-Culture, West Lombok". Auf dem Bild ist unten links eine Kirche mit Kreuz zu
-sehen, die Bauweise erinnert eher an Ostindonesien als an Mataram. Es steht
-dort auf ausdrücklichen Wunsch; wenn sich herausstellt, dass es nicht Lombok
-ist, gehört es getauscht.
+### Die Galerie gibt es nicht mehr
 
-### Die Galerie
+Der Bildteppich „Where the days go on Lombok" ist entfernt — samt Lightbox,
+Pfeiltasten-Navigation und den zehn Bildunterschriften. Er versprach „das
+echte Lombok" und zeigte gekaufte Stockfotos; der Instagram-Kanal macht
+dieselbe Sache ehrlich.
 
-Die Galerie zeigt weiterhin **zehn Stockfotos**, fünf davon teilt sie sich mit
-Tourkarten (`rinjani`, `waterfall`, `selong-belanak`, `tanjung-bloam`,
-`waterfall-tall`). Das ist der nächste Schritt, wenn eigene Aufnahmen
-vorliegen — dort fällt der Unterschied zum Instagram-Kanal am deutlichsten
-auf. Fünf Dateien werden inzwischen **nur noch** in der Galerie verwendet
-(`hero`, `gili-shallows`, `gili-boat`, `kuta-coast`, `tanjung-aan`), weil die
-Touren eigene Bilder bekommen haben.
+Geblieben ist an derselben Stelle ein schmales Band mit dem
+**Instagram-Verweis**. Das hat zwei Gründe: ohne Galerie ist es der einzige Ort,
+an dem Gäste echte Fotos sehen — und es hält den Hell-Dunkel-Rhythmus. Ohne
+dieses Band stießen „Why book direct" und „Reviews" als zwei dunkle Abschnitte
+direkt aneinander.
+
+Mit der Galerie sind fünf Stockfotos verschwunden, die sonst nirgends mehr
+gebraucht wurden. `gili-shallows.webp` und `gili-boat.webp` bleiben liegen,
+obwohl sie aktuell nicht eingebunden sind: sie sind das einzige eigene
+Bildmaterial, und sobald die Originale in voller Auflösung vorliegen, gehören
+sie auf eine der Gili-Touren.
 
 ---
 
@@ -534,9 +516,9 @@ index.html               Startseite (Texte über data-i18n aus i18n.js)
 tours.html               vollständige Tourenübersicht, alle 14
 css/style.css            Design-System (Farben, Typografie, alle Komponenten)
 js/config.js             ← Kontaktdaten, Live-URL, Umrechnungskurs, Feature-Schalter
-js/content.js            ← Touren, Preise, Galerie, Bewertungen, FAQ
+js/content.js            ← Touren, Preise, Matcher-Fragen, Bewertungen, FAQ
 js/i18n.js               ← Oberflächentexte, WhatsApp-Nachrichtenvorlage
-js/app.js                Rendering, Modals, Lightbox, Formular, „Find your match"
+js/app.js                Rendering, Tour-Modal, Formular, „Find your match"
 assets/logo-lockup.svg   Logo mit Schriftzug (Hero und Footer)
 assets/logo-mark.svg     Logo, nur Lenkrad (Header, „Über uns")
 assets/favicon.svg       Browser-Icon
@@ -647,7 +629,6 @@ auf.
 - **Mobile First** — auf 360–430 px entworfen, Touch-Flächen ab 44 px, kein horizontales Scrollen
 - **14 Touren**, sieben davon auf der Startseite, alle auf `tours.html` mit Filter nach Kategorie und Detail-Ansicht (Ablauf, Leistungen, Hinweise)
 - **„Find your match"** — vier Fragen, eine Empfehlung, zwei Alternativen
-- **Galerie** mit Lightbox und Pfeiltasten-Navigation
 - **FAQ-Akkordeon**, Bewertungen, „Über uns"
 - **Instagram** prominent verlinkt: eigene Sektion, Header-Buchungspfad, Footer
 - **SEO:** Meta-Tags, Open Graph, `TravelAgency`-JSON-LD mit allen Touren als `Offer`

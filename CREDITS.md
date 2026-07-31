@@ -8,9 +8,10 @@
 | `images/gili-boat.webp` | @mylombokdriver, Instagram |
 
 Diese beiden stammen aus Screenshots des Instagram-Kanals und sind daher nur
-1176 px breit — ausreichend für die Tour-Karten, aber nicht für das Hero-Bild.
-**Wenn die Originaldateien vorliegen, sollten sie ersetzt werden** (siehe
-`images/README.md`).
+1176 px breit. Sie lagen in der Galerie; seit die entfernt wurde, sind sie auf
+der Website **nicht mehr eingebunden**. Die Dateien bleiben liegen, weil sie
+das einzige Originalmaterial sind — sobald die Aufnahmen in voller Auflösung
+vorliegen, gehören sie auf eine der Gili-Touren.
 
 ## Pexels
 
@@ -21,24 +22,23 @@ damit nachvollziehbar bleibt, was woher kommt.
 
 | Datei | Fotograf:in | Verwendung |
 |---|---|---|
-| `images/hero.webp`, `images/og-image.jpg` | Luqman Hakim | Hero, Teilen-Vorschau, Galerie |
-| `images/kuta-coast.webp` | Javaistan | Lombok in drei Tagen, Galerie |
-| `images/rinjani.webp` | Oi Donnyboy | Sembalun & Rinjani, Galerie |
-| `images/waterfall.webp` | Vincent Ma Janssen | Sendang Gile & Tiu Kelep, Galerie |
-| `images/waterfall-tall.webp` | Holger Raukamp | Benang Stokel, Galerie |
-| `images/tanjung-aan.webp` | Captura Visual Moment | Galerie |
-| `images/tanjung-bloam.webp` | Tina P | Pink Beach, Galerie |
-| `images/selong-belanak.webp` | Rizknas | Sasak & Südküste, Galerie |
-| `images/airport-arrival.webp` | Sangadjie | Airport Transfer |
-| `images/gili-anchorage.webp` | James Ibung | Transfer zu den Gilis |
-| `images/tetebatu-valley.webp` | Septian Dwi Cahya | Tetebatu |
-| `images/coastal-town.webp` | Adiardi Zulfansyah | City & Culture West Lombok |
-| `images/gili-turtle.webp` | Senor Caliente | Gili-Schnorcheln |
-| `images/snorkellers.webp` | iwashere | Gili Nanggu, Sudak & Kedis |
-| `images/harbour-jetty.webp` | Padli | Hidden Paradise |
-| `images/gili-meno-swing.webp` | Tim V | Gili Trawangan Tagestour |
+| `hero.webp`, `og-image.jpg` | Luqman Hakim | Startbild, Teilen-Vorschau |
+| `kuta-coast.webp` | Javaistan | Lombok in drei Tagen |
+| `waterfall.webp` | Vincent Ma Janssen | Sendang Gile & Tiu Kelep |
+| `selong-belanak.webp` | Rizknas | Sasak & Südküste |
+| `airport-arrival.webp` | Sangadjie | Airport Transfer |
+| `gili-anchorage.webp` | James Ibung | Transfer zu den Gilis |
+| `tetebatu-valley.webp` | Septian Dwi Cahya | Tetebatu |
+| `coastal-town.webp` | Adiardi Zulfansyah | City & Culture West Lombok |
+| `gili-turtle.webp` | Senor Caliente | Gili-Schnorcheln |
+| `harbour-jetty.webp` | Padli | Hidden Paradise |
+| `gili-meno-swing.webp` | Tim V | Gili Trawangan Tagestour |
+| `jungle-waterfall.webp` | Taryn Elliott | Benang Stokel |
+| `rinjani-trail.webp` | Ramadhan | Sembalun & Rinjani |
+| `pink-sand.webp` | Moeid | Pink Beach |
+| `reef-guide.webp` | Dana Englich | Gili Nanggu, Sudak & Kedis |
 
-Die Namen der neun zuletzt ergänzten Fotos sind aus den Dateinamen der
+Die Namen der zuletzt ergänzten Fotos sind aus den Dateinamen der
 Pexels-Downloads abgeleitet. Pexels ist aus der Entwicklungsumgebung nicht
 erreichbar, die Schreibweise konnte deshalb nicht auf der Quellseite geprüft
 werden — vor einem Impressum einmal nachsehen.

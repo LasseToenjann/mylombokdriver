@@ -1,8 +1,8 @@
 /* ============================================================================
    MY LOMBOK DRIVER — CONTENT
    ----------------------------------------------------------------------------
-   Tours, prices, gallery captions, reviews and FAQ. The site is English only,
-   so every text here is a plain string — edit it and it is live.
+   Tours, prices, the matcher questions, reviews and FAQ. The site is English
+   only, so every text here is a plain string — edit it and it is live.
 
    Prices are in Indonesian Rupiah (IDR), as a whole number, no dots.
    unit: 'car'    -> price is per vehicle (up to 4 guests)
@@ -153,8 +153,7 @@ window.MLD_CONTENT = {
     {
       id: 'benang-stokel',
       cats: ['tours'],
-      scene: 'waterfall-tall.webp',
-      photoTodo: 'Benang Kelambu — the curtain of water coming straight out of the rock.',
+      scene: 'jungle-waterfall.webp',
       featured: false,
       match: { vibe: ['green','culture'], time: 'day', who: ['couple','kids','friends'], pace: 'medium' },
       price: 1400000, unit: 'car',
@@ -205,8 +204,7 @@ window.MLD_CONTENT = {
     {
       id: 'rinjani-sembalun',
       cats: ['tours'],
-      scene: 'rinjani.webp',
-      photoTodo: 'Bukit Selong looking over the field patchwork, or the switchback road.',
+      scene: 'rinjani-trail.webp',
       featured: true,
       match: { vibe: ['green'], time: 'day', who: ['couple','friends'], pace: 'medium' },
       price: 1450000, unit: 'car',
@@ -306,7 +304,7 @@ window.MLD_CONTENT = {
     {
       id: 'southwest-islands',
       cats: ['islands'],
-      scene: 'snorkellers.webp',
+      scene: 'reef-guide.webp',
       featured: false,
       match: { vibe: ['sea'], time: 'day', who: ['couple','kids','friends'], pace: 'medium' },
       price: 800000, unit: 'person',
@@ -331,8 +329,7 @@ window.MLD_CONTENT = {
     {
       id: 'pink-beach',
       cats: ['islands', 'tours'],
-      scene: 'tanjung-bloam.webp',
-      photoTodo: 'The pink sand itself, wet, so the colour actually shows.',
+      scene: 'pink-sand.webp',
       featured: true,
       match: { vibe: ['sea'], time: 'day', who: ['couple','friends'], pace: 'medium' },
       price: 1000000, unit: 'person',
@@ -409,7 +406,6 @@ window.MLD_CONTENT = {
       id: 'lombok-3-day',
       cats: ['multi', 'tours', 'islands'],
       scene: 'kuta-coast.webp',
-      photoTodo: 'One frame that carries three days — the boat day is the strongest candidate. Currently borrowing the Kuta coast panorama.',
       featured: false,
       match: { vibe: ['green','sea','culture'], time: 'multi', who: ['couple','friends'], pace: 'active' },
       price: 0, unit: 'ask',
@@ -491,21 +487,6 @@ window.MLD_CONTENT = {
     ]
   },
 
-  /* --------------------------------------------------------------------- */
-  /* Gallery                                                                */
-  /* --------------------------------------------------------------------- */
-  gallery: [
-    { scene: 'hero.webp',           caption: 'The west coast near Nipah, with Bali on the horizon' },
-    { scene: 'gili-shallows.webp',  caption: 'Clear water off the Gili Islands' },
-    { scene: 'rinjani.webp',        caption: 'Mount Rinjani seen across the bay' },
-    { scene: 'waterfall.webp',      caption: 'Tiu Kelep waterfall, Senaru' },
-    { scene: 'kuta-coast.webp',     caption: 'Merese hill and the bays around Kuta' },
-    { scene: 'gili-boat.webp',      caption: 'Boats on the beach, Gili Trawangan' },
-    { scene: 'tanjung-aan.webp',    caption: 'Turquoise shallows on the south coast' },
-    { scene: 'selong-belanak.webp', caption: 'The long sweep of Selong Belanak' },
-    { scene: 'tanjung-bloam.webp',  caption: 'A quiet cove in the south east' },
-    { scene: 'waterfall-tall.webp', caption: 'Rainforest on the northern slope of Rinjani' }
-  ],
 
   /* --------------------------------------------------------------------- */
   /* Reviews                                                                */
