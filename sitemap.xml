@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Die Adresse hier muss mit js/config.js -> site.url und der Sitemap-Zeile in
-  robots.txt übereinstimmen. Kommt später eine eigene Domain dazu, sind das die
-  drei Stellen, die geändert werden müssen.
+  Die Adresse hier muss mit js/config.js -> site.url, der Sitemap-Zeile in
+  robots.txt und den canonical-/og:url-Zeilen in index.html und tours.html
+  übereinstimmen. Kommt später eine eigene Domain dazu, sind das die fünf
+  Stellen, die geändert werden müssen — die Tabelle dazu steht in
+  INFORMATIONEN.md unter „Veröffentlichen".
 
   Zwei echte Seiten: die Startseite und die vollständige Tourenübersicht.
   Die einzelnen Touren liegen hinter #tour-…-Adressen — Google behandelt
   Fragmente nicht als eigene Seiten, sie gehören deshalb NICHT hier hinein.
-  Sollen Touren einzeln ranken, brauchen sie echte HTML-Dateien (siehe README,
-  Abschnitt SEO).
+  Sollen Touren einzeln ranken, brauchen sie echte HTML-Dateien (siehe
+  INFORMATIONEN.md, Abschnitt SEO).
 
   lastmod ist das einzige Feld hier, das Google tatsächlich auswertet —
   changefreq und priority ignoriert es seit Jahren. Bitte das Datum mitziehen,

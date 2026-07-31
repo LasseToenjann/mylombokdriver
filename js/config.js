@@ -68,7 +68,7 @@ window.MLD_CONFIG = {
      more, and the honest number is the one guests can go and verify.
 
      These are typed in by hand because the site has no backend — see the
-     "Live-Bewertungen" section in README.md for why, and what it would take.
+     "Live-Bewertungen" section in INFORMATIONEN.md for why, and what it would take.
      Check them against the Google profile now and then; they only move when a
      new review comes in. */
   reviewStats: {
