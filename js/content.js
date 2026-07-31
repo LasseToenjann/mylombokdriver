@@ -200,7 +200,11 @@ window.MLD_CONTENT = {
       cats: ['tours'],
       scene: 'rinjani-trail.webp',
       featured: true,
-      match: { vibe: ['green'], time: 'day', who: ['couple','friends'], pace: 'medium' },
+      /* pace: 'active', seit die Wasserfälle dazugehören. Zwölf Stunden mit
+         vierzig Minuten Fußweg und einer Flussquerung sind kein mittlerer Tag
+         mehr — wer im Matcher "gemütlich" antwortet, darf den hier nicht als
+         Empfehlung bekommen. */
+      match: { vibe: ['green'], time: 'day', who: ['couple','friends'], pace: 'active' },
       price: 1450000, unit: 'car',
       duration: 'Long day, approx. 12 h',
       title:  'Sembalun Valley, Rinjani Viewpoints & the Waterfalls',
@@ -560,7 +564,7 @@ window.MLD_CONTENT = {
     },
     {
       q: 'Do the prices include entrance fees and lunch?',
-      a: 'Entrance fees, park tickets and the local guides at waterfalls, temples and villages are included — you will not be asked for money at a gate. Lunch is not, on purpose: you eat where you feel like eating and pay what a local pays, usually IDR 30,000 to 60,000. The two exceptions are Pink Beach and the north-east islands, where there is nowhere to buy food, so lunch is brought and cooked on the beach and is included in the price. Every tour on this page lists exactly what is included and what is not.'
+      a: 'Entrance fees, park tickets and the local guides at waterfalls, temples and villages are included — you will not be asked for money at a gate. The one exception is the Gili islands, which collect a small fee from every visitor who lands there; the tours that go ashore say so on their card. Lunch is not included, on purpose: you eat where you feel like eating and pay what a local pays, usually IDR 30,000 to 60,000. The two exceptions are Pink Beach and the north-east islands, where there is nowhere to buy food, so lunch is brought and cooked on the beach and is included in the price. Every tour on this page lists exactly what is included and what is not.'
     },
     {
       q: 'Can you drive us for several days?',

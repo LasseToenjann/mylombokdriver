@@ -64,7 +64,7 @@ window.MLD_I18N = {
 
   'toursPage.eyebrow': 'Everything we do',
   'toursPage.title':   'All Lombok tours, transfers & island trips',
-  'toursPage.sub':     'Thirteen ways to spend a day, from a 30-minute airport run to a full day on the water. Fixed prices, everything included spelled out, and every route open to change.',
+  'toursPage.sub':     'Thirteen ways to spend a day, from a 30-minute airport run to twelve hours around Rinjani. Fixed prices, everything included spelled out, and every route open to change.',
   'toursPage.back':    'Back to the home page',
   'toursPage.metaTitle': 'All Tours & Prices — Lombok Day Trips, Transfers & Snorkelling | My Lombok Driver',
   'toursPage.metaDesc':  'Every tour and transfer on Lombok with fixed prices: airport transfers, waterfalls, Rinjani viewpoints, Sasak villages, Gili snorkelling, Pink Beach and the north-east islands.',

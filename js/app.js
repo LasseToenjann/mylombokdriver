@@ -48,8 +48,13 @@
   const esc = str => String(str).replace(/[&<>"']/g, c =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-  /** 350000 -> "IDR 350.000" (Indonesian thousands separator) */
-  const idr = n => 'IDR ' + n.toLocaleString('de-DE');
+  /** 350000 -> "IDR 350,000"
+      Indonesia writes 350.000, and that is what stood here. But every hand
+      written price on this site — the transfer list in the airport note, the
+      "IDR 30,000 to 60,000" for lunch in the FAQ — uses commas, so the same
+      number appeared in two notations on one page. The readers are English
+      speaking guests, so the comma wins and the code follows the prose. */
+  const idr = n => 'IDR ' + n.toLocaleString('en-US');
 
   /** Rough EUR equivalent, only ever shown with a "≈". */
   const eur = n => {
