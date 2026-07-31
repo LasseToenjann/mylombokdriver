@@ -577,6 +577,17 @@
 
     $('#f-date').min = new Date().toISOString().slice(0, 10);
 
+    /* The car seats four. Rather than capping the field — which would just
+       turn a large group away — the limit is stated the moment they exceed
+       it, together with the way around it. */
+    const guests = $('#f-guests');
+    const gHint  = $('#guestsHint');
+    const syncGuestsHint = () => {
+      gHint.hidden = !(parseInt(guests.value, 10) > 4);
+    };
+    guests.addEventListener('input', syncGuestsHint);
+    syncGuestsHint();
+
     form.addEventListener('input', () => { err.hidden = true; });
 
     form.addEventListener('submit', async e => {
@@ -804,7 +815,7 @@
      exactly the popping that was left over after the curve was fixed. */
   function markReveal() {
     $$('.sec-head, .book-form').forEach(el => el.classList.add('reveal', 'reveal-lg'));
-    $$('.custom-panel, .ig-panel, .direct, .proof, .marquee, .sec-foot, .foot-brand, .foot-col')
+    $$('.custom-panel, .ig-panel, .direct, .proof, .marquee, .sec-foot, .tour-capacity, .foot-brand, .foot-col')
       .forEach(el => el.classList.add('reveal'));
     $$('.faq-item').forEach(el => el.classList.add('reveal', 'reveal-sm'));
 

@@ -49,10 +49,13 @@ window.MLD_CONFIG = {
     googleMaps: 'https://g.co/kgs/VWJeLQ',
     /* Facebook. One quiet row in the footer, nowhere else, so it stays behind
        Instagram. Empty renders nothing at all.
-       This is Facebook's short share link. If the page has a proper vanity URL
-       (facebook.com/SomeName), prefer that — it is stabler and a better signal
-       for Google when it links the business's profiles together. */
-    facebook: 'https://www.facebook.com/share/1AtEDdNNih/',
+       This is the numeric profile URL, which is permanent. The tracking
+       parameter Facebook appends when you copy the link (?http_ref=…) is
+       stripped — it carries a timestamp and belongs to the copy, not the page.
+       If the profile ever gets a vanity URL (facebook.com/SomeName), prefer
+       that: it reads better and is a stronger signal for Google when it links
+       the business's profiles together. */
+    facebook: 'https://www.facebook.com/100083377775106',
     /* Optional: shown after "Facebook ·" in that row. Left empty on purpose —
        the page still carries a former driver's name, so the row just reads
        "Facebook" until the page is renamed. */

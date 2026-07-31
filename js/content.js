@@ -41,7 +41,7 @@ window.MLD_CONTENT = {
     {
       icon: 'car',
       title: 'Clean, air-conditioned car',
-      text:  'A well kept car with real air conditioning, cold water on board, space for luggage and surfboards, and a child seat whenever you need one.'
+      text:  'A well kept car for four guests with real air conditioning, cold water on board, room for your luggage and a child seat whenever you need one.'
     },
     {
       icon: 'chat',
@@ -344,7 +344,11 @@ window.MLD_CONTENT = {
     },
     {
       q: 'How many people fit in the car?',
-      a: 'Up to four guests plus luggage in an air-conditioned car. For larger groups a second car with a second driver is arranged — just say how many you are and you get one price for the whole party.'
+      a: 'Four guests plus their luggage, in an air-conditioned car. If you are more than four, ask before you book and say how many you are — a second car with a second driver can usually be arranged, and you get one price for the whole party. There is almost always a way to make it work.'
+    },
+    {
+      q: 'How much luggage fits?',
+      a: 'For an airport transfer, four guests with normal suitcases and hand luggage is no problem. Bulky sports gear is a different matter — surfboards, bicycles and diving tanks do not fit in the car. Say what you are bringing when you book and it gets checked first rather than at the kerb.'
     },
     {
       q: 'Do you have child seats?',

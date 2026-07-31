@@ -24,22 +24,51 @@ Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 | 5 | **Bewertungen** | `js/content.js` → `reviews:` | ✅ echte Google-Bewertungen |
 | 6 | **Fahrer-Foto und Name** | `js/config.js` → `business.driverPhoto`, `driverName` | ✅ erledigt (Suhar) |
 | 7 | **Gründungsjahr** | `js/config.js` → `business.since` | ❌ offen |
-| 8 | **Facebook-Seite** verlinken | `js/config.js` → `contact.facebook` | ✅ erledigt (Share-Link) |
+| 8 | **Facebook-Seite** verlinken | `js/config.js` → `contact.facebook` | ✅ erledigt (numerische Profil-URL) |
+| 9 | **Fahrzeug: 4 Plätze** klarstellen | `js/content.js`, `js/i18n.js` | ✅ erledigt |
 
 Punkt 4 ist der letzte echte Blocker: solange er offen ist, stehen unbestätigte
 Preise auf der Seite. Die beiden als Vorlage genannten Websites liegen hinter
 `share.google`-Kurzlinks, die aus der Entwicklungsumgebung nicht abrufbar sind
 (Google ist dort geblockt) — Inhalte müssen als Text oder Screenshot vorliegen.
 
-Ebenfalls noch zu klären: das Fahrzeug. Die Seite sagt jetzt **bis 4 Gäste**;
-die Beschreibung nennt nur noch „car" statt „MPV", weil das Modell nicht
-bestätigt ist.
+### Das Fahrzeug: vier Plätze
+
+Die Seite sagt durchgehend **vier Gäste**, und zwar an vier Stellen, damit es
+niemand erst nach der Buchung merkt:
+
+* der Preiszusatz an jeder Tourkarte („per car · up to 4 guests")
+* ein Hinweis direkt unter dem Tourenraster (`tours.capacity` in `js/i18n.js`),
+  mit goldener Linie am linken Rand
+* zwei FAQ-Einträge — „How many people fit in the car?" und „How much luggage
+  fits?"
+* im Buchungsformular ein Hinweis, der **erst ab fünf Gästen** erscheint, statt
+  das Feld bei vier zu deckeln. Wer zu sechst ist, wird nicht weggeschickt,
+  sondern liest, dass ein zweites Auto möglich ist.
+
+Der Grundton ist überall gleich: vier passen rein, bei mehr bitte vorher fragen,
+es findet sich fast immer eine Lösung.
+
+**Gepäck:** Koffer beim Transfer sind kein Problem, sperriges Sportgerät schon.
+Surfboards, Fahrräder und Tauchflaschen sind ausdrücklich als „passt nicht"
+benannt — vorher stand „space for luggage and surfboards" auf der Seite, das war
+falsch und ist raus.
+
+Das Modell steht weiterhin nicht auf der Seite („car" statt „MPV"), weil es
+nicht bestätigt ist.
 
 **Der Name des früheren Fahrers ist überall entfernt** — er stand in allen sechs
 Google-Bewertungen und stimmt nicht mehr. In den Zitaten steht jetzt „our
 driver" bzw. ein Pronomen; inhaltlich ist nichts verändert. Auch der
 Facebook-Seitenname wird nicht mehr angezeigt, solange er den alten Namen
 trägt (`contact.facebookName` ist leer).
+
+**Facebook-Link:** eingetragen ist jetzt `facebook.com/100083377775106` — die
+numerische Profil-URL, die dauerhaft gilt. Der Parameter `?http_ref=…`, den
+Facebook beim Kopieren anhängt, ist entfernt: er enthält nur einen Zeitstempel
+des Kopiervorgangs. Der Link konnte aus der Entwicklungsumgebung nicht geöffnet
+werden (Facebook ist dort geblockt), also einmal im Browser prüfen, ob er auf
+dem richtigen Profil landet.
 
 Alle Stellen mit offener Aufgabe sind im Code mit `### TODO ###` markiert:
 
