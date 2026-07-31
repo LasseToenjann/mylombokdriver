@@ -99,7 +99,20 @@ ul, ol { list-style: none; padding: 0; }
 .sec-dark { background: var(--ink); color: var(--tx-light); }
 .sec-dark .sec-sub { color: var(--tx-light-2); }
 
+/* tours.html opens straight into a light section, with no hero to sit under
+   the fixed header — so the first section carries the header's height itself
+   and the header keeps its dark plate from the first pixel instead of waiting
+   for a scroll. Without this the white brand text sat on sand-coloured
+   background and was unreadable at the top of the page. */
+.sec-page { padding-top: calc(var(--head-h) + clamp(34px, 5vw, 70px)); }
+body[data-page="tours"] .site-head {
+  background: rgba(8,8,10,.86);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom-color: var(--line-d);
+}
+
 .sec-head { max-width: 720px; margin-bottom: clamp(38px, 5vw, 62px); }
+.sec-head h1,
 .sec-head h2 {
   font-family: var(--ff-display); font-weight: 600; letter-spacing: -.015em;
   font-size: clamp(2rem, 4.4vw, 3.35rem); line-height: 1.08; margin-bottom: .55rem;
@@ -394,6 +407,20 @@ ul, ol { list-style: none; padding: 0; }
 .tour-actions { display: flex; gap: .55rem; margin-top: .55rem; }
 .tour-actions .btn { flex: 1; padding: 12px 16px; font-size: .875rem; }
 
+/* ---------- 8b. The two ways out of the shortlist -------------------------- */
+/* The home page lists seven of fourteen, so this row has to carry the other
+   seven. Two buttons, not a single "more" link: browsing the catalogue and
+   being asked four questions are genuinely different intentions. */
+.tours-more {
+  margin-top: 2.2rem; display: flex; flex-wrap: wrap; align-items: center; gap: .8rem;
+}
+.tours-more-hint {
+  flex-basis: 100%; font-size: .87rem; color: var(--tx-dark-2); margin-top: .15rem;
+}
+@media (max-width: 560px) {
+  .tours-more .btn { width: 100%; }
+}
+
 /* The one hard limit on the whole page. A gold rule on the leading edge marks
    it as information rather than sales copy, without shouting. */
 .tour-capacity {
@@ -413,9 +440,135 @@ ul, ol { list-style: none; padding: 0; }
   background: radial-gradient(circle, rgba(212,165,68,.22), transparent 66%);
 }
 .custom-copy { flex: 1 1 380px; position: relative; }
+.custom-copy h2,
 .custom-copy h3 { font-family: var(--ff-display); font-size: clamp(1.5rem, 2.6vw, 2.15rem); font-weight: 600; margin-bottom: .6rem; }
 .custom-copy p { color: var(--tx-light-2); max-width: 62ch; font-size: .99rem; }
 .custom-panel .btn { position: relative; }
+
+/* ---------- 8c. Find your match ------------------------------------------- */
+/* One box that is either a question or a result. It keeps a minimum height so
+   the page below it does not jump every time an answer replaces a three-line
+   question with a four-line one — a quiz that shifts the ground under the
+   next button is a quiz people mis-tap. */
+.match-box {
+  border: 1px solid var(--line-d); border-radius: var(--r-lg);
+  background: linear-gradient(165deg, rgba(255,255,255,.05), rgba(255,255,255,.015));
+  padding: clamp(22px, 3.4vw, 38px);
+  min-height: 430px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+.match-prog { display: flex; gap: 7px; margin-bottom: 1.4rem; }
+.match-prog span {
+  height: 3px; flex: 1; border-radius: 2px; background: rgba(255,255,255,.13);
+  transition: background .45s var(--ease-fade);
+}
+.match-prog span.on { background: var(--gold); }
+
+.match-count {
+  font-size: .74rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .7rem;
+}
+.match-step h3 {
+  font-family: var(--ff-display); font-weight: 600; line-height: 1.14;
+  font-size: clamp(1.45rem, 3.1vw, 2.1rem); margin-bottom: 1.5rem;
+}
+
+.match-opts { display: grid; gap: .7rem; }
+@media (min-width: 620px) { .match-opts { grid-template-columns: 1fr 1fr; } }
+
+/* Full-width targets with the label and the reason on separate lines. The
+   hint is what stops the options reading as four equally arbitrary words. */
+.match-opt {
+  text-align: left; display: flex; flex-direction: column; gap: .22rem;
+  padding: 16px 18px; border-radius: var(--r); cursor: pointer;
+  border: 1px solid var(--line-d); background: rgba(255,255,255,.03);
+  color: var(--tx-light); min-height: 62px; justify-content: center;
+  transition: border-color .25s, background .25s, transform .25s var(--ease);
+}
+.match-opt:hover, .match-opt:focus-visible {
+  border-color: var(--gold); background: rgba(212,165,68,.10); transform: translateY(-2px);
+}
+.match-opt.picked { border-color: var(--gold); background: rgba(212,165,68,.14); }
+.match-opt-l { font-weight: 600; font-size: 1.01rem; }
+.match-opt-h { font-size: .84rem; color: var(--tx-light-2); line-height: 1.45; }
+
+.match-back {
+  margin-top: 1.3rem; align-self: flex-start; cursor: pointer;
+  background: none; border: 0; padding: 8px 0;
+  color: var(--tx-light-2); font-size: .89rem; font-weight: 500;
+  border-bottom: 1px solid transparent; transition: color .2s, border-color .2s;
+}
+.match-back:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ---- the result ---- */
+.match-card {
+  display: grid; gap: 1.2rem; align-items: center;
+  background: var(--white); color: var(--tx-dark);
+  border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--sh-lg);
+}
+/* stretch, not center: the photo column has to fill the card's height or it
+   floats in the middle with white above and below it. */
+@media (min-width: 640px) { .match-card { grid-template-columns: 40% 1fr; gap: 0; align-items: stretch; } }
+.match-media { overflow: hidden; }
+.match-media img { display: block; width: 100%; height: 100%; min-height: 190px; object-fit: cover; }
+.match-body { padding: 4px 24px 26px; }
+@media (min-width: 640px) { .match-body { padding: 26px 28px; } }
+.match-body h3 {
+  font-family: var(--ff-display); font-weight: 600; line-height: 1.14;
+  font-size: clamp(1.3rem, 2.4vw, 1.75rem); margin-bottom: .45rem;
+}
+.match-body > p { color: var(--tx-dark-2); font-size: .96rem; margin-bottom: .3rem; }
+
+/* Saying back what was picked. Without it the recommendation is a black box,
+   and a black box is easy to disbelieve. */
+.match-why {
+  margin-top: 1.4rem; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+}
+.match-why-l {
+  font-size: .76rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--tx-light-2); margin-right: .2rem;
+}
+.match-chip {
+  font-size: .82rem; padding: 6px 12px; border-radius: 999px;
+  border: 1px solid rgba(212,165,68,.42); color: var(--gold-hi);
+  background: rgba(212,165,68,.10);
+}
+
+.match-alts { margin-top: 1.7rem; border-top: 1px solid var(--line-d); padding-top: 1.3rem; }
+.match-alts-l {
+  font-size: .76rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--tx-light-2); margin-bottom: .8rem;
+}
+.match-alt {
+  width: 100%; display: grid; grid-template-columns: 60px 1fr auto; align-items: center; gap: .9rem;
+  padding: 9px; margin-bottom: .5rem; border-radius: var(--r-sm); cursor: pointer;
+  border: 1px solid transparent; background: rgba(255,255,255,.03);
+  color: var(--tx-light); text-align: left;
+  transition: border-color .25s, background .25s;
+}
+.match-alt:hover, .match-alt:focus-visible { border-color: var(--gold); background: rgba(212,165,68,.09); }
+.match-alt img { width: 60px; height: 44px; object-fit: cover; border-radius: 7px; display: block; }
+.match-alt-t { font-weight: 600; font-size: .93rem; line-height: 1.3; }
+.match-alt-p { font-size: .82rem; color: var(--tx-light-2); white-space: nowrap; }
+@media (max-width: 420px) { .match-alt-p { display: none; } }
+
+.match-foot {
+  margin-top: 1.5rem; display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: .8rem;
+}
+.match-foot .match-back { margin-top: 0; }
+
+/* The result card is white on a dark section, so the price block inside it
+   needs the light-section treatment rather than inheriting the dark one. */
+.match-card .tour-price { margin: .7rem 0 1rem; }
+.match-card .tour-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+.match-card .btn { flex: 1 1 auto; }
+/* .sec-dark .btn-line paints itself light for a dark background. This card is
+   white, so the outline button has to be taken back to the light treatment —
+   otherwise "See the full day" is near-white text on white. */
+.sec-dark .match-card .btn-line { border-color: var(--line-l); color: var(--tx-dark); }
+.sec-dark .match-card .btn-line:hover { border-color: var(--gold); color: var(--gold-lo); }
 
 /* ---------- 9. Values ----------------------------------------------------- */
 .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
@@ -680,6 +833,8 @@ ul, ol { list-style: none; padding: 0; }
   .direct-links a { min-height: 44px; }
 }
 .foot-col a:hover { color: var(--gold); transform: translateX(3px); }
+/* Last row of the services column: the way to the ones not listed above it. */
+.foot-col a.foot-all { color: var(--gold); margin-top: .35rem; }
 .foot-col address { font-style: normal; color: var(--tx-light-2); font-size: .89rem; margin-top: .8rem; line-height: 1.6; }
 
 .foot-bar {

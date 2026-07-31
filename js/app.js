@@ -17,6 +17,24 @@
 
   const SCENES = 'images/';
 
+  /* Two pages share this script: the home page and tours.html. Rather than
+     splitting it in two — which would mean maintaining the header, the modal
+     and the reveal system twice — every renderer checks whether its host
+     element is actually on the page and does nothing when it is not.
+     `data-page` on <body> only decides the handful of things that genuinely
+     differ: which tours are listed, where the booking links point, and which
+     title and canonical URL the document gets. */
+  const PAGE = document.body.dataset.page || 'home';
+  const ON_TOURS_PAGE = PAGE === 'tours';
+
+  /* "Book this" has to reach the form, which only exists on the home page.
+     From tours.html it therefore carries the tour in the query string; the
+     booking form picks it up on arrival. */
+  const bookHref = id =>
+    ON_TOURS_PAGE ? `index.html?service=${encodeURIComponent(id)}#book` : '#book';
+
+  const pageTitleKey = ON_TOURS_PAGE ? 'toursPage.metaTitle' : 'meta.title';
+
   /* Resolve an image reference from content.js.
      A bare file name  ("waterfall.webp")     -> images/waterfall.webp
      Anything with a slash or protocol        -> used exactly as written,
@@ -99,11 +117,13 @@
 
   function renderMarquee() {
     const track = $('#marqueeTrack');
+    if (!track) return;
     const items = [1, 2, 3, 4, 5].map(n => `<span>${esc(t('strip.' + n))}</span>`).join('');
     track.innerHTML = items + items;   /* duplicated for a seamless loop */
   }
 
   function renderValues() {
+    if (!$('#valueGrid')) return;
     $('#valueGrid').innerHTML = DATA.values.map(v => `
       <article class="value-card">
         <div class="value-icon"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[v.icon] || ICONS.shield}</svg></div>
@@ -134,9 +154,19 @@
     return cat ? cat.label : '';
   }
 
+  /* The home page shows a shortlist — seven cards is a section, fourteen is a
+     catalogue and pushes everything below it out of reach. The full list lives
+     on tours.html, which is also the only page with the category filters. */
+  function tourList(filter = 'all') {
+    const base = ON_TOURS_PAGE ? DATA.tours : DATA.tours.filter(x => x.featured);
+    return base.filter(x => filter === 'all' || x.cats.includes(filter));
+  }
+
   function renderTours(filter = 'all') {
-    const list = DATA.tours.filter(x => filter === 'all' || x.cats.includes(filter));
-    $('#tourGrid').innerHTML = list.map(tour => `
+    const host = $('#tourGrid');
+    if (!host) return;
+    const list = tourList(filter);
+    host.innerHTML = list.map(tour => `
       <article class="tour-card">
         <div class="tour-media">
           <span class="tour-tag">${esc(catLabel(tour))}</span>
@@ -152,15 +182,21 @@
           ${priceBlock(tour)}
           <div class="tour-actions">
             <button class="btn btn-line" data-tour="${tour.id}">${esc(t('tours.details'))}</button>
-            <a class="btn btn-gold" href="#book" data-book-service="${tour.id}">${esc(t('tours.book'))}</a>
+            <a class="btn btn-gold" href="${bookHref(tour.id)}" data-book-service="${tour.id}">${esc(t('tours.book'))}</a>
           </div>
         </div>
       </article>`).join('');
     revealGroup($$('#tourGrid .tour-card'));
+
+    /* "See all 14 tours" — the number comes from the data, so adding a tour
+       never leaves a stale count on the button. */
+    const all = $('#toursAllCta');
+    if (all) all.textContent = t('tours.allCta').replace('{n}', DATA.tours.length);
   }
 
   function renderFilters() {
     const host = $('#filters');
+    if (!host) return;
     host.innerHTML = DATA.categories.map((c, i) =>
       `<button type="button" role="tab" data-cat="${c.id}" aria-selected="${i === 0}">${esc(c.label)}</button>`).join('');
   }
@@ -296,10 +332,18 @@
   }
 
   function renderFooter() {
-    $('#year').textContent = new Date().getFullYear();
+    const year = $('#year');
+    if (year) year.textContent = new Date().getFullYear();
 
-    $('#footServices').innerHTML = DATA.tours.slice(0, 6)
-      .map(x => `<a href="#tours" data-tour-link="${x.id}">${esc(x.title)}</a>`).join('');
+    /* Six of the fourteen, and only ones the home page also shows — a footer
+       link that scrolls to a grid the tour is not in reads as broken. */
+    const footHost = $('#footServices');
+    if (footHost) {
+      footHost.innerHTML = DATA.tours.filter(x => x.featured).slice(0, 6)
+        .map(x => `<a href="${ON_TOURS_PAGE ? '#tour-' + x.id : '#tours'}" data-tour-link="${x.id}">${esc(x.title)}</a>`)
+        .join('') +
+        `<a href="${ON_TOURS_PAGE ? '#tours' : 'tours.html'}" class="foot-all">${esc(t('tours.allCta').replace('{n}', DATA.tours.length))}</a>`;
+    }
 
     const c = CFG.contact, b = CFG.business;
     const rows = [];
@@ -333,6 +377,7 @@
 
   function renderServiceSelect() {
     const sel = $('#f-service');
+    if (!sel) return;
     const keep = sel.value;
     sel.innerHTML =
       `<option value="" disabled ${keep ? '' : 'selected'}>${esc(t('book.servicePh'))}</option>` +
@@ -342,11 +387,12 @@
   }
 
   function renderMeta() {
-    document.title = t('meta.title');
+    document.title = t(pageTitleKey);
     const url = (CFG.site.url || '').replace(/\/$/, '');
+    const path = ON_TOURS_PAGE ? '/tours.html' : '/';
     const canonical = $('#canonical-link');
     if (url) {
-      if (canonical) canonical.href = url + '/';
+      if (canonical) canonical.href = url + path;
       const ogImg = $('#og-image');
       if (ogImg) ogImg.content = url + '/images/og-image.jpg';
       let ogUrl = document.querySelector('meta[property="og:url"]');
@@ -355,7 +401,7 @@
         ogUrl.setAttribute('property', 'og:url');
         document.head.appendChild(ogUrl);
       }
-      ogUrl.content = url + '/';
+      ogUrl.content = url + path;
     } else if (canonical) {
       canonical.remove();
     }
@@ -424,7 +470,9 @@
        own, so it gets its own graph node. Google only honours it when the same
        questions and answers are visible on the page — they are, in #faq. */
     const graph = [data];
-    if (CFG.features.faq !== false && (DATA.faq || []).length) {
+    /* Only where the questions are actually on the page — Google discards
+       FAQPage markup it cannot see, and tours.html has no FAQ section. */
+    if (!ON_TOURS_PAGE && CFG.features.faq !== false && (DATA.faq || []).length) {
       graph.push({
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
@@ -449,6 +497,171 @@
     s.id = 'mld-jsonld';
     s.textContent = JSON.stringify(graph.length > 1 ? graph : data);
     document.head.appendChild(s);
+  }
+
+  /* --------------------------------------------------- find your match */
+
+  /* Four questions, one tour. State is a plain object of answers and an index
+     — no history entries, no URL, nothing to restore. Somebody who reloads
+     the page starts over, which is fine for a twenty-second quiz and avoids a
+     back button that appears to do two different things.                    */
+  const MATCH = { step: 0, answers: {} };
+
+  const matchQuestions = () => (DATA.matcher && DATA.matcher.questions) || [];
+
+  /* How well one tour answers everything picked so far.
+
+     `pace` is scored on a scale rather than as a hit or a miss: somebody who
+     asked for an easy day and gets offered a medium one has been served
+     reasonably, while an active one has not. Without that, three tours often
+     tied on the exact same integer and the "best" match was decided by
+     nothing more than array order. */
+  const PACE_ORDER = ['easy', 'medium', 'active'];
+
+  function scoreTour(tour, answers) {
+    const m = tour.match;
+    if (!m) return 0;
+    let score = 0;
+    matchQuestions().forEach(q => {
+      const a = answers[q.id];
+      if (!a) return;
+      const w = q.weight || 1;
+      if (q.id === 'pace') {
+        const d = Math.abs(PACE_ORDER.indexOf(m.pace) - PACE_ORDER.indexOf(a));
+        score += d === 0 ? w : d === 1 ? w * 0.4 : 0;
+        return;
+      }
+      const field = m[q.id];
+      const hit = Array.isArray(field) ? field.includes(a) : field === a;
+      if (hit) score += w;
+    });
+    return score;
+  }
+
+  function rankTours(answers) {
+    return DATA.tours
+      .map(x => ({ tour: x, score: scoreTour(x, answers) }))
+      .sort((a, b) => b.score - a.score)
+      .filter(r => r.score > 0);
+  }
+
+  /* The answers spelled back, so the result is explainable rather than
+     magic. A recommendation nobody can check is a recommendation nobody
+     trusts. */
+  function answerChips(answers) {
+    return matchQuestions()
+      .map(q => {
+        const opt = (q.options || []).find(o => o.value === answers[q.id]);
+        return opt ? `<span class="match-chip">${esc(opt.label)}</span>` : '';
+      })
+      .join('');
+  }
+
+  function renderMatch() {
+    const host = $('#matchBox');
+    if (!host) return;
+    const qs = matchQuestions();
+    if (!qs.length) { $('#match')?.remove(); return; }
+
+    /* ---- questions ---- */
+    if (MATCH.step < qs.length) {
+      const q = qs[MATCH.step];
+      host.innerHTML = `
+        <div class="match-step" role="group" aria-labelledby="matchQ">
+          <div class="match-prog" aria-hidden="true">
+            ${qs.map((_, i) => `<span class="${i <= MATCH.step ? 'on' : ''}"></span>`).join('')}
+          </div>
+          <p class="match-count">${esc(t('match.step').replace('{n}', MATCH.step + 1).replace('{total}', qs.length))}</p>
+          <h3 id="matchQ">${esc(q.q)}</h3>
+          <div class="match-opts">
+            ${(q.options || []).map(o => `
+              <button type="button" class="match-opt${MATCH.answers[q.id] === o.value ? ' picked' : ''}"
+                      data-answer="${esc(o.value)}">
+                <span class="match-opt-l">${esc(o.label)}</span>
+                ${o.hint ? `<span class="match-opt-h">${esc(o.hint)}</span>` : ''}
+              </button>`).join('')}
+          </div>
+          ${MATCH.step > 0 ? `<button type="button" class="match-back" data-match-back>${esc(t('match.back'))}</button>` : ''}
+        </div>`;
+      host.querySelector('.match-opt')?.focus({ preventScroll: true });
+      return;
+    }
+
+    /* ---- result ---- */
+    const ranked = rankTours(MATCH.answers);
+    const best = ranked[0];
+    if (!best) {                                  /* cannot happen with the
+                                                     current data, but a quiz
+                                                     that renders nothing is a
+                                                     dead end, so: */
+      MATCH.step = 0; MATCH.answers = {};
+      renderMatch();
+      return;
+    }
+    const alts = ranked.slice(1, 3).map(r => r.tour);
+    const x = best.tour;
+
+    host.innerHTML = `
+      <div class="match-result">
+        <p class="match-count">${esc(t('match.result'))}</p>
+        <article class="match-card">
+          <div class="match-media">
+            <img src="${img(x.scene)}" alt="${esc(x.title)}" width="800" height="500" loading="lazy">
+          </div>
+          <div class="match-body">
+            <h3>${esc(x.title)}</h3>
+            <p>${esc(x.short)}</p>
+            ${priceBlock(x)}
+            <div class="tour-actions">
+              <button class="btn btn-line" data-tour="${x.id}">${esc(t('match.details'))}</button>
+              <a class="btn btn-gold" href="${bookHref(x.id)}" data-book-service="${x.id}">${esc(t('match.book'))}</a>
+            </div>
+          </div>
+        </article>
+
+        <div class="match-why">
+          <span class="match-why-l">${esc(t('match.because'))}</span>
+          ${answerChips(MATCH.answers)}
+        </div>
+
+        ${alts.length ? `
+          <div class="match-alts">
+            <p class="match-alts-l">${esc(t('match.alts'))}</p>
+            ${alts.map(a => `
+              <button type="button" class="match-alt" data-tour="${a.id}">
+                <img src="${img(a.scene)}" alt="" width="120" height="80" loading="lazy">
+                <span class="match-alt-t">${esc(a.title)}</span>
+                <span class="match-alt-p">${a.unit === 'ask'
+                  ? esc(t('tours.onRequest'))
+                  : esc(idr(a.price))}</span>
+              </button>`).join('')}
+          </div>` : ''}
+
+        <div class="match-foot">
+          <button type="button" class="match-back" data-match-restart>${esc(t('match.again'))}</button>
+          <a class="link-gold" href="${ON_TOURS_PAGE ? '#tours' : 'tours.html'}">${esc(t('match.allCta'))}</a>
+        </div>
+      </div>`;
+  }
+
+  function initMatch() {
+    const host = $('#matchBox');
+    if (!host) return;
+    host.addEventListener('click', e => {
+      const opt = e.target.closest('[data-answer]');
+      if (opt) {
+        const q = matchQuestions()[MATCH.step];
+        MATCH.answers[q.id] = opt.dataset.answer;
+        MATCH.step++;
+        renderMatch();
+        return;
+      }
+      if (e.target.closest('[data-match-back]'))    { MATCH.step = Math.max(0, MATCH.step - 1); renderMatch(); return; }
+      if (e.target.closest('[data-match-restart]')) { MATCH.step = 0; MATCH.answers = {}; renderMatch(); return; }
+      const details = e.target.closest('[data-tour]');
+      if (details) openTourModal(details.dataset.tour);
+    });
+    renderMatch();
   }
 
   /* --------------------------------------------------------------- modal */
@@ -507,13 +720,14 @@
   function closeModal(fromPopState) {
     $('#tourModal').hidden = true;
     document.body.classList.remove('no-scroll');
-    document.title = t('meta.title');
+    document.title = t(pageTitleKey);
     if (!fromPopState && location.hash.startsWith('#tour-')) history.pushState({}, '', location.pathname + location.search);
     lastFocus?.focus();
   }
 
   /* Open the tour named in the address bar, on first load and on back/forward. */
   function syncTourFromHash() {
+    if (!$('#tourModal')) return;
     const id = location.hash.startsWith('#tour-') ? location.hash.slice(6) : null;
     const open = !$('#tourModal').hidden;
     if (id && DATA.tours.some(x => x.id === id)) openTourModal(id);
@@ -577,8 +791,20 @@
   function initBooking() {
     const form = $('#bookForm');
     const err  = $('#formError');
+    if (!form) return;                      /* tours.html has no booking form */
 
     $('#f-date').min = new Date().toISOString().slice(0, 10);
+
+    /* Arriving from tours.html, where "Book this" cannot reach this form and
+       links here with ?service=<id> instead. The parameter is dropped from
+       the address afterwards so a reload or a shared link does not carry a
+       stale preselection around. */
+    const wanted = new URLSearchParams(location.search).get('service');
+    if (wanted) {
+      const sel = $('#f-service');
+      if ([...sel.options].some(o => o.value === wanted)) sel.value = wanted;
+      history.replaceState({}, '', location.pathname + location.hash);
+    }
 
     /* The car seats four. Rather than capping the field — which would just
        turn a large group away — the limit is stated the moment they exceed
@@ -625,17 +851,24 @@
   function applyWaState() {
     const hint = $('#waHint');
     const label = $('#submitBtn span');
+    const float = $('#waFloat');
     if (hasWa()) {
-      hint.hidden = true;
-      label.textContent = t('book.submit');
-      $('#waFloat').href = waLink('Hello My Lombok Driver! I would like to ask about a trip.');
-      $('#waFloat').target = '_blank';
-      $('#waFloat').rel = 'noopener';
+      if (hint) hint.hidden = true;
+      if (label) label.textContent = t('book.submit');
+      if (float) {
+        float.href = waLink('Hello My Lombok Driver! I would like to ask about a trip.');
+        float.target = '_blank';
+        float.rel = 'noopener';
+      }
     } else {
-      hint.hidden = false;
-      label.textContent = t('book.submitIg');
-      $('#waFloat').href = '#book';
-      $('#waFloat').removeAttribute('target');
+      if (hint) hint.hidden = false;
+      if (label) label.textContent = t('book.submitIg');
+      if (float) {
+        /* No form on tours.html to fall back to, so the button goes to the
+           page that has one. */
+        float.href = ON_TOURS_PAGE ? 'index.html#book' : '#book';
+        float.removeAttribute('target');
+      }
       console.warn('[My Lombok Driver] No WhatsApp number in js/config.js — booking buttons fall back to Instagram.');
     }
   }
@@ -649,6 +882,8 @@
 
     const book = $('#book');
 
+    const float = $('#waFloat');
+
     const onScroll = () => {
       head.classList.toggle('scrolled', window.scrollY > 40);
       /* The floating button is a shortcut to the booking form, so it only gets
@@ -658,7 +893,7 @@
         ? (() => { const r = book.getBoundingClientRect();
                    return r.top < window.innerHeight && r.bottom > 0; })()
         : false;
-      $('#waFloat').classList.toggle('show', window.scrollY > 600 && !bookVisible);
+      float?.classList.toggle('show', window.scrollY > 600 && !bookVisible);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
@@ -674,11 +909,16 @@
       }
     });
 
-    /* active section in the nav */
+    /* Active section in the nav. Only same-page anchors take part: on
+       tours.html the nav points back at "index.html#tours" and friends, and
+       feeding that to querySelector throws a SyntaxError that would take the
+       rest of this function — burger menu included — down with it. */
     const links = $$('#nav a');
     const map = new Map();
     links.forEach(a => {
-      const sec = document.querySelector(a.getAttribute('href'));
+      const href = a.getAttribute('href') || '';
+      if (!href.startsWith('#') || href.length < 2) return;
+      const sec = document.querySelector(href);
       if (sec) map.set(sec, a);
     });
     const io = new IntersectionObserver(entries => {
@@ -818,7 +1058,7 @@
      exactly the popping that was left over after the curve was fixed. */
   function markReveal() {
     $$('.sec-head, .book-form').forEach(el => el.classList.add('reveal', 'reveal-lg'));
-    $$('.custom-panel, .ig-panel, .direct, .proof, .marquee, .sec-foot, .tour-capacity, .foot-brand, .foot-col')
+    $$('.custom-panel, .ig-panel, .direct, .proof, .marquee, .sec-foot, .tour-capacity, .tours-more, .match-box, .foot-brand, .foot-col')
       .forEach(el => el.classList.add('reveal'));
     $$('.faq-item').forEach(el => el.classList.add('reveal', 'reveal-sm'));
 
@@ -833,8 +1073,8 @@
   }
 
   function initDelegates() {
-    /* tour filters */
-    $('#filters').addEventListener('click', e => {
+    /* tour filters — tours.html only */
+    $('#filters')?.addEventListener('click', e => {
       const b = e.target.closest('button');
       if (!b) return;
       $$('#filters button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
@@ -842,19 +1082,19 @@
     });
 
     /* details buttons */
-    $('#tourGrid').addEventListener('click', e => {
+    $('#tourGrid')?.addEventListener('click', e => {
       const b = e.target.closest('[data-tour]');
       if (b) openTourModal(b.dataset.tour);
     });
 
     /* footer service links open the matching tour */
-    $('#footServices').addEventListener('click', e => {
+    $('#footServices')?.addEventListener('click', e => {
       const a = e.target.closest('[data-tour-link]');
       if (a) setTimeout(() => openTourModal(a.dataset.tourLink), 500);
     });
 
     /* modal */
-    $('#tourModal').addEventListener('click', e => { if (e.target.closest('[data-close]')) closeModal(); });
+    $('#tourModal')?.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeModal(); });
 
     /* gallery */
     $('#galGrid')?.addEventListener('click', e => {
@@ -862,7 +1102,7 @@
       if (b) openLightbox(Number(b.dataset.index));
     });
     const lb = $('#lightbox');
-    lb.addEventListener('click', e => {
+    lb?.addEventListener('click', e => {
       if (e.target.closest('[data-lb-close]') || e.target === lb) closeLightbox();
       if (e.target.closest('[data-lb-prev]')) openLightbox(lbIndex - 1);
       if (e.target.closest('[data-lb-next]')) openLightbox(lbIndex + 1);
@@ -881,11 +1121,13 @@
 
     /* keyboard */
     document.addEventListener('keydown', e => {
+      const lbOpen    = lb && !lb.hidden;
+      const modalOpen = $('#tourModal') && !$('#tourModal').hidden;
       if (e.key === 'Escape') {
-        if (!$('#lightbox').hidden) closeLightbox();
-        else if (!$('#tourModal').hidden) closeModal();
+        if (lbOpen) closeLightbox();
+        else if (modalOpen) closeModal();
       }
-      if (!$('#lightbox').hidden) {
+      if (lbOpen) {
         if (e.key === 'ArrowLeft')  openLightbox(lbIndex - 1);
         if (e.key === 'ArrowRight') openLightbox(lbIndex + 1);
       }
@@ -916,14 +1158,28 @@
     initCountUp();
   }
 
+  /* A quiet note for whoever maintains the site, never for a visitor. Several
+     tours currently borrow a photo from another tour because no picture of
+     their own exists yet; content.js records what each one still needs, and
+     this prints that list where the owner will actually trip over it. */
+  function reportPhotoTodos() {
+    const open = DATA.tours.filter(x => x.photoTodo);
+    if (!open.length || !/localhost|127\.0\.0\.1/.test(location.hostname)) return;
+    console.groupCollapsed(`[My Lombok Driver] ${open.length} tours are still using a stand-in photo`);
+    open.forEach(x => console.info(`${x.id} (${x.scene}) — ${x.photoTodo}`));
+    console.groupEnd();
+  }
+
   function init() {
     renderAll();
     initDelegates();
+    initMatch();
     initHeader();
     initBooking();
     window.addEventListener('popstate', syncTourFromHash);
     syncTourFromHash();
     loadReviewStats();
+    reportPhotoTodos();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

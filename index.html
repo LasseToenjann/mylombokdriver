@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-page="home">
 
 <a class="skip" href="#main">Skip to content</a>
 
@@ -44,6 +44,7 @@
 
     <nav class="nav" id="nav" aria-label="Main">
       <a href="#tours"   data-i18n="nav.tours">Tours &amp; prices</a>
+      <a href="#match"   data-i18n="nav.match">Find your tour</a>
       <a href="#why"     data-i18n="nav.why">Why me</a>
       <a href="#gallery" data-i18n="nav.gallery">Lombok</a>
       <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
@@ -103,8 +104,16 @@
       <p class="sec-sub" data-i18n="tours.sub">Honest “from” prices, everything that is included spelled out, and every route open to change. Tell me what you would rather see and the day is rebuilt around it.</p>
     </header>
 
-    <div class="filters" id="filters" role="tablist" aria-label="Tour categories"></div>
+    <!-- Only the seven marked `featured: true` in content.js. Fourteen cards
+         turned this section into a catalogue and pushed everything below it
+         out of reach on a phone; the full list lives on tours.html. -->
     <div class="tour-grid" id="tourGrid"></div>
+
+    <div class="tours-more">
+      <a class="btn btn-gold" id="toursAllCta" href="tours.html">See all 14 tours &amp; transfers</a>
+      <a class="btn btn-line" href="#match" data-i18n="tours.matchCta">Not sure? Find your match</a>
+      <p class="tours-more-hint" data-i18n="tours.allHint">The seven guests book most often are shown here.</p>
+    </div>
 
     <!-- One car, four seats. Said once, plainly, right under the prices that
          are quoted per car — so nobody discovers it after booking. -->
@@ -117,6 +126,22 @@
       </div>
       <a class="btn btn-gold" href="#book" data-book-service="custom" data-i18n="custom.cta">Design my own day</a>
     </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ FIND YOUR MATCH ═════════════ -->
+<!-- Four questions, then one recommendation with two runners-up. Rendered
+     entirely by js/app.js from MLD_CONTENT.matcher — the empty box below is
+     all the markup it needs. Without JavaScript the section removes itself
+     rather than sitting there as a dead heading. -->
+<section class="sec sec-dark" id="match">
+  <div class="wrap wrap-narrow">
+    <header class="sec-head">
+      <p class="eyebrow" data-i18n="match.eyebrow">Find your match</p>
+      <h2 data-i18n="match.title">Not sure which day is yours?</h2>
+      <p class="sec-sub" data-i18n="match.sub">Four questions, about twenty seconds, and you get the trip that actually fits — with the two closest runners-up underneath.</p>
+    </header>
+    <div class="match-box" id="matchBox"></div>
   </div>
 </section>
 
@@ -277,6 +302,8 @@
     <nav class="foot-col" aria-label="Explore">
       <h3 data-i18n="footer.explore">Explore</h3>
       <a href="#tours"   data-i18n="nav.tours">Tours &amp; prices</a>
+      <a href="tours.html" data-i18n="nav.allTours">All tours</a>
+      <a href="#match"   data-i18n="nav.match">Find your tour</a>
       <a href="#why"     data-i18n="nav.why">Why me</a>
       <a href="#gallery" data-i18n="nav.gallery">Lombok</a>
       <a href="#reviews" data-i18n="nav.reviews">Reviews</a>

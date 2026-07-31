@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title data-i18n="toursPage.metaTitle">All Tours &amp; Prices — Lombok Day Trips, Transfers &amp; Snorkelling | My Lombok Driver</title>
+<meta name="description" data-i18n-attr="content:toursPage.metaDesc" content="Every tour and transfer on Lombok with fixed prices: airport transfers, waterfalls, Rinjani viewpoints, Sasak villages, Gili snorkelling, Pink Beach and a three-day island trip.">
+<meta name="theme-color" content="#0A0A0B">
+<meta name="author" content="My Lombok Driver">
+<link rel="canonical" href="" id="canonical-link">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="My Lombok Driver">
+<meta property="og:title" data-i18n-attr="content:toursPage.metaTitle" content="All Tours &amp; Prices — Lombok Day Trips, Transfers &amp; Snorkelling | My Lombok Driver">
+<meta property="og:description" data-i18n-attr="content:toursPage.metaDesc" content="Every tour and transfer on Lombok with fixed prices: airport transfers, waterfalls, Rinjani viewpoints, Sasak villages, Gili snorkelling, Pink Beach and a three-day island trip.">
+<meta property="og:image" content="images/og-image.jpg" id="og-image">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/logo-mark.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<!-- data-page is read by js/app.js. It decides three things and nothing else:
+     that every tour is listed rather than the seven featured ones, that
+     "Book this" links back to the form on the home page, and which title and
+     canonical URL this document gets. -->
+<body data-page="tours">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ══════════════════════════════════════════ HEADER ══════════════════════ -->
+<header class="site-head" id="siteHead">
+  <div class="wrap head-inner">
+    <a class="brand" href="index.html" data-i18n-attr="aria-label:a11y.logo">
+      <img class="brand-mark" src="assets/logo-mark.svg" alt="" width="48" height="48">
+      <span class="brand-type">
+        <span class="brand-name">My Lombok Driver</span>
+        <span class="brand-claim">Your journey, our priority</span>
+      </span>
+    </a>
+
+    <!-- Everything except this page itself lives on the home page, so these
+         are full links rather than fragments. -->
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#tours"              data-i18n="nav.allTours">All tours</a>
+      <a href="#match"              data-i18n="nav.match">Find your tour</a>
+      <a href="index.html#why"      data-i18n="nav.why">Why me</a>
+      <a href="index.html#gallery"  data-i18n="nav.gallery">Lombok</a>
+      <a href="index.html#reviews"  data-i18n="nav.reviews">Reviews</a>
+      <a href="index.html#about"    data-i18n="nav.about">About</a>
+      <a href="index.html#faq"      data-i18n="nav.faq">FAQ</a>
+    </nav>
+
+    <div class="head-actions">
+      <a class="btn btn-gold btn-sm" href="index.html#book" data-i18n="nav.book">Book now</a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="nav" data-i18n-attr="aria-label:nav.menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ══════════════════════════════════════════ ALL TOURS ═══════════════════ -->
+<section class="sec sec-page" id="tours">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="eyebrow" data-i18n="toursPage.eyebrow">Everything we do</p>
+      <h1 data-i18n="toursPage.title">All Lombok tours, transfers &amp; island trips</h1>
+      <p class="sec-sub" data-i18n="toursPage.sub">Fourteen ways to spend a day, from a 30-minute airport run to three days around the island. Fixed prices, everything included spelled out, and every route open to change.</p>
+    </header>
+
+    <div class="filters" id="filters" role="tablist" aria-label="Tour categories"></div>
+    <div class="tour-grid" id="tourGrid"></div>
+
+    <p class="tour-capacity" data-i18n="tours.capacity">The car takes four guests plus their luggage. If you are a larger group, or travelling with something bulky, just ask before you book — a second car and driver can usually be arranged and we will find a way that works.</p>
+
+    <div class="custom-panel">
+      <div class="custom-copy">
+        <h2 data-i18n="custom.title">None of these quite right?</h2>
+        <p data-i18n="custom.text">Most guests end up with something of their own — two half tours joined together, a sunrise start before the tour buses arrive, three days around the island with the luggage in the boot. Describe your ideal day and you get a plan and a price back, usually the same day.</p>
+      </div>
+      <a class="btn btn-gold" href="index.html?service=custom#book" data-i18n="custom.cta">Design my own day</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ FIND YOUR MATCH ═════════════ -->
+<section class="sec sec-dark" id="match">
+  <div class="wrap wrap-narrow">
+    <header class="sec-head">
+      <p class="eyebrow" data-i18n="match.eyebrow">Find your match</p>
+      <h2 data-i18n="match.title">Not sure which day is yours?</h2>
+      <p class="sec-sub" data-i18n="match.sub">Four questions, about twenty seconds, and you get the trip that actually fits — with the two closest runners-up underneath.</p>
+    </header>
+    <div class="match-box" id="matchBox"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ BACK TO BOOKING ═════════════ -->
+<section class="sec">
+  <div class="wrap wrap-narrow">
+    <div class="custom-panel">
+      <div class="custom-copy">
+        <h2 data-i18n="book.title">Tell me about your trip</h2>
+        <p data-i18n="book.sub">Fill this in and WhatsApp opens with the whole enquiry already written. Nothing is sent automatically — you read it over and press send yourself.</p>
+      </div>
+      <a class="btn btn-gold" href="index.html#book" data-i18n="nav.book">Book now</a>
+    </div>
+    <p class="sec-foot"><a class="link-gold" href="index.html" data-i18n="toursPage.back">Back to the home page</a></p>
+  </div>
+</section>
+</main>
+
+<!-- ══════════════════════════════════════════ FOOTER ══════════════════════ -->
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <img src="assets/logo-lockup.svg" alt="My Lombok Driver" width="1000" height="566" loading="lazy">
+      <p data-i18n="footer.tagline">Private driver, airport transfers and tours across Lombok and the Gili Islands.</p>
+    </div>
+
+    <nav class="foot-col" aria-label="Explore">
+      <h3 data-i18n="footer.explore">Explore</h3>
+      <a href="index.html#tours"   data-i18n="nav.tours">Tours &amp; prices</a>
+      <a href="#tours"             data-i18n="nav.allTours">All tours</a>
+      <a href="#match"             data-i18n="nav.match">Find your tour</a>
+      <a href="index.html#why"     data-i18n="nav.why">Why me</a>
+      <a href="index.html#gallery" data-i18n="nav.gallery">Lombok</a>
+      <a href="index.html#reviews" data-i18n="nav.reviews">Reviews</a>
+      <a href="index.html#faq"     data-i18n="nav.faq">FAQ</a>
+    </nav>
+
+    <nav class="foot-col" aria-label="Services">
+      <h3 data-i18n="footer.services">Services</h3>
+      <div id="footServices"></div>
+    </nav>
+
+    <div class="foot-col">
+      <h3 data-i18n="footer.contact">Contact</h3>
+      <div id="footContact"></div>
+    </div>
+  </div>
+
+  <div class="wrap foot-bar">
+    <p>© <span id="year"></span> My Lombok Driver. <span data-i18n="footer.rights">All rights reserved.</span></p>
+    <p class="foot-note" data-i18n="footer.built">Prices are guide prices and confirmed on booking.</p>
+    <a class="foot-top" href="#top" data-i18n="footer.top">Back to top</a>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════ OVERLAYS ════════════════════ -->
+<div class="modal" id="tourModal" role="dialog" aria-modal="true" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="document">
+    <button class="modal-x" data-close aria-label="Close">&times;</button>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<a class="wa-float" id="waFloat" href="index.html#book" aria-label="Book on WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.6 2 2.2 6.39 2.2 11.8c0 1.9.5 3.66 1.4 5.2L2 22l5.15-1.55a9.9 9.9 0 0 0 4.89 1.28h.01c5.44 0 9.84-4.39 9.84-9.8C21.89 6.39 17.48 2 12.04 2Zm5.7 13.94c-.24.67-1.4 1.29-1.93 1.34-.5.05-1.13.07-1.82-.11-.42-.11-.96-.29-1.65-.58-2.9-1.23-4.8-4.1-4.95-4.29-.14-.19-1.18-1.55-1.18-2.96 0-1.4.74-2.09 1-2.38.25-.29.55-.36.74-.36.18 0 .37 0 .53.01.17.01.4-.06.62.47.24.55.8 1.92.87 2.06.07.14.12.31.02.5-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.14-.3.3-.13.59.17.29.76 1.23 1.63 1.99 1.12.98 2.06 1.28 2.35 1.42.29.15.46.12.63-.07.17-.19.73-.83.92-1.12.19-.29.39-.24.65-.14.26.09 1.65.77 1.93.91.29.14.48.22.55.34.07.12.07.69-.17 1.36Z"/></svg>
+</a>
+
+<script src="js/config.js"></script>
+<script src="js/content.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

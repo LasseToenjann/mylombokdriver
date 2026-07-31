@@ -18,6 +18,8 @@ window.MLD_I18N = {
   'meta.description':  'English-speaking private driver on Lombok: airport transfers from LOP, day tours, Gili snorkelling and fast boats. Fixed prices, book on WhatsApp.',
 
   'nav.tours':    'Tours & prices',
+  'nav.match':    'Find your tour',
+  'nav.allTours': 'All tours',
   'nav.why':      'Why me',
   'nav.gallery':  'Lombok',
   'nav.reviews':  'Reviews',
@@ -54,6 +56,32 @@ window.MLD_I18N = {
   'tours.book':    'Book this',
   'tours.approx':  'approx.',
   'tours.capacity': 'The car takes four guests plus their luggage. If you are a larger group, or travelling with something bulky, just ask before you book — a second car and driver can usually be arranged and we will find a way that works.',
+
+  /* The home page shows a shortlist; the full catalogue lives on tours.html. */
+  'tours.allCta':   'See all {n} tours & transfers',
+  'tours.allHint':  'The seven guests book most often are shown here.',
+  'tours.matchCta': 'Not sure? Find your match',
+
+  'toursPage.eyebrow': 'Everything we do',
+  'toursPage.title':   'All Lombok tours, transfers & island trips',
+  'toursPage.sub':     'Fourteen ways to spend a day, from a 30-minute airport run to three days around the island. Fixed prices, everything included spelled out, and every route open to change.',
+  'toursPage.back':    'Back to the home page',
+  'toursPage.metaTitle': 'All Tours & Prices — Lombok Day Trips, Transfers & Snorkelling | My Lombok Driver',
+  'toursPage.metaDesc':  'Every tour and transfer on Lombok with fixed prices: airport transfers, waterfalls, Rinjani viewpoints, Sasak villages, Gili snorkelling, Pink Beach and a three-day island trip.',
+
+  'match.eyebrow':  'Find your match',
+  'match.title':    'Not sure which day is yours?',
+  'match.sub':      'Four questions, about twenty seconds, and you get the trip that actually fits — with the two closest runners-up underneath.',
+  'match.start':    'Start',
+  'match.step':     'Question {n} of {total}',
+  'match.back':     'Back',
+  'match.again':    'Start again',
+  'match.result':   'Your match',
+  'match.because':  'Because you said',
+  'match.alts':     'Also worth a look',
+  'match.details':  'See the full day',
+  'match.book':     'Book this',
+  'match.allCta':   'Or browse all tours',
 
   'custom.title': 'None of these quite right?',
   'custom.text':  'Most guests end up with something of their own — two half tours joined together, a sunrise start before the tour buses arrive, three days around the island with the luggage in the boot. Describe your ideal day and you get a plan and a price back, usually the same day.',

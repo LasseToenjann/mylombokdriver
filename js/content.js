@@ -81,6 +81,9 @@ window.MLD_CONTENT = {
       id: 'airport-transfer',
       cats: ['transfers'],
       scene: 'kuta-coast.webp',
+      photoTodo: 'A pick-up shot: the car at LOP arrivals, or luggage going into the boot.',
+      featured: true,
+      match: { vibe: ['transfer'], time: 'short', who: ['couple','kids','friends'], pace: 'easy' },
       price: 350000, unit: 'car',
       duration: '30–90 min',
       title:  'Airport Transfer',
@@ -103,6 +106,9 @@ window.MLD_CONTENT = {
       id: 'speedboat-gili',
       cats: ['transfers', 'islands'],
       scene: 'gili-boat.webp',
+      photoTodo: 'The speedboat at Teluk Nara. Current file is a 1176 px Instagram screenshot.',
+      featured: true,
+      match: { vibe: ['transfer','sea'], time: 'short', who: ['couple','kids','friends'], pace: 'easy' },
       price: 700000, unit: 'car',
       duration: 'Approx. 2 h door to island',
       title:  'Transfer to the Gili Islands',
@@ -125,6 +131,8 @@ window.MLD_CONTENT = {
       id: 'waterfalls-north',
       cats: ['tours'],
       scene: 'waterfall.webp',
+      featured: true,
+      match: { vibe: ['green'], time: 'day', who: ['couple','kids','friends'], pace: 'medium' },
       price: 1300000, unit: 'car',
       duration: 'Full day, approx. 9 h',
       title:  'Sendang Gile & Tiu Kelep Waterfalls',
@@ -148,6 +156,9 @@ window.MLD_CONTENT = {
       id: 'benang-stokel',
       cats: ['tours'],
       scene: 'waterfall-tall.webp',
+      photoTodo: 'Benang Kelambu — the curtain of water coming straight out of the rock.',
+      featured: false,
+      match: { vibe: ['green','culture'], time: 'day', who: ['couple','kids','friends'], pace: 'medium' },
       price: 1400000, unit: 'car',
       duration: 'Full day, approx. 8 h',
       title:  'Benang Stokel & Benang Kelambu Waterfalls',
@@ -172,6 +183,9 @@ window.MLD_CONTENT = {
       id: 'tetebatu',
       cats: ['tours'],
       scene: 'rinjani.webp',
+      photoTodo: 'The Tetebatu rice terraces. Current file shows Rinjani from the coast.',
+      featured: false,
+      match: { vibe: ['green','culture'], time: 'day', who: ['couple','friends'], pace: 'active' },
       price: 1500000, unit: 'car',
       duration: 'Full day, approx. 9 h',
       title:  'Tetebatu — Rice Fields & Countryside',
@@ -195,6 +209,9 @@ window.MLD_CONTENT = {
       id: 'rinjani-sembalun',
       cats: ['tours'],
       scene: 'rinjani.webp',
+      photoTodo: 'Bukit Selong looking over the field patchwork, or the switchback road.',
+      featured: true,
+      match: { vibe: ['green'], time: 'day', who: ['couple','friends'], pace: 'medium' },
       price: 1450000, unit: 'car',
       duration: 'Full day, approx. 10 h',
       title:  'Sembalun Valley & Rinjani Viewpoints',
@@ -218,6 +235,8 @@ window.MLD_CONTENT = {
       id: 'south-sasak',
       cats: ['tours'],
       scene: 'selong-belanak.webp',
+      featured: true,
+      match: { vibe: ['culture','sea'], time: 'day', who: ['couple','kids','friends'], pace: 'easy' },
       price: 1200000, unit: 'car',
       duration: 'Full day, approx. 9 h',
       title:  'Sasak Culture & the South Coast',
@@ -241,6 +260,9 @@ window.MLD_CONTENT = {
       id: 'city-culture',
       cats: ['tours'],
       scene: 'hero.webp',
+      photoTodo: 'The Islamic Centre, Kebon Roek market or Ampenan old town at dusk.',
+      featured: false,
+      match: { vibe: ['culture'], time: 'day', who: ['couple','kids'], pace: 'easy' },
       price: 1200000, unit: 'car',
       duration: 'Full day, approx. 7 h',
       title:  'City & Culture, West Lombok',
@@ -264,6 +286,9 @@ window.MLD_CONTENT = {
       id: 'gili-snorkeling',
       cats: ['islands'],
       scene: 'gili-shallows.webp',
+      photoTodo: 'Underwater or the turtle point. Current file is a 1176 px screenshot.',
+      featured: true,
+      match: { vibe: ['sea'], time: 'day', who: ['couple','kids','friends'], pace: 'medium' },
       price: 1050000, unit: 'person',
       duration: 'Full day, approx. 8 h',
       title:  'Gili Islands Snorkelling Trip',
@@ -287,6 +312,9 @@ window.MLD_CONTENT = {
       id: 'southwest-islands',
       cats: ['islands'],
       scene: 'tanjung-aan.webp',
+      photoTodo: 'Gili Nanggu or Gili Kedis. Current file shows the south coast instead.',
+      featured: false,
+      match: { vibe: ['sea'], time: 'day', who: ['couple','kids','friends'], pace: 'medium' },
       price: 800000, unit: 'person',
       duration: 'Full day, approx. 8 h',
       title:  'Gili Nanggu, Sudak & Kedis',
@@ -310,6 +338,9 @@ window.MLD_CONTENT = {
       id: 'pink-beach',
       cats: ['islands', 'tours'],
       scene: 'tanjung-bloam.webp',
+      photoTodo: 'The pink sand itself, wet, so the colour actually shows.',
+      featured: true,
+      match: { vibe: ['sea'], time: 'day', who: ['couple','friends'], pace: 'medium' },
       price: 1000000, unit: 'person',
       duration: 'Full day, approx. 9 h',
       title:  'Pink Beach & Gili Petelu',
@@ -334,6 +365,9 @@ window.MLD_CONTENT = {
       id: 'hidden-paradise',
       cats: ['islands'],
       scene: 'gili-shallows.webp',
+      photoTodo: 'Gili Kapal, the sandbank at low tide, or the mangrove channels.',
+      featured: false,
+      match: { vibe: ['sea'], time: 'day', who: ['couple','friends'], pace: 'active' },
       price: 1100000, unit: 'person',
       duration: 'Full day, approx. 10 h',
       title:  'Hidden Paradise — the North-East Islands',
@@ -358,6 +392,9 @@ window.MLD_CONTENT = {
       id: 'gili-day-trip',
       cats: ['islands'],
       scene: 'gili-boat.webp',
+      photoTodo: 'The sea swings on the west shore of Trawangan.',
+      featured: false,
+      match: { vibe: ['sea'], time: 'day', who: ['couple','friends'], pace: 'easy' },
       price: 650000, unit: 'person',
       duration: 'Full day, approx. 9 h',
       title:  'Gili Trawangan Day Trip',
@@ -380,6 +417,9 @@ window.MLD_CONTENT = {
       id: 'lombok-3-day',
       cats: ['multi', 'tours', 'islands'],
       scene: 'hero.webp',
+      photoTodo: 'One frame that carries three days — the boat day is the strongest candidate.',
+      featured: false,
+      match: { vibe: ['green','sea','culture'], time: 'multi', who: ['couple','friends'], pace: 'active' },
       price: 0, unit: 'ask',
       duration: '3 days, 2 nights',
       title:  'Lombok in Three Days',
@@ -401,6 +441,63 @@ window.MLD_CONTENT = {
       note: 'Priced with the itinerary rather than off a list, because the hotels depend on how many of you there are. As a guide, two guests in one room comes to roughly IDR 6,400,000 for the three days, everything above included; a third and fourth guest add a room. Dinners and the two lunches on days one and three are your own. Starting from Kuta or the airport, the whole thing can be run in reverse.'
     }
   ],
+
+  /* --------------------------------------------------------------------- */
+  /* "Find your match" — the four questions                                 */
+  /* --------------------------------------------------------------------- */
+  /*  Every tour carries a `match` object with the same four keys. A tour
+      scores points for each answer it satisfies, and the highest score wins.
+
+      The weights below are deliberately lopsided. What somebody wants to SEE
+      decides the day; how active they feel is a tiebreaker. Getting that
+      order wrong produces a technically correct answer that feels wrong —
+      somebody who says "the sea" should never be handed a temple tour just
+      because the pace matched.
+
+      `who` and `pace` never rule a tour out, they only reorder. With four
+      questions and fourteen tours there is always a sensible answer, and a
+      matcher that says "nothing fits" is worse than no matcher.               */
+  matcher: {
+    questions: [
+      {
+        id: 'vibe', weight: 5,
+        q: 'What are you here for?',
+        options: [
+          { value: 'sea',      label: 'The sea and the islands', hint: 'Snorkelling, boats, empty beaches' },
+          { value: 'green',    label: 'Waterfalls and mountains', hint: 'Rinjani, rainforest, rice terraces' },
+          { value: 'culture',  label: 'Villages and markets',     hint: 'Sasak life, temples, weaving, pottery' },
+          { value: 'transfer', label: 'Just getting somewhere',   hint: 'Airport, harbour, hotel to hotel' }
+        ]
+      },
+      {
+        id: 'time', weight: 4,
+        q: 'How much time do you have?',
+        options: [
+          { value: 'short', label: 'A couple of hours', hint: 'A ride, not a day out' },
+          { value: 'day',   label: 'A whole day',       hint: 'Out after breakfast, back for dinner' },
+          { value: 'multi', label: 'Several days',      hint: 'Sleeping somewhere new' }
+        ]
+      },
+      {
+        id: 'who', weight: 2,
+        q: 'Who is coming along?',
+        options: [
+          { value: 'couple',  label: 'One or two of us',   hint: '' },
+          { value: 'kids',    label: 'With children',      hint: 'Shorter walks, child seat, no long boat rides' },
+          { value: 'friends', label: 'A group of friends', hint: 'Up to four in the car' }
+        ]
+      },
+      {
+        id: 'pace', weight: 2,
+        q: 'How active should it be?',
+        options: [
+          { value: 'easy',   label: 'Easy',        hint: 'Mostly looking, short walks' },
+          { value: 'medium', label: 'A bit of both', hint: 'Some walking, some swimming' },
+          { value: 'active', label: 'As much as fits', hint: 'Long walks, long days, early starts' }
+        ]
+      }
+    ]
+  },
 
   /* --------------------------------------------------------------------- */
   /* Gallery                                                                */

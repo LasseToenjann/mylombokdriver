@@ -18,7 +18,7 @@ Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 | # | Was | Wo | Status |
 |---|-----|-----|--------|
 | 1 | **WhatsApp-Nummer** eintragen | `js/config.js` → `contact.whatsapp` | ✅ erledigt |
-| 2 | **Echte Fotos** einsetzen | `images/` | ✅ erledigt (2 eigene, 8 von Pexels) |
+| 2 | **Echte Fotos** einsetzen | `images/` | ⚠️ 12 Touren zeigen ein Platzhalterbild, siehe unten |
 | 3 | **Live-URL** eintragen | `js/config.js`, `sitemap.xml`, `robots.txt` | ✅ erledigt |
 | 4 | **Preise & Touren** an die Vorlagen-Websites angleichen | `js/content.js` | ⚠️ eingebaut, muss vom Fahrer bestätigt werden |
 | 5 | **Bewertungen** | `js/content.js` → `reviews:` | ✅ echte Google-Bewertungen |
@@ -212,21 +212,47 @@ sondern direkt in `index.html` (`images/hero.webp` bzw. `images/waterfall-tall.w
 > gewonnen und deshalb nur 1176 px breit. Sobald die Originaldateien vorliegen,
 > sollten sie unter gleichem Namen ersetzt werden.
 
-**Vier Bilder kommen doppelt vor**, weil es 14 Touren, aber nur 10 Fotos gibt:
-`rinjani.webp` (Tetebatu und Sembalun), `gili-boat.webp` (Gili-Transfer und
-Trawangan-Tagestour), `gili-shallows.webp` (Gili-Schnorcheln und Hidden
-Paradise) und `hero.webp` (City-Tour und Drei-Tages-Tour). Das fällt beim
-Scrollen kaum auf, weil die Paare nie nebeneinander stehen — aber diese sechs
-Touren sind die erste Adresse, wenn eigene Fotos dazukommen:
+### Welche Fotos noch fehlen
 
-| Tour | braucht am dringendsten ein eigenes Foto von |
-|---|---|
-| `tetebatu` | Reisterrassen bei Tetebatu |
-| `benang-stokel` | Benang Kelambu, der „Vorhang"-Wasserfall |
-| `city-culture` | Islamic Centre oder Ampenan Altstadt |
-| `southwest-islands` | Gili Nanggu oder Gili Kedis |
-| `hidden-paradise` | Gili Kapal, die Sandbank |
-| `lombok-3-day` | ein Bild, das die drei Tage zusammenfasst |
+14 Touren, 10 Fotos. Zwölf Touren zeigen deshalb ein **Platzhalterbild** —
+entweder eins, das einer anderen Tour gehört, oder eins, das die Gegend nur
+ungefähr trifft. Die Seite sieht damit vollständig aus, aber die Bilder
+erzählen noch nicht die richtige Geschichte.
+
+Welche Tour was braucht, steht **im Code selbst**, im Feld `photoTodo` der
+jeweiligen Tour in `js/content.js`. Die Liste lässt sich jederzeit abrufen:
+
+```bash
+grep -n "photoTodo" js/content.js
+```
+
+Beim lokalen Aufruf (`localhost`) schreibt die Seite dieselbe Liste
+zusammengeklappt in die Browser-Konsole. Auf der Live-Seite passiert das
+bewusst nicht — Besucher sollen davon nichts mitbekommen.
+
+**Nach Dringlichkeit sortiert:**
+
+| Priorität | Tour | Braucht ein Foto von |
+|---|---|---|
+| hoch | `pink-beach` | dem rosa Sand selbst, nass, damit die Farbe rauskommt |
+| hoch | `tetebatu` | den Reisterrassen (zeigt aktuell Rinjani von der Küste) |
+| hoch | `benang-stokel` | Benang Kelambu, dem „Vorhang" aus der Felswand |
+| hoch | `city-culture` | Islamic Centre, Kebon-Roek-Markt oder Ampenan bei Dämmerung |
+| mittel | `southwest-islands` | Gili Nanggu oder Gili Kedis (zeigt aktuell die Südküste) |
+| mittel | `hidden-paradise` | Gili Kapal, der Sandbank bei Ebbe, oder den Mangrovenkanälen |
+| mittel | `airport-transfer` | dem Auto an der Ankunft in LOP, Koffer im Kofferraum |
+| mittel | `lombok-3-day` | einem Bild, das die drei Tage zusammenfasst |
+| mittel | `rinjani-sembalun` | Bukit Selong oder der Serpentinenstraße |
+| niedrig | `gili-day-trip` | den Schaukeln im Wasser auf Trawangans Westseite |
+| niedrig | `speedboat-gili` | dem Speedboot in Teluk Nara (Datei nur 1176 px breit) |
+| niedrig | `gili-snorkeling` | unter Wasser oder dem Turtle Point (Datei nur 1176 px breit) |
+
+Korrekt bebildert sind nur `waterfalls-north` (Tiu Kelep) und `south-sasak`
+(Selong Belanak).
+
+Ein neues Foto einsetzen heißt: Datei nach `images/`, `scene:` bei der Tour
+ändern, und die Zeile `photoTodo:` löschen — dann verschwindet sie auch aus
+der Liste oben.
 
 ---
 
@@ -476,12 +502,13 @@ Compositor-Ebenen an und erzeugt genau das Ruckeln, das es verhindern soll.
 ## Struktur
 
 ```
-index.html               alle Sektionen (Texte über data-i18n aus i18n.js)
+index.html               Startseite (Texte über data-i18n aus i18n.js)
+tours.html               vollständige Tourenübersicht, alle 14
 css/style.css            Design-System (Farben, Typografie, alle Komponenten)
 js/config.js             ← Kontaktdaten, Live-URL, Umrechnungskurs, Feature-Schalter
 js/content.js            ← Touren, Preise, Galerie, Bewertungen, FAQ
 js/i18n.js               ← Oberflächentexte, WhatsApp-Nachrichtenvorlage
-js/app.js                Rendering, Modals, Lightbox, Formular
+js/app.js                Rendering, Modals, Lightbox, Formular, „Find your match"
 assets/logo-lockup.svg   Logo mit Schriftzug (Hero und Footer)
 assets/logo-mark.svg     Logo, nur Lenkrad (Header, „Über uns")
 assets/favicon.svg       Browser-Icon
@@ -497,13 +524,81 @@ robots.txt, sitemap.xml  SEO — enthalten die Live-URL
 .nojekyll                nötig, damit GitHub Pages die Dateien unverändert ausliefert
 ```
 
+## Zwei Seiten statt einer
+
+Mit 14 Touren wurde die Startseite zum Katalog: die Tourenliste allein war
+länger als alles darunter, und auf dem Handy war der Buchungsbereich
+unerreichbar weit unten. Deshalb jetzt:
+
+* **`index.html`** zeigt **nur die sieben beliebtesten** Touren, gefolgt von zwei
+  Wegen weiter — „See all 14 tours" und „Not sure? Find your match".
+* **`tours.html`** zeigt **alle 14**, mit den Kategoriefiltern, die vorher auf
+  der Startseite saßen.
+
+**Welche Touren die Startseite zeigt**, steht in `js/content.js` — jede Tour hat
+ein Feld `featured`:
+
+```js
+featured: true,     // erscheint auf der Startseite
+featured: false,    // nur auf tours.html
+```
+
+Mehr braucht es nicht. Der Knopf „See all 14 tours" zählt selbst, wie viele
+Touren es insgesamt gibt, und der Footer verlinkt automatisch dieselbe Auswahl.
+
+Beide Seiten teilen sich **eine** `app.js`. Jede Render-Funktion prüft, ob ihr
+Ziel-Element überhaupt existiert, und tut sonst nichts — dadurch braucht
+`tours.html` kein eigenes Skript. Das Attribut `data-page="tours"` am `<body>`
+entscheidet nur drei Dinge: welche Touren gelistet werden, wohin „Book this"
+zeigt (auf tours.html gibt es kein Formular, der Knopf verlinkt deshalb auf
+`index.html?service=<id>#book` und das Formular wählt die Tour beim Ankommen
+selbst aus) und welchen Titel und welche Canonical-URL das Dokument bekommt.
+
+---
+
+## „Find your match"
+
+Vier Fragen, danach eine Empfehlung plus die zwei nächstbesten. Der Abschnitt
+steht auf beiden Seiten und wird komplett aus `js/content.js` gebaut.
+
+**Die Fragen** stehen unter `matcher.questions`. Jede Frage hat ein `weight`:
+
+| Frage | Gewicht | Warum |
+|---|---|---|
+| Was willst du sehen? | 5 | entscheidet den Tag |
+| Wie viel Zeit? | 4 | schließt Halbtages- gegen Mehrtagestouren aus |
+| Wer kommt mit? | 2 | sortiert um, schließt nichts aus |
+| Wie aktiv? | 2 | Stichentscheid |
+
+**Die Zuordnung** steht bei jeder Tour im Feld `match`:
+
+```js
+match: { vibe: ['sea'], time: 'day', who: ['couple','kids','friends'], pace: 'medium' },
+```
+
+`pace` wird als Skala gewertet, nicht als Treffer oder Fehlschlag: wer „easy"
+wählt und „medium" angeboten bekommt, ist ordentlich bedient, „active" nicht.
+Ohne das landeten regelmäßig drei Touren auf exakt derselben Punktzahl und die
+„beste" wurde durch nichts als die Reihenfolge im Array bestimmt.
+
+Das Ergebnis zeigt unter der Empfehlung die gewählten Antworten als Chips
+(„Because you said …"). Eine Empfehlung, die niemand nachprüfen kann, glaubt
+auch niemand.
+
+**Eine neue Tour aufnehmen** heißt nur: das `match`-Feld ausfüllen. Fehlt es,
+kann die Tour nie empfohlen werden — sie taucht aber ganz normal in den Listen
+auf.
+
+---
+
 ## Funktionen
 
 - **Buchung über WhatsApp ohne Backend** — das Formular baut aus den Eingaben eine
   fertige Nachricht. Nichts wird automatisch versendet: der Gast sieht die
   Nachricht vorher und drückt selbst auf Senden.
 - **Mobile First** — auf 360–430 px entworfen, Touch-Flächen ab 44 px, kein horizontales Scrollen
-- **8 Touren** mit Filter nach Kategorie und Detail-Ansicht (Ablauf, Leistungen, Hinweise)
+- **14 Touren**, sieben davon auf der Startseite, alle auf `tours.html` mit Filter nach Kategorie und Detail-Ansicht (Ablauf, Leistungen, Hinweise)
+- **„Find your match"** — vier Fragen, eine Empfehlung, zwei Alternativen
 - **Galerie** mit Lightbox und Pfeiltasten-Navigation
 - **FAQ-Akkordeon**, Bewertungen, „Über uns"
 - **Instagram** prominent verlinkt: eigene Sektion, Header-Buchungspfad, Footer
