@@ -23,9 +23,11 @@ Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 | 4 | **Preise & Touren** an die Vorlagen-Websites angleichen | `js/content.js` | ⚠️ eingebaut, muss vom Fahrer bestätigt werden |
 | 5 | **Bewertungen** | `js/content.js` → `reviews:` | ✅ echte Google-Bewertungen |
 | 6 | **Fahrer-Foto und Name** | `js/config.js` → `business.driverPhoto`, `driverName` | ✅ erledigt (Suhar) |
-| 7 | **Gründungsjahr** | `js/config.js` → `business.since` | ❌ offen |
-| 8 | **Facebook-Seite** verlinken | `js/config.js` → `contact.facebook` | ✅ erledigt (numerische Profil-URL) |
-| 9 | **Fahrzeug: 4 Plätze** klarstellen | `js/content.js`, `js/i18n.js` | ✅ erledigt |
+| 7 | **Facebook-Seite** verlinken | `js/config.js` → `contact.facebook` | ✅ erledigt, Link vom Betreiber geprüft |
+| 8 | **Fahrzeug: 4 Plätze** klarstellen | `js/content.js`, `js/i18n.js` | ✅ erledigt |
+
+Ein Gründungsjahr wird bewusst **nicht** genannt — es stand früher als offener
+Punkt hier und ist auf Wunsch des Betreibers ersatzlos entfallen.
 
 ### Preise und Touren: woher die Zahlen kommen
 

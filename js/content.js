@@ -148,7 +148,7 @@ window.MLD_CONTENT = {
         'National park entrance and the local waterfall guide',
         'Chilled water and soft drinks'
       ],
-      note: 'Pick-up around 08:30, about 2.5 hours to Senaru. Lunch is your own — there are warungs at the waterfall entrance and grilled fish from the stalls at Nipah on the way back.'
+      note: 'Pick-up around 08:30, about 1 h 45 min to Senaru. Lunch is your own — there are warungs at the waterfall entrance and grilled fish from the stalls at Nipah on the way back.'
     },
     {
       id: 'benang-stokel',

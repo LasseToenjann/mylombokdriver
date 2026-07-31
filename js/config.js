@@ -25,8 +25,6 @@ window.MLD_CONFIG = {
        or a stand-in landscape shot looks worse than no photo at all. Drop the
        file in, name it here, and the portrait column appears. */
     driverPhoto: 'driver.webp',
-    /* Year the business started — shown as "since ...". Empty = hidden. */
-    since: '',                                             // ### TODO ###
     base: 'Senggigi, West Lombok',
     address: 'Jalan Wisata Alam Kerandangan, Senggigi, Lombok Barat, Nusa Tenggara Barat, Indonesia',
     serviceArea: 'All of Lombok, Gili Islands & Lombok International Airport (LOP)'
