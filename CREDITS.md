@@ -42,19 +42,21 @@ damit nachvollziehbar bleibt, was woher kommt.
 Die Namen der zuletzt ergänzten Fotos sind aus den Dateinamen der
 Pexels-Downloads abgeleitet. Pexels ist aus der Entwicklungsumgebung nicht
 erreichbar, die Schreibweise konnte deshalb nicht auf der Quellseite geprüft
-werden — vor einem Impressum einmal nachsehen.
+werden. Der Betreiber hat den Stand abgenommen; sollte einmal ein Impressum
+dazukommen, ist das die Stelle, an der man die Schreibweisen gegenprüft.
 
 **Ortsangaben:** Zwei der neuen Fotos zeigen erkennbar einen Gili
 (`gili-meno-swing.webp` trägt das Schild „Seri Resort – Gili Meno",
 `gili-anchorage.webp` zeigt Lombok im Hintergrund). Bei den übrigen ist der
 Ort nicht überprüfbar; sie sind so eingesetzt, dass die Bildunterschrift und
 der Tourtext keinen Ort behaupten, den das Bild nicht zeigt. `coastal-town.webp`
-ist der unsicherste Fall, siehe README.
+war der unsicherste Fall und ist vom Betreiber so bestätigt.
 
-Die Fotos zeigen echte Orte auf Lombok, sind aber **keine Aufnahmen von
-My Lombok Driver**. Die Galerie beschreibt sie deshalb nur nach Ort und verweist
-für die tatsächlichen Tourfotos ausdrücklich auf den Instagram-Kanal. Sobald
-genug eigene Aufnahmen vorliegen, sollten sie die Stock-Fotos ersetzen.
+Die Fotos zeigen echte Orte auf Lombok, sind aber bis auf `gili-shallows.webp`
+**keine Aufnahmen von My Lombok Driver**. Deshalb behauptet kein Text auf der
+Seite, dass ein Bild von einer bestimmten Fahrt stammt, und für die
+tatsächlichen Tourfotos verweist ein eigener Abschnitt auf den Instagram-Kanal.
+Sobald genug eigene Aufnahmen vorliegen, sollten sie die Stock-Fotos ersetzen.
 
 ## Logo
 

@@ -30,6 +30,17 @@ was geprüft wurde:
 Ein Gründungsjahr wird bewusst **nicht** genannt — es stand früher als offener
 Punkt hier und ist auf Wunsch des Betreibers ersatzlos entfallen.
 
+### Der einzige verbliebene Punkt
+
+**Die Bewertungszahlen werden von Hand gepflegt.** In `js/config.js` stehen
+5,0 aus 41 Bewertungen; der Vertrauensbalken unter dem Hero zeigt genau diese
+Zahlen. Sie veralten mit jeder neuen Google-Bewertung.
+
+Der Workflow, der sie automatisch holt, liegt fertig im Repository und braucht
+nur zwei Repository-Secrets — siehe Abschnitt „Live-Bewertungen" weiter unten.
+Alles andere auf dieser Seite ist abgenommen: Preise, Touren, Texte, Fotos,
+Kontaktdaten, Facebook-Link und die Anmeldung in der Search Console.
+
 ### Preise und Touren: woher die Zahlen kommen
 
 Grundlage sind die beiden als Vorlage genannten Anbieter:
@@ -57,10 +68,10 @@ Die beiden rechnen **unterschiedlich**, das ist der wichtigste Punkt:
 | Eintritte | **enthalten**, inklusive lokaler Guides — so machen es beide Anbieter |
 | Umfang | **13 Touren**, deckt praktisch alles ab, was A und B zusammen anbieten |
 
-**Eine Annahme, die der Fahrer prüfen sollte:** A nennt seine Fahrzeugpreise für
+**Eine Annahme, die der Fahrer geprüft hat:** A nennt seine Fahrzeugpreise für
 **zwei** Gäste, unsere gelten für **bis zu vier**. Eine vierköpfige Familie zahlt
-bei uns damit deutlich weniger als bei A. Das ist bewusst so — ein Auto, ein
-Preis — aber er kann sich ab drei Gästen einen Aufschlag wünschen.
+bei uns damit deutlich weniger als bei A. Er hat das so bestätigt — ein Auto,
+ein Preis, kein Aufschlag ab dem dritten Gast.
 
 **Nicht übernommen wurden** die Fehler der Quellseiten: B nennt bei einer Tour
 68 statt 38 USD, im Footer die Vorwahl +68 statt +62, und bei der Waterfall Tour
@@ -106,8 +117,8 @@ trägt (`contact.facebookName` ist leer).
 numerische Profil-URL, die dauerhaft gilt. Der Parameter `?http_ref=…`, den
 Facebook beim Kopieren anhängt, ist entfernt: er enthält nur einen Zeitstempel
 des Kopiervorgangs. Der Link konnte aus der Entwicklungsumgebung nicht geöffnet
-werden (Facebook ist dort geblockt), also einmal im Browser prüfen, ob er auf
-dem richtigen Profil landet.
+werden (Facebook ist dort geblockt). Der Betreiber hat den Link im Browser
+geprüft: er landet auf dem richtigen Profil.
 
 Offene Aufgaben wären im Code mit `### TODO ###` markiert — aktuell gibt es
 keine mehr:
@@ -235,10 +246,11 @@ die Stock-Fotos, sitzt aber inhaltlich genauer — und sie ist echt.
 Es gibt keinen Behelf mehr: Der letzte war die Kuta-Panorama-Aufnahme bei
 der Drei-Tages-Tour, und mit der Tour ist auch das Bild weggefallen.
 
-**Eingesetzt trotz Unsicherheit:** `coastal-town.webp` bei „City & Culture,
-West Lombok". Unten links steht eine Kirche mit Kreuz, und die Bauweise
-erinnert eher an Ostindonesien als an Mataram. Es steht dort auf ausdrücklichen
-Wunsch; wenn sich herausstellt, dass es nicht Lombok ist, gehört es getauscht.
+**Der Bilderstand ist abgenommen.** `coastal-town.webp` bei „City & Culture,
+West Lombok" war der einzige Zweifelsfall — unten links eine Kirche mit Kreuz,
+die Bauweise erinnert eher an Ostindonesien als an Mataram. Der Betreiber hat
+es geprüft und so bestätigt. Bildunterschrift und Tourtext behaupten dort
+ohnehin keinen Ort, den das Bild nicht zeigt.
 
 ### Ein Bild, das wieder entfernt wurde
 
@@ -265,7 +277,8 @@ Lombok** aufgenommen wurden:
   bugineischer Pinisi.
 
 Sie liegen bereit und sind in einer Minute eingebaut, falls die Herkunft doch
-geklärt ist.
+geklärt ist. Gebraucht werden sie nicht: jede der dreizehn Touren hat ihr
+eigenes Bild.
 
 ### Die Galerie gibt es nicht mehr
 
