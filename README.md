@@ -11,9 +11,10 @@ eine Sprache, die alle lesen, schlägt eine halb übersetzte Seite.
 
 ---
 
-## ⚠️ Vor dem Livegang zwingend erledigen
+## ✅ Vor dem Livegang zwingend erledigen
 
-Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
+Diese Liste ist abgearbeitet — sie bleibt stehen, damit nachvollziehbar ist,
+was geprüft wurde:
 
 | # | Was | Wo | Status |
 |---|-----|-----|--------|

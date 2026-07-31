@@ -4,7 +4,7 @@
    This is the ONLY file you need to touch for day-to-day changes:
    phone number, e-mail, address, prices and the exchange rate.
 
-   Everything marked  ### TODO ###  must be filled in before going live.
+   Offene Aufgaben stünden hier als  ### TODO ###  — aktuell gibt es keine.
    ========================================================================== */
 
 window.MLD_CONFIG = {
