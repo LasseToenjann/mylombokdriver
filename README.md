@@ -310,6 +310,27 @@ Alles andere folgt daraus:
 - Einzelne Karten animieren einzeln, Abschnitts-Überschriften und große Blöcke
   reisen kürzer (16–20 px) als kleine Elemente.
 
+**Was sonst noch animiert, damit es nicht monoton wird:**
+
+| Wo | Was |
+|---|---|
+| Bewertungsleiste | Schnitt zählt von 0,0 auf 5,0, die Anzahl von 0 auf 41, die fünf Sterne bauen sich im Abstand von 70 ms auf — die drei zusammen lesen sich als *eine* Geste |
+| Bewertungskarten | Dieselben aufbauenden Sterne pro Karte |
+| „Über uns", ab 901 px | Foto kommt von links, Text von rechts — dort stehen sie tatsächlich nebeneinander, also liest sich die seitliche Bewegung als Einrasten |
+| Bilder | Blenden beim Dekodieren ein statt hart zu erscheinen |
+
+**Zwei Ursachen für das restliche Aufploppen waren gar keine Kurven-Frage:**
+
+1. **Ganze Bereiche waren nie im Reveal-System** — die Bewertungsleiste, das
+   Laufband, die Filter-Buttons, der „Read on Google"-Link und der komplette
+   Footer erschienen einfach mit der Seite. Jetzt sind alle 62 animierten
+   Elemente abgedeckt, geprüft per Skript.
+2. **Bilder mit `loading="lazy"`** kommen, wenn das Netz sie liefert — bei
+   16 von 24 lange nachdem ihre Karte eingeblendet war. Kein Reveal-System
+   fängt das ab. Sie blenden jetzt beim Dekodieren ein; bereits zwischen-
+   gespeicherte Bilder überspringen das, damit beim zweiten Besuch nichts
+   blinkt.
+
 **Ein wichtiger Fehler steckte im Beobachter.** Er meldet nur Zustandswechsel.
 Wischt man schnell, springt ein Element zwischen zwei Frames von unterhalb des
 Beobachtungsbereichs nach oberhalb — es gilt nie als sichtbar und bleibt

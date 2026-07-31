@@ -220,7 +220,7 @@
     bar.innerHTML = `
       <span class="proof-score" data-count-to="${avg.toFixed(1)}">${avg.toFixed(1)}</span>
       <span class="proof-stars" aria-hidden="true">${STAR.repeat(rounded)}</span>
-      <span class="proof-count">${count} ${esc(t('proof.reviews'))}</span>
+      <span class="proof-count"><span data-count-to="${count}" data-count-int="1">${count}</span> ${esc(t('proof.reviews'))}</span>
       ${stats.source ? `<span class="proof-src">${esc(t('proof.on'))} ${esc(stats.source)}</span>` : ''}
       <span class="proof-cta">${esc(t('proof.cta'))}</span>`;
   }
@@ -716,6 +716,22 @@
     $$('.reveal:not(.in)', root).forEach(el => revealObserver.observe(el));
   }
 
+  /* A lazy image arrives whenever the network delivers it, which is long after
+     its card faded in — it lands with a snap that no reveal system catches.
+     Sixteen of the page's images were still loading when their container
+     appeared. Cached images are already complete on the first pass and skip
+     straight to visible, so nothing flashes on a repeat visit. */
+  function initImageFade(root = document) {
+    $$('img[loading="lazy"]', root).forEach(im => {
+      if (im.classList.contains('fade-img')) return;
+      im.classList.add('fade-img');
+      if (im.complete && im.naturalWidth) { im.classList.add('img-in'); return; }
+      const done = () => im.classList.add('img-in');
+      im.addEventListener('load', done, { once: true });
+      im.addEventListener('error', done, { once: true });
+    });
+  }
+
   /* 110ms between siblings. The 55–70ms of the earlier versions read as a
      machine gun; this reads as composed. Capped after six so the last tile of
      a long gallery is never left arriving on its own. */
@@ -728,6 +744,7 @@
     const list = Array.from(els);
     list.forEach(el => el.classList.add('reveal', ...(opts.size ? ['reveal-' + opts.size] : [])));
     stagger(list, opts.step, opts.cap);
+    initImageFade();
     observeReveals();
   }
 
@@ -737,39 +754,59 @@
   function countUp(el) {
     const to = parseFloat(el.dataset.countTo);
     if (!isFinite(to)) return;
-    if (REDUCED.matches) { el.textContent = to.toFixed(1); return; }
-    const dur = 850;
+    const int = el.dataset.countInt === '1';
+    const fmt = v => (int ? String(Math.round(v)) : v.toFixed(1));
+    if (REDUCED.matches) { el.textContent = fmt(to); return; }
+    const dur = 1100;
     const t0 = performance.now();
     const tick = now => {
       const p = Math.min(1, (now - t0) / dur);
-      el.textContent = (to * (1 - Math.pow(1 - p, 3))).toFixed(1);
+      el.textContent = fmt(to * (1 - Math.pow(1 - p, 3)));
       if (p < 1) requestAnimationFrame(tick);
     };
-    el.textContent = '0.0';
+    el.textContent = fmt(0);
     requestAnimationFrame(tick);
   }
 
+  /* Both figures in the rating block count, and they start together with the
+     stars building next to them — the three read as one gesture rather than
+     three separate effects. */
   function initCountUp() {
-    const el = $('.proof-score');
-    if (!el) return;
+    const targets = $$('[data-count-to]');
+    if (!targets.length) return;
     const io = new IntersectionObserver((entries, obs) => {
       entries.forEach(en => {
         if (!en.isIntersecting) return;
         countUp(en.target);
         obs.unobserve(en.target);
       });
-    }, { threshold: 0.6 });
-    io.observe(el);
+    }, { threshold: 0.5 });
+    targets.forEach(el => io.observe(el));
   }
 
   /* Section furniture. The grids are not listed here — each of them staggers
-     its own cards in when it renders. */
+     its own cards in when it renders.
+
+     The rating bar, the filter row, the "read on Google" link and the footer
+     used to be missing entirely and simply appeared with the page, which is
+     exactly the popping that was left over after the curve was fixed. */
   function markReveal() {
-    $$('.sec-head, .about-media, .about-copy, .book-form')
-      .forEach(el => el.classList.add('reveal', 'reveal-lg'));
-    $$('.custom-panel, .ig-panel, .direct').forEach(el => el.classList.add('reveal'));
+    $$('.sec-head, .book-form').forEach(el => el.classList.add('reveal', 'reveal-lg'));
+    $$('.custom-panel, .ig-panel, .direct, .proof, .marquee, .sec-foot, .foot-brand, .foot-col')
+      .forEach(el => el.classList.add('reveal'));
     $$('.faq-item').forEach(el => el.classList.add('reveal', 'reveal-sm'));
     stagger($$('.faq-item'), 70, 8);
+    stagger($$('.foot-brand, .foot-col'), 90, 4);
+
+    /* Side by side on a wide screen, so they settle in from their own sides. */
+    $('.about-media')?.classList.add('reveal', 'reveal-lg', 'reveal-from-left');
+    $('.about-copy')?.classList.add('reveal', 'reveal-lg', 'reveal-from-right');
+
+    const filters = $('#filters');
+    if (filters) {
+      $$('button', filters).forEach(b => b.classList.add('reveal', 'reveal-sm'));
+      stagger($$('button', filters), 70, 4);
+    }
   }
 
   function initDelegates() {
@@ -851,6 +888,7 @@
     renderStructuredData();
     applyWaState();
     markReveal();
+    initImageFade();
     observeReveals();
     initCountUp();
   }
