@@ -42,7 +42,7 @@ window.MLD_I18N = {
   'strip.2': 'Day tours',
   'strip.3': 'Snorkelling trips',
   'strip.4': 'Private speedboat to the Gilis',
-  'strip.5': 'Multi-day itineraries',
+  'strip.5': 'Waterfalls & Rinjani viewpoints',
 
   'tours.eyebrow': 'What we do',
   'tours.title':   'Lombok tours & airport transfers',
@@ -58,7 +58,7 @@ window.MLD_I18N = {
   /* The home page shows a shortlist; the full catalogue lives on tours.html.
      The matcher is the gold button of the two on purpose — somebody who does
      not already know what they want is better served by four questions than
-     by a list of fourteen. */
+     by a list of thirteen. */
   'tours.matchCta': 'Find your match in 4 questions',
   'tours.allCta':   'See all {n} tours',
 
@@ -67,7 +67,7 @@ window.MLD_I18N = {
   'toursPage.sub':     'Thirteen ways to spend a day, from a 30-minute airport run to a full day on the water. Fixed prices, everything included spelled out, and every route open to change.',
   'toursPage.back':    'Back to the home page',
   'toursPage.metaTitle': 'All Tours & Prices — Lombok Day Trips, Transfers & Snorkelling | My Lombok Driver',
-  'toursPage.metaDesc':  'Every tour and transfer on Lombok with fixed prices: airport transfers, waterfalls, Rinjani viewpoints, Sasak villages, Gili snorkelling, Pink Beach and a three-day island trip.',
+  'toursPage.metaDesc':  'Every tour and transfer on Lombok with fixed prices: airport transfers, waterfalls, Rinjani viewpoints, Sasak villages, Gili snorkelling, Pink Beach and the north-east islands.',
 
   'match.eyebrow':  'Find your match',
   'match.title':    'Which day is yours?',
@@ -84,7 +84,7 @@ window.MLD_I18N = {
   'match.allCta':   'Or browse all tours',
 
   'custom.title': 'None of these quite right?',
-  'custom.text':  'Most guests end up with something of their own — two half tours joined together, a sunrise start before the tour buses arrive, three days around the island with the luggage in the boot. Describe your ideal day and you get a plan and a price back, usually the same day.',
+  'custom.text':  'Most guests end up with something of their own — two half tours joined together, a sunrise start before the tour buses arrive, three days in a row with a different corner of the island each morning. Describe your ideal day and you get a plan and a price back, usually the same day.',
   'custom.cta':   'Design my own day',
 
   'modal.highlights': 'What you will see',

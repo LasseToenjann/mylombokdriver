@@ -20,7 +20,7 @@ Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 | 1 | **WhatsApp-Nummer** eintragen | `js/config.js` → `contact.whatsapp` | ✅ erledigt |
 | 2 | **Echte Fotos** einsetzen | `images/` | ✅ jede Tour hat ihr eigenes Bild |
 | 3 | **Live-URL** eintragen | `js/config.js`, `sitemap.xml`, `robots.txt` | ✅ erledigt |
-| 4 | **Preise & Touren** an die Vorlagen-Websites angleichen | `js/content.js` | ⚠️ eingebaut, muss vom Fahrer bestätigt werden |
+| 4 | **Preise & Touren** an die Vorlagen-Websites angleichen | `js/content.js` | ✅ vom Fahrer bestätigt (31.07.26) |
 | 5 | **Bewertungen** | `js/content.js` → `reviews:` | ✅ echte Google-Bewertungen |
 | 6 | **Fahrer-Foto und Name** | `js/config.js` → `business.driverPhoto`, `driverName` | ✅ erledigt (Suhar) |
 | 7 | **Facebook-Seite** verlinken | `js/config.js` → `contact.facebook` | ✅ erledigt, Link vom Betreiber geprüft |
@@ -65,9 +65,10 @@ Preis — aber er kann sich ab drei Gästen einen Aufschlag wünschen.
 68 statt 38 USD, im Footer die Vorwahl +68 statt +62, und bei der Waterfall Tour
 beschreibt der Highlights-Abschnitt eine ganz andere Tour.
 
-Die Preise stehen jetzt vollständig auf der Seite, sind aber **noch nicht vom
-Fahrer bestätigt** — der `### TODO ###`-Block oben in `js/content.js` erklärt,
-worauf beim Durchgehen zu achten ist.
+**Die Preise sind inzwischen vom Fahrer bestätigt**, einschließlich der
+Annahme mit den vier Gästen pro Auto — er hat die Liste durchgesehen und sie so
+übernommen. Ab jetzt ist jede Änderung hier eine Änderung an seinen Preisen,
+also vorher fragen.
 
 ### Das Fahrzeug: vier Plätze
 
@@ -107,7 +108,8 @@ des Kopiervorgangs. Der Link konnte aus der Entwicklungsumgebung nicht geöffnet
 werden (Facebook ist dort geblockt), also einmal im Browser prüfen, ob er auf
 dem richtigen Profil landet.
 
-Alle Stellen mit offener Aufgabe sind im Code mit `### TODO ###` markiert:
+Offene Aufgaben wären im Code mit `### TODO ###` markiert — aktuell gibt es
+keine mehr:
 
 ```bash
 grep -rn "### TODO ###" js/
@@ -164,7 +166,7 @@ benachbarte Karten mit 1.300.000 und 1.400.000 beide „≈ €65" anzeigten.
 | City & Culture, West Lombok | 1.200.000 | pro Auto |
 | Sendang Gile & Tiu Kelep Waterfalls | 1.300.000 | pro Auto |
 | Benang Stokel & Benang Kelambu | 1.400.000 | pro Auto |
-| Sembalun Valley & Rinjani Viewpoints | 1.450.000 | pro Auto |
+| Sembalun Valley, Rinjani Viewpoints & the Waterfalls | 1.450.000 | pro Auto |
 | Tetebatu — Rice Fields & Countryside | 1.500.000 | pro Auto |
 | Gili Trawangan Day Trip | 650.000 | pro Person |
 | Gili Nanggu, Sudak & Kedis | 800.000 | pro Person |
@@ -176,16 +178,21 @@ Die Einzelpreise der Punkt-zu-Punkt-Transfers (Senggigi–Bangsal, Senggigi–Ku
 und so weiter) stehen im `note`-Feld der Tour `airport-transfer`, damit die
 Tourenliste nicht mit zehn Transferkarten zugestellt wird.
 
-> Die Preise sind aus den beiden Vorlage-Anbietern abgeleitet (siehe oben), aber
-> **noch nicht vom Fahrer bestätigt**.
+> Die Preise sind aus den beiden Vorlage-Anbietern abgeleitet (siehe oben) und
+> **vom Fahrer bestätigt**.
 
 ---
 
 ## 3. Fotos austauschen
 
 Die Seite läuft mit **echten Fotos** im Ordner `images/` (WebP). Zwei davon sind
-eigene Aufnahmen von My Lombok Driver, die übrigen acht sind lizenzfreie
-Lombok-Fotos von Pexels — die Zuordnung steht in **`CREDITS.md`**.
+eigene Aufnahmen von My Lombok Driver, der Rest sind lizenzfreie Lombok-Fotos
+von Pexels — die Zuordnung steht in **`CREDITS.md`**.
+
+**Keine angefassten Tiere.** Ein Stockfoto zeigte einen Guide, der einem Kind
+einen Kugelfisch in die Hand hält; der Fahrer hat darum gebeten, es zu
+entfernen. Es ist gelöscht, und bei neuen Fotos gilt dasselbe: keine Hände an
+Schildkröten, Seesternen, Fischen oder Korallen.
 
 **So tauschst du eins aus:**
 
@@ -206,8 +213,9 @@ gesucht, Namen **mit** Schrägstrich (`assets/foo.svg`) direkt als Pfad verwende
 Details zu Bildgrössen, Zuschnitt und der Tabelle „welches Bild wo erscheint":
 **`images/README.md`**.
 
-Hero-Bild und das grosse Bild im „Über uns"-Block stehen nicht in `content.js`,
-sondern direkt in `index.html` (`images/hero.webp` bzw. `images/waterfall-tall.webp`).
+Das Hero-Bild steht nicht in `content.js`, sondern direkt in `index.html`
+(`images/hero.webp`); das Porträt im „Über uns"-Block kommt aus
+`js/config.js` → `business.driverPhoto`.
 
 > `gili-shallows.webp` und `gili-boat.webp` sind aus Instagram-Screenshots
 > gewonnen und deshalb nur 1176 px breit. Sobald die Originaldateien vorliegen,
@@ -218,6 +226,11 @@ sondern direkt in `index.html` (`images/hero.webp` bzw. `images/waterfall-tall.w
 **Jede der 13 Touren hat ihr eigenes Foto** — keine Datei wird zweimal
 verwendet. Welches Bild wo hängt, steht in `images/README.md`.
 
+Bei **Gili Nanggu, Sudak & Kedis** hängt seit dem Tierschutz-Tausch die erste
+**eigene** Aufnahme auf einer Tourkarte: `gili-shallows.webp`, klares Flachwasser
+mit ankerndem Boot und Lombok im Hintergrund. Sie ist mit 1176 px kleiner als
+die Stock-Fotos, sitzt aber inhaltlich genauer — und sie ist echt.
+
 Es gibt keinen Behelf mehr: Der letzte war die Kuta-Panorama-Aufnahme bei
 der Drei-Tages-Tour, und mit der Tour ist auch das Bild weggefallen.
 
@@ -225,6 +238,14 @@ der Drei-Tages-Tour, und mit der Tour ist auch das Bild weggefallen.
 West Lombok". Unten links steht eine Kirche mit Kreuz, und die Bauweise
 erinnert eher an Ostindonesien als an Mataram. Es steht dort auf ausdrücklichen
 Wunsch; wenn sich herausstellt, dass es nicht Lombok ist, gehört es getauscht.
+
+### Ein Bild, das wieder entfernt wurde
+
+`reef-guide.webp` zeigte einen Guide, der einem Kind einen Kugelfisch in die
+Hand hält. Der Fahrer hat ausdrücklich darum gebeten, es zu tauschen: Tiere
+werden nicht angefasst. Das ist keine Kosmetik — ein Foto auf der Website
+verkauft ein Verhalten mit, und Gäste machen nach, was sie dort gesehen haben.
+Ersetzt durch die eigene Aufnahme `gili-shallows.webp`, gelöscht ist es auch.
 
 ### Drei Bilder, die bewusst nicht eingesetzt wurden
 

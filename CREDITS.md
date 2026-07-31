@@ -7,11 +7,14 @@
 | `images/gili-shallows.webp` | @mylombokdriver, Instagram — „The Gilis – Gili Air, Gili Meno and Gili Trawangan" |
 | `images/gili-boat.webp` | @mylombokdriver, Instagram |
 
-Diese beiden stammen aus Screenshots des Instagram-Kanals und sind daher nur
-1176 px breit. Sie lagen in der Galerie; seit die entfernt wurde, sind sie auf
-der Website **nicht mehr eingebunden**. Die Dateien bleiben liegen, weil sie
-das einzige Originalmaterial sind — sobald die Aufnahmen in voller Auflösung
-vorliegen, gehören sie auf eine der Gili-Touren.
+Beide stammen aus Screenshots des Instagram-Kanals und sind daher nur 1176 px
+breit. `gili-shallows.webp` steht seit dem Bildertausch bei **Gili Nanggu,
+Sudak & Kedis** — das erste eigene Foto auf einer Tourkarte. Es ersetzt dort
+eine Stock-Aufnahme, auf der ein Kind einen Kugelfisch anfasst; Meerestiere
+werden auf dieser Website nicht angefasst.
+
+`gili-boat.webp` ist weiterhin nicht eingebunden. Sobald die Aufnahmen in
+voller Auflösung vorliegen, gehören sie auf weitere Gili-Touren.
 
 ## Pexels
 
@@ -35,7 +38,6 @@ damit nachvollziehbar bleibt, was woher kommt.
 | `jungle-waterfall.webp` | Taryn Elliott | Benang Stokel |
 | `rinjani-trail.webp` | Ramadhan | Sembalun & Rinjani |
 | `pink-sand.webp` | Moeid | Pink Beach |
-| `reef-guide.webp` | Dana Englich | Gili Nanggu, Sudak & Kedis |
 
 Die Namen der zuletzt ergänzten Fotos sind aus den Dateinamen der
 Pexels-Downloads abgeleitet. Pexels ist aus der Entwicklungsumgebung nicht

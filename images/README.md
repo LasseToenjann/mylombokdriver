@@ -32,11 +32,11 @@ Das Startbild steht nicht in `content.js`, sondern direkt in `../index.html`.
 | `waterfall.webp` | Sendang Gile & Tiu Kelep Waterfalls |
 | `jungle-waterfall.webp` | Benang Stokel & Benang Kelambu Waterfalls |
 | `tetebatu-valley.webp` | Tetebatu — Rice Fields & Countryside |
-| `rinjani-trail.webp` | Sembalun Valley & Rinjani Viewpoints |
+| `rinjani-trail.webp` | Sembalun Valley, Rinjani Viewpoints & the Waterfalls |
 | `selong-belanak.webp` | Sasak Culture & the South Coast |
 | `coastal-town.webp` | City & Culture, West Lombok |
 | `gili-turtle.webp` | Gili Islands Snorkelling Trip |
-| `reef-guide.webp` | Gili Nanggu, Sudak & Kedis |
+| `gili-shallows.webp` | Gili Nanggu, Sudak & Kedis (eigene Aufnahme) |
 | `pink-sand.webp` | Pink Beach & Gili Petelu |
 | `harbour-jetty.webp` | Hidden Paradise — the North-East Islands |
 | `gili-meno-swing.webp` | Gili Trawangan Day Trip |
@@ -77,11 +77,19 @@ oben nach unten läuft — der mittige Zuschnitt der Karte trifft ihn trotzdem.
 - **Personen:** Gäste, die klar erkennbar sind, sollten dem Foto auf der Website
   zugestimmt haben. Bei Bildern mit Kindern gilt das besonders.
 
+## Keine Tiere anfassen
+
+Auf dieser Website wird kein Meerestier angefasst. Ein Stockfoto zeigte einen
+Guide, der einem Kind einen Kugelfisch in die Hand hält — es ist gelöscht.
+Wer neue Fotos aussucht: keine Hände an Schildkröten, Seesternen, Fischen oder
+Korallen, auch nicht „nur zum Zeigen". Ein Foto verkauft ein Verhalten mit, und
+Gäste ahmen nach, was sie auf der Seite gesehen haben.
+
 ## Nicht eingebunden
 
-`gili-shallows.webp` und `gili-boat.webp` sind die einzigen **eigenen**
-Aufnahmen von My Lombok Driver, aus Instagram-Screenshots gewonnen und deshalb
-nur 1176 px breit. Sie lagen in der Galerie, die es nicht mehr gibt, und sind
-aktuell nirgends eingebunden. Sie bleiben hier liegen, weil sie das einzige
-Originalmaterial sind — sobald die Dateien in voller Auflösung vorliegen,
-gehören sie auf die passende Gili-Tour statt eines Stockfotos.
+`gili-boat.webp` ist eine **eigene** Aufnahme von My Lombok Driver, aus einem
+Instagram-Screenshot gewonnen und deshalb nur 1176 px breit. Sie ist aktuell
+nirgends eingebunden und bleibt liegen, weil sie Originalmaterial ist — sobald
+die Datei in voller Auflösung vorliegt, gehört sie auf eine Gili-Tour statt
+eines Stockfotos. `gili-shallows.webp` aus derselben Quelle hängt inzwischen
+bei Gili Nanggu, Sudak & Kedis.
