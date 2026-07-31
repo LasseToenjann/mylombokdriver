@@ -9,10 +9,20 @@
          'person' -> price is per person
          'ask'    -> no price shown, "on request" instead
 
-   ### TODO ###  UNCONFIRMED PRICES
-   Every price below is a typical market rate researched for Lombok, NOT a rate
-   quoted by the driver. They have not been confirmed yet. Before the site is
-   advertised to guests, go through them with the driver and correct them.
+   ### TODO ###  PRICES NOT YET CONFIRMED BY THE DRIVER
+   The prices below are derived from two established Lombok operators —
+   lombokprivatetour.com and lombokroute.com — and sit roughly 12 % below the
+   first of them, which has the same positioning we do (fully private, own
+   driver, based near Senggigi). They are a defensible market position, not a
+   rate the driver has quoted. Go through the list with him before the site is
+   advertised.
+
+   One assumption worth checking: the operator these figures come from quotes
+   its per-vehicle prices for TWO guests in a six-seat car. Ours are quoted for
+   up to FOUR in a four-seat car, so a family of four pays noticeably less here
+   than there. That is deliberate — one car, one price — but he may want a
+   surcharge above two guests.
+
    If a price cannot be confirmed in time, set that tour to unit: 'ask' — the
    card then reads "on request" instead of promising a figure.
    ========================================================================== */
@@ -62,7 +72,8 @@ window.MLD_CONTENT = {
     { id: 'all',       label: 'Everything' },
     { id: 'transfers', label: 'Transfers' },
     { id: 'tours',     label: 'Day tours' },
-    { id: 'islands',   label: 'Islands & sea' }
+    { id: 'islands',   label: 'Islands & sea' },
+    { id: 'multi',     label: 'Multi-day' }
   ],
 
   tours: [
@@ -70,15 +81,15 @@ window.MLD_CONTENT = {
       id: 'airport-transfer',
       cats: ['transfers'],
       scene: 'kuta-coast.webp',
-      price: 300000, unit: 'car',
+      price: 350000, unit: 'car',
       duration: '30–90 min',
       title:  'Airport Transfer',
       short:  'Met at arrivals with a name sign, bags carried, cold water in the car — and a fixed price to any hotel on Lombok.',
-      long:   'Lombok International Airport (LOP) sits in the south, so most hotels are still one to two hours away. Send your flight number when you book and your arrival is tracked: if the plane is late, the waiting time is free. Your driver stands in the public arrivals area with a sign showing your name, helps with the luggage and takes you straight to your door — Senggigi, Kuta, Mataram, Bangsal harbour for the Gilis, or anywhere else on the island.',
+      long:   'Lombok International Airport (LOP) sits in the south, so most hotels are still one to two hours away. Send your flight number when you book and your arrival is tracked: if the plane is late, the waiting time is free. Your driver stands in the public arrivals area with a sign showing your name, helps with the luggage and takes you straight to your door — Kuta, Senggigi, Mataram, Bangsal harbour for the Gilis, or anywhere else on the island.',
       highlights: [
         'Flight tracked — free waiting time if you are delayed',
         'Name sign in the arrivals hall',
-        'Up to 4 guests plus luggage',
+        'Four guests plus luggage, one price for the car',
         'Also available for your departure, at any hour'
       ],
       includes: [
@@ -86,162 +97,308 @@ window.MLD_CONTENT = {
         'Chilled bottled water',
         'Child seat on request, free'
       ],
-      note: 'Price is for the south of the island (Kuta area). Senggigi, Bangsal and the north are a little more — ask for your exact hotel.'
-    },
-    {
-      id: 'gili-snorkeling',
-      cats: ['islands'],
-      scene: 'gili-shallows.webp',
-      price: 450000, unit: 'person',
-      duration: 'Full day, approx. 8 h',
-      title:  'Gili Islands Snorkelling Trip',
-      short:  'Three snorkelling stops around Gili Trawangan, Meno and Air — turtles, the underwater statues and a coral garden.',
-      long:   'Picked up at your hotel in the morning, driven to the harbour and out on a local boat for the classic three-island route. The turtle point off Gili Meno is the highlight for most guests — green turtles here are used to swimmers and simply carry on grazing. You also stop at the underwater statue circle and a shallow coral garden that works for beginners. Lunch on Gili Air or Trawangan, free time on the beach, and back to your hotel in the late afternoon.',
-      highlights: [
-        'Green turtles at the Gili Meno turtle point',
-        'The underwater statues ("Nest")',
-        'Shallow coral garden, fine for first-timers',
-        'Beach time and lunch on a Gili'
-      ],
-      includes: [
-        'Hotel pick-up and drop-off',
-        'Boat, mask, snorkel and fins',
-        'Life jacket and boat crew',
-        'Drinking water and fresh fruit'
-      ],
-      note: 'Lunch and the island entrance fee are paid on the spot. Bring reef-safe sunscreen — it makes a real difference here.'
+      note: 'Price per car, one way. Airport to Kuta or Mandalika IDR 350,000 · to Senggigi or Mataram IDR 450,000 · to Bangsal harbour IDR 500,000 · to Senaru and the north IDR 750,000. Transfers between towns are the same idea: Senggigi–Bangsal IDR 250,000, Senggigi–Kuta or Tetebatu IDR 500,000, Senggigi–Lembar IDR 350,000. Departures run from 05:00 to 21:00; earlier or later on request.'
     },
     {
       id: 'speedboat-gili',
       cats: ['transfers', 'islands'],
       scene: 'gili-boat.webp',
-      price: 200000, unit: 'person',
-      duration: '15–30 min crossing',
-      title:  'Lombok – Gili Fast Boat',
-      short:  'Car to the harbour, ticket in your hand, boat to Gili Trawangan, Meno or Air. One booking instead of three.',
-      long:   'Getting to the Gilis is easy once somebody has done the harbour part for you. You are collected at your hotel, driven to Bangsal or Teluk Nara, and your boat ticket is arranged before you arrive — no queue, no negotiating on the pier, no porters insisting on carrying your bag. The crossing takes 15 to 30 minutes depending on the island. The same works in reverse, and the car can be waiting for you on the day you come back.',
+      price: 700000, unit: 'car',
+      duration: 'Approx. 2 h door to island',
+      title:  'Transfer to the Gili Islands',
+      short:  'Car to the harbour and a private speedboat to Trawangan, Meno or Air. One booking instead of three, one price for the whole car.',
+      long:   'Getting to the Gilis is easy once somebody has done the harbour part for you. You are collected at your hotel, driven to Teluk Nara or Bangsal, and the boat is waiting — no queue, no negotiating on the pier, no porters insisting on carrying your bag. The crossing takes 15 to 30 minutes depending on the island. The same works in reverse, and the car can be waiting for you on the day you come back.',
       highlights: [
-        'Boat ticket arranged before you arrive',
+        'Private speedboat, no fixed departure time',
         'No haggling and no porter pressure at the pier',
         'Works for all three Gilis, both directions',
-        'Luggage stays with you'
+        'Luggage stays with you the whole way'
       ],
       includes: [
         'Hotel pick-up anywhere in west or central Lombok',
-        'Boat ticket and harbour fee',
+        'Private speedboat and harbour fees',
         'Help with luggage on and off the boat'
       ],
-      note: 'Boat price per person, car transfer to the harbour quoted separately by distance.'
+      note: 'Price per car and boat, one way, up to four guests. From Senggigi IDR 700,000 · from the airport IDR 1,100,000. The scheduled public fast boat is cheaper if you do not mind fixed departure times — ask and you get that price instead.'
     },
     {
       id: 'waterfalls-north',
       cats: ['tours'],
       scene: 'waterfall.webp',
-      price: 800000, unit: 'car',
+      price: 1300000, unit: 'car',
       duration: 'Full day, approx. 9 h',
       title:  'Sendang Gile & Tiu Kelep Waterfalls',
-      short:  'The two great waterfalls on Rinjani’s northern slope, plus the monkey forest on the Pusuk pass.',
-      long:   'North through the Pusuk pass, where the road curls through jungle and long-tailed macaques sit on the crash barriers waiting for an audience. Then on to Senaru: Sendang Gile drops in two stages a few minutes from the entrance, and a further 30-minute walk — a shallow river crossing, so wear something you do not mind soaking — brings you to Tiu Kelep, the wide one people come back for. Local guides at the gate know the path in any weather. Back along the coast road with a stop wherever the light is good.',
+      short:  'The two great waterfalls on Rinjani’s northern slope, the Pusuk monkey forest and a sunset stop on the way home.',
+      long:   'North through the Pusuk pass, where the road curls through jungle and long-tailed macaques sit on the crash barriers waiting for an audience, with a stop at the traditional market in Tanjung. Then on to Senaru: Sendang Gile drops in two stages a few minutes from the entrance, and a further 30-minute walk — a shallow river crossing, so wear something you do not mind soaking — brings you to Tiu Kelep, the wide one people come back for. Afterwards a walk through Senaru village, then the coast road home with a sunset stop at Nipah beach, looking across at the three northern Gilis and Mount Agung on Bali.',
       highlights: [
         'Sendang Gile — five minutes from the car park',
         'Tiu Kelep — 30 minutes on foot through the forest',
         'Monkey forest on the Pusuk pass',
-        'Rice terrace and coastline photo stops'
+        'Sunset at Nipah beach with Bali on the horizon'
       ],
       includes: [
         'Private car and driver for the whole day',
         'Fuel, parking and all road fees',
-        'Chilled water for everyone'
+        'National park entrance and the local waterfall guide',
+        'Chilled water and soft drinks'
       ],
-      note: 'National park entrance and the local waterfall guide are paid at the gate, roughly IDR 30,000 per person.'
+      note: 'Pick-up around 08:30, about 2.5 hours to Senaru. Lunch is your own — there are warungs at the waterfall entrance and grilled fish from the stalls at Nipah on the way back.'
+    },
+    {
+      id: 'benang-stokel',
+      cats: ['tours'],
+      scene: 'waterfall-tall.webp',
+      price: 1400000, unit: 'car',
+      duration: 'Full day, approx. 8 h',
+      title:  'Benang Stokel & Benang Kelambu Waterfalls',
+      short:  'The curtain waterfall in central Lombok, the Lingsar temple where two religions share one courtyard, and a weaving village on the way back.',
+      long:   'First Lingsar, the temple where Hindu and Muslim Sasak traditions are practised side by side — a local guide explains how that came about, because it is not obvious from looking. Then east through Narmada, where the roadside is rambutan, durian and mangosteen in season. At Benang Stokel a motorbike taxi takes you the last stretch up to Benang Kelambu, where the water does not fall over an edge but seeps straight out of the rock face in dozens of strands, like a curtain — you can stand under it. Fifteen minutes further down is Benang Stokel itself. Lunch in a warung, then Sukarara, where songket weaving takes weeks per cloth and you can sit at the loom yourself.',
+      highlights: [
+        'Benang Kelambu — water straight out of the cliff face',
+        'Swimming under the falls',
+        'Lingsar temple, Hindu and Sasak side by side',
+        'Songket weaving in Sukarara'
+      ],
+      includes: [
+        'Private car and driver for the whole day',
+        'Fuel, parking and all road fees',
+        'Temple and waterfall entrance, local guides',
+        'Motorbike taxi to the upper falls',
+        'Chilled water and soft drinks'
+      ],
+      note: 'Pick-up around 08:30. Lunch in a local warung is your own, usually IDR 30,000–60,000. A small donation at Lingsar temple is customary and not included.'
+    },
+    {
+      id: 'tetebatu',
+      cats: ['tours'],
+      scene: 'rinjani.webp',
+      price: 1500000, unit: 'car',
+      duration: 'Full day, approx. 9 h',
+      title:  'Tetebatu — Rice Fields & Countryside',
+      short:  'A three-hour walk through the rice terraces on Rinjani’s southern slope, with coffee, cocoa and vanilla growing at the side of the path.',
+      long:   'Tetebatu sits high enough that the air is noticeably cooler, and the whole village looks out at Rinjani. The heart of the day is a walk of about three hours with a local guide, through the terraced fields and the plantations behind them — he will stop and show you a cocoa pod, a vanilla vine, a coffee cherry, and explain what happens to each of them next. The path passes the hidden Sarang Walet waterfall and skirts the monkey forest. Afterwards there is time for the bamboo craftsmen of Loyok and the weavers of Pringgasela, both of whom will hand you the tools and let you try.',
+      highlights: [
+        'Three-hour panorama walk through the rice terraces',
+        'Coffee, cocoa, vanilla and nutmeg growing wild along the way',
+        'The hidden Sarang Walet waterfall',
+        'Bamboo weaving in Loyok, cloth weaving in Pringgasela'
+      ],
+      includes: [
+        'Private car and driver for the whole day',
+        'Fuel, parking and all road fees',
+        'Local walking guide and the waterfall entrance',
+        'Chilled water and soft drinks'
+      ],
+      note: 'Pick-up around 08:30, roughly two hours each way. Lunch in the village is your own. Bring shoes you can walk in — the field paths are narrow and often wet.'
     },
     {
       id: 'rinjani-sembalun',
       cats: ['tours'],
       scene: 'rinjani.webp',
-      price: 900000, unit: 'car',
+      price: 1450000, unit: 'car',
       duration: 'Full day, approx. 10 h',
       title:  'Sembalun Valley & Rinjani Viewpoints',
       short:  'The volcano without the two-day climb: Bukit Selong, the Sembalun valley and the famous switchback road.',
-      long:   'You do not have to trek Rinjani to stand in front of it. An early start gets you to the east side before the cloud builds. From Bukit Selong the patchwork of garlic and rice fields spreads out below with the volcano behind it — the picture most people have in mind when they think of Lombok. The road up through Pusuk Sembalun bends back on itself again and again with viewpoints at almost every turn, and the valley villages still feel unhurried. On a clear afternoon you can add the Rinjani trailhead at Sembalun Lawang.',
+      long:   'You do not have to trek Rinjani to stand in front of it. An early start gets you to the east side before the cloud builds. From Bukit Selong the patchwork of garlic and rice fields spreads out below with the volcano behind it — the picture most people have in mind when they think of Lombok. The road up through Pusuk Sembalun bends back on itself again and again with viewpoints at almost every turn, and the valley villages still feel unhurried. Sembalun is farming country: strawberries, onions, garlic, and in season you can pick the strawberries yourself. The way home runs along the north coast to a sunset stop at Nipah.',
       highlights: [
         'Bukit Selong viewpoint over the rice patchwork',
         'The Pusuk Sembalun switchback road',
-        'Sembalun village life and strawberry fields',
-        'Early start to beat the cloud on the summit'
+        'Strawberry fields you can pick in season',
+        'North coast road and sunset at Nipah'
       ],
       includes: [
         'Private car and driver, 10 hours',
         'Fuel, parking and all road fees',
-        'Chilled water for everyone'
+        'Viewpoint entrances',
+        'Chilled water and soft drinks'
       ],
-      note: 'Best between April and October. Bring a light jacket — Sembalun sits at 1,150 m and mornings are genuinely cool.'
+      note: 'Pick-up around 08:00, about three hours to Sembalun. Best between April and October. Lunch with a view of Rinjani is your own. Bring a light jacket — Sembalun sits at 1,150 m and mornings are genuinely cool.'
     },
     {
       id: 'south-sasak',
       cats: ['tours'],
       scene: 'selong-belanak.webp',
-      price: 750000, unit: 'car',
+      price: 1200000, unit: 'car',
       duration: 'Full day, approx. 9 h',
       title:  'Sasak Culture & the South Coast',
-      short:  'Sade village, the weavers of Sukarara, then the bays of Kuta, Tanjung Aan and Merese hill at sunset.',
-      long:   'The Sasak are Lombok’s own people, and the south is where that is easiest to see. Sade is a working village of bamboo and thatch houses where the floors are still sealed the traditional way; a villager walks you through it and explains rather than performs. In Sukarara the songket weaving takes weeks per cloth and you can sit at the loom yourself. Then the coast: the wide white curve of Tanjung Aan, the fishing boats at Kuta, and Merese hill for the last hour of light, when the whole coastline turns gold.',
+      short:  'Pottery in Banyumulek, weaving in Sukarara, a living Sasak village — then Selong Belanak, Mawun and Tanjung Aan.',
+      long:   'The Sasak are Lombok’s own people, and the south is where that is easiest to see. In Banyumulek the pots are still thrown and fired the old way, and you are welcome to sit down at the wheel; anything you buy gets packed for the flight. In Sukarara the songket weaving takes weeks per cloth. Sade and Rambitan are working villages of bamboo and thatch where a villager walks you through and explains rather than performs. Then the coast: the wide white curve of Selong Belanak, the quieter bays at Mawun and Lancing, the pepper-grain sand of Tanjung Aan, and the fishing boats at Kuta. Beginners can take a surf lesson at Selong Belanak, where the waves are made for it.',
       highlights: [
-        'Sade — a living Sasak village, not a museum',
-        'Songket weaving in Sukarara',
-        'Tanjung Aan and the pepper-grain sand',
-        'Sunset from Merese hill'
+        'Banyumulek pottery — try the wheel yourself',
+        'Sade and Rambitan, living Sasak villages',
+        'Selong Belanak, Mawun and Tanjung Aan',
+        'Surf lesson for beginners if you want one'
       ],
       includes: [
         'Private car and driver for the whole day',
         'Fuel, parking and all road fees',
-        'Chilled water for everyone'
+        'Village entrance and the local guide',
+        'Chilled water and soft drinks'
       ],
-      note: 'Village donations are small and go to the community. Nobody will push you to buy anything.'
+      note: 'Pick-up around 09:00. Lunch at one of the beach restaurants is your own. Village donations are small, go to the community, and are not included. Surf lessons are booked on the beach. Nobody will push you to buy anything.'
+    },
+    {
+      id: 'city-culture',
+      cats: ['tours'],
+      scene: 'hero.webp',
+      price: 1200000, unit: 'car',
+      duration: 'Full day, approx. 7 h',
+      title:  'City & Culture, West Lombok',
+      short:  'Mataram and the west: the morning market, the great mosque, Lingsar temple, the water palace and old Ampenan at sunset.',
+      long:   'The short day, and the one that makes the most sense on your first morning. Kebon Roek market in Ampenan is where the island shops — fish, spices, palm sugar, and nobody performing for visitors. The Islamic Centre in Mataram is the largest mosque on Lombok and you can go up the minaret. Lingsar is the temple Hindus and Sasak Muslims share. Narmada was the king’s summer palace, built around a lake meant to imitate Rinjani’s crater. Then the potters of Banyumulek or the weavers of Sukarara, and finally Ampenan old town — Dutch and Chinese shopfronts, faded and still lived in, best in the last hour of light.',
+      highlights: [
+        'Kebon Roek market, where the island actually shops',
+        'Islamic Centre — the biggest mosque on Lombok',
+        'Narmada water palace and its sacred pool',
+        'Ampenan old town at sunset'
+      ],
+      includes: [
+        'Private car and driver, 7 hours',
+        'Fuel, parking and all road fees',
+        'Mosque and temple entrance, local guide',
+        'Chilled water and soft drinks'
+      ],
+      note: 'Pick-up around 09:00. Lunch is your own. For the inside of the mosque, arms and legs need to be covered — a sarong is lent at the door if you do not have one. A small donation at Lingsar is customary and not included.'
+    },
+    {
+      id: 'gili-snorkeling',
+      cats: ['islands'],
+      scene: 'gili-shallows.webp',
+      price: 1050000, unit: 'person',
+      duration: 'Full day, approx. 8 h',
+      title:  'Gili Islands Snorkelling Trip',
+      short:  'Your own boat around Trawangan, Meno and Air — turtles, the underwater statues and a coral garden that suits beginners.',
+      long:   'Picked up at your hotel in the morning, driven to Teluk Nara and out on a boat that is yours for the day, so the route bends to what you feel like. The turtle point off Gili Meno is the highlight for most guests — green turtles here are used to swimmers and simply carry on grazing. You also stop at the underwater statue circle and a shallow coral garden that works for first-timers. Time on Gili Trawangan, lunch and more snorkelling off Gili Air, and back to the harbour in the late afternoon with a sunset stop at Malimbu hill on the drive home.',
+      highlights: [
+        'Green turtles at the Gili Meno turtle point',
+        'The underwater statues ("Nest")',
+        'Shallow coral garden, fine for first-timers',
+        'Sunset from Malimbu hill on the way back'
+      ],
+      includes: [
+        'Hotel pick-up and drop-off',
+        'Private boat with crew for the day',
+        'Mask, snorkel, fins and life jacket',
+        'Chilled water, soft drinks and fresh fruit'
+      ],
+      note: 'Per person, from two guests. Pick-up around 09:00. Lunch on the island and the Gili entrance fee are your own. A private speedboat instead of the traditional boat gives you more time in the water and costs about IDR 250,000 more per person. Bring reef-safe sunscreen — it makes a real difference here.'
+    },
+    {
+      id: 'southwest-islands',
+      cats: ['islands'],
+      scene: 'tanjung-aan.webp',
+      price: 800000, unit: 'person',
+      duration: 'Full day, approx. 8 h',
+      title:  'Gili Nanggu, Sudak & Kedis',
+      short:  'The quiet islands off the south-west coast — reef a few metres off the beach, and a sandbank barely big enough to stand on.',
+      long:   'Two hours south-west to Sekotong, past villages where bricks are still made by hand, and out on a local boat past the floating pearl farms. Gili Nanggu is the one people mean when they call this a living aquarium: the reef starts a few metres off the sand, shallow enough for a first-timer and good enough that experienced snorkellers stay in the water for an hour. Gili Sudak has the clear water and the beach restaurant where lunch happens. Gili Kedis is tiny, uninhabited and takes about four minutes to walk around. Nobody is selling anything on any of them.',
+      highlights: [
+        'Reef snorkelling straight off the beach at Gili Nanggu',
+        'Starfish and clear shallows at Gili Sudak',
+        'Gili Kedis — an uninhabited islet you can walk around',
+        'Floating pearl farms on the boat ride out'
+      ],
+      includes: [
+        'Hotel pick-up and drop-off',
+        'Private boat with crew for the day',
+        'Mask, snorkel, fins and life jacket',
+        'Chilled water, soft drinks and fresh fruit'
+      ],
+      note: 'Per person, from two guests. Pick-up around 08:30, roughly two hours each way. Lunch at the beach restaurant on Gili Sudak is your own. Back around 16:00.'
     },
     {
       id: 'pink-beach',
-      cats: ['tours', 'islands'],
+      cats: ['islands', 'tours'],
       scene: 'tanjung-bloam.webp',
-      price: 950000, unit: 'car',
-      duration: 'Full day, approx. 10 h',
-      title:  'Pink Beach & the Wild South East',
-      short:  'The coral-pink sand of Tangsi, a snorkel stop by boat and the cliffs of Tanjung Ringgit.',
-      long:   'The long way east, past salt pans and tobacco fields, to a corner of Lombok most visitors never reach. Pink Beach gets its colour from red coral ground into the white sand — strongest when the sand is wet, so the morning is the time to be there. A small boat takes you around the headland to snorkel and, if you want, on to the empty beaches further east. Tanjung Ringgit adds high cliffs, a Japanese cave from the war and a view straight across to Sumbawa.',
+      price: 1000000, unit: 'person',
+      duration: 'Full day, approx. 9 h',
+      title:  'Pink Beach & Gili Petelu',
+      short:  'The coral-pink sand of Tangsi, snorkelling at one of east Lombok’s best reefs, and a sandbank that only exists at low tide.',
+      long:   'The long way east, past salt pans and tobacco fields, to the harbour at Tanjung Luar and a boat of your own. If the tide is out there is a stop at Pulau Pasir, a bare sandbank in open water covered in coloured starfish — it disappears again a few hours later. Gili Petelu is the snorkelling: clownfish, healthy coral, one of the best spots on this side of the island. Then Pink Beach itself, where red coral ground into white sand gives the colour, strongest where the water has just washed over it. Tangsi hill behind the beach is a five-minute climb for the view along the whole coast.',
       highlights: [
         'Pink sand at Tangsi beach',
-        'Boat trip to a quiet snorkel spot',
-        'Tanjung Ringgit cliffs and the Japanese cave',
-        'A long drive through an untouristed east'
+        'Snorkelling at Gili Petelu, clownfish and live coral',
+        'Pulau Pasir sandbank at low tide, covered in starfish',
+        'The climb up Tangsi hill for the coastline view'
       ],
       includes: [
-        'Private car and driver, 10 hours',
-        'Fuel, parking and all road fees',
-        'Chilled water for everyone'
+        'Hotel pick-up and drop-off',
+        'Private boat with crew for the day',
+        'Mask, snorkel, fins and life jacket',
+        'Seafood lunch on the beach',
+        'Chilled water, soft drinks and fresh fruit'
       ],
-      note: 'The local boat and snorkel gear are paid at the beach. The last stretch of road is rough — worth it, but not a smooth ride.'
+      note: 'Per person, from two guests. Pick-up around 08:00, two to two and a half hours each way. Lunch is included on this trip because there are no restaurants at Pink Beach — everything is brought and grilled on the spot. Back around 15:00. The last stretch of road is rough; worth it, but not a smooth ride.'
+    },
+    {
+      id: 'hidden-paradise',
+      cats: ['islands'],
+      scene: 'gili-shallows.webp',
+      price: 1100000, unit: 'person',
+      duration: 'Full day, approx. 10 h',
+      title:  'Hidden Paradise — the North-East Islands',
+      short:  'Four uninhabited islands off the north-east coast, a mangrove forest you snorkel through, and a sandbank that comes and goes with the tide.',
+      long:   'The longest day on the list and the one almost nobody else books. Two and a half hours to the harbour at Sambelia, then out to Gili Petagan, where the mangroves grow into the water and you snorkel through the channels between them — a strange, quiet, green kind of swimming. Gili Kapal is a pure sandbank that only shows above water at low tide; an hour later it is gone. Gili Bidara and Gili Kondo are small, empty and have nothing on them but sand and shade, which is the point. Lunch is cooked on the beach by the boat crew, because there is nowhere out here to buy it.',
+      highlights: [
+        'Snorkelling through the mangrove channels at Gili Petagan',
+        'Gili Kapal — a sandbank that appears and disappears',
+        'Gili Bidara and Gili Kondo, empty and undeveloped',
+        'Lunch grilled on the beach by the crew'
+      ],
+      includes: [
+        'Hotel pick-up and drop-off',
+        'Private boat with crew for the day',
+        'Mask, snorkel, fins and life jacket',
+        'Lunch cooked on the island',
+        'Chilled water, soft drinks and fresh fruit'
+      ],
+      note: 'Per person, from two guests. Pick-up around 07:30 — it is a long drive and the tides decide the schedule. At high tide it may not be possible to land on Gili Petagan, in which case the mangroves are seen from the boat. Bring water shoes.'
     },
     {
       id: 'gili-day-trip',
       cats: ['islands'],
-      scene: 'tanjung-aan.webp',
-      price: 600000, unit: 'person',
+      scene: 'gili-boat.webp',
+      price: 650000, unit: 'person',
       duration: 'Full day, approx. 9 h',
       title:  'Gili Trawangan Day Trip',
       short:  'A day on the car-free island: bicycle, the sea swing, sunset on the west side and back the same evening.',
-      long:   'No cars, no motorbikes, no traffic noise — just horse carts, bicycles and a coastline you can ride around in ninety minutes. You are driven to the harbour, put on the boat and met again in the evening. Rent a bike at the pier, find the sea swings on the west shore, eat at the night market, and be back on the mainland before bedtime. It also works as a first look before deciding whether to stay a few nights.',
+      long:   'No cars, no motorbikes, no traffic noise — just horse carts, bicycles and a coastline you can ride around in ninety minutes. You are driven to the harbour, put on the boat and met again in the evening. Rent a bike at the pier, find the sea swings on the west shore, snorkel straight off the beach, and be back on the mainland before bedtime. It also works as a first look before deciding whether to stay a few nights.',
       highlights: [
         'The sea swings on the west coast',
         'Sunset over Bali and Mount Agung',
         'Snorkelling straight off the beach',
-        'Night market for dinner before the boat back'
+        'Ninety minutes to cycle round the whole island'
       ],
       includes: [
         'Hotel pick-up and evening drop-off',
         'Return boat ticket and harbour fee',
         'Chilled water for the drive'
       ],
-      note: 'Bicycle rental, food and drinks on the island are your own. The last boats back leave in the early evening.'
+      note: 'Per person, from two guests. Bicycle rental, food and drinks on the island are your own. The last boats back leave in the early evening. For a private speedboat instead of the scheduled one, see the Gili transfer.'
+    },
+    {
+      id: 'lombok-3-day',
+      cats: ['multi', 'tours', 'islands'],
+      scene: 'hero.webp',
+      price: 0, unit: 'ask',
+      duration: '3 days, 2 nights',
+      title:  'Lombok in Three Days',
+      short:  'North to the waterfalls, a boat day among the empty north-east islands, then the rice terraces of Tetebatu — sleeping where the next day starts.',
+      long:   'The nicest way to see Lombok, and the only way to reach the far corners without spending the whole time in the car. Day one runs north along the coast to Sendang Gile and Tiu Kelep, then east to Labuan Pandan for the night. Day two is on the water: the mangroves of Gili Petagan, the Gili Kapal sandbank, snorkelling and lunch on Gili Bidara, and in the afternoon inland to Tetebatu, stopping at the giant trees the Dutch planted centuries ago. Day three is the long walk through the Tetebatu rice terraces, then back to Senggigi through the weaving villages. Each night is spent where the next morning begins, so no day starts with two hours of driving.',
+      highlights: [
+        'Sendang Gile and Tiu Kelep waterfalls, day one',
+        'A private boat day among four uninhabited islands',
+        'Two nights in the countryside, not in a resort strip',
+        'The three-hour rice terrace walk at Tetebatu'
+      ],
+      includes: [
+        'Private car and driver for all three days',
+        'Two nights’ accommodation with breakfast',
+        'Private boat, snorkelling gear and lunch on day two',
+        'All entrance fees and local guides',
+        'Chilled water and soft drinks throughout'
+      ],
+      note: 'Priced with the itinerary rather than off a list, because the hotels depend on how many of you there are. As a guide, two guests in one room comes to roughly IDR 6,400,000 for the three days, everything above included; a third and fourth guest add a room. Dinners and the two lunches on days one and three are your own. Starting from Kuta or the airport, the whole thing can be run in reverse.'
     }
   ],
 
@@ -360,11 +517,11 @@ window.MLD_CONTENT = {
     },
     {
       q: 'Do the prices include entrance fees and lunch?',
-      a: 'The price covers the car, driver, fuel, parking, tolls and water. Park entrances, local guides, boats and food are paid on the spot and stay with the people providing them. Every tour on this page lists exactly what is extra.'
+      a: 'Entrance fees, park tickets and the local guides at waterfalls, temples and villages are included — you will not be asked for money at a gate. Lunch is not, on purpose: you eat where you feel like eating and pay what a local pays, usually IDR 30,000 to 60,000. The two exceptions are Pink Beach and the north-east islands, where there is nowhere to buy food, so lunch is brought and cooked on the beach and is included in the price. Every tour on this page lists exactly what is included and what is not.'
     },
     {
       q: 'Can you drive us for several days?',
-      a: 'That is the nicest way to see Lombok. Multi-day itineraries — including an overnight on the Gilis or a run around the whole island — are priced per day and get cheaper the longer you book. Send your dates and what you would like to see.'
+      a: 'That is the nicest way to see Lombok, and the three-day trip on this page is the version guests book most: north to the waterfalls, a boat day among the empty north-east islands, then the rice terraces at Tetebatu, sleeping each night where the next day starts. Anything else — an overnight on the Gilis, a run right around the island, a week with the luggage in the boot — is priced per day and gets cheaper the longer you book. Send your dates and what you would like to see.'
     }
   ]
 };

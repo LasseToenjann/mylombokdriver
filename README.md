@@ -20,17 +20,52 @@ Stand der Dinge — nur die offenen Punkte müssen noch erledigt werden:
 | 1 | **WhatsApp-Nummer** eintragen | `js/config.js` → `contact.whatsapp` | ✅ erledigt |
 | 2 | **Echte Fotos** einsetzen | `images/` | ✅ erledigt (2 eigene, 8 von Pexels) |
 | 3 | **Live-URL** eintragen | `js/config.js`, `sitemap.xml`, `robots.txt` | ✅ erledigt |
-| 4 | **Preise & Touren** an die Vorlagen-Websites angleichen | `js/content.js` | ❌ offen — Websites nicht abrufbar, siehe unten |
+| 4 | **Preise & Touren** an die Vorlagen-Websites angleichen | `js/content.js` | ⚠️ eingebaut, muss vom Fahrer bestätigt werden |
 | 5 | **Bewertungen** | `js/content.js` → `reviews:` | ✅ echte Google-Bewertungen |
 | 6 | **Fahrer-Foto und Name** | `js/config.js` → `business.driverPhoto`, `driverName` | ✅ erledigt (Suhar) |
 | 7 | **Gründungsjahr** | `js/config.js` → `business.since` | ❌ offen |
 | 8 | **Facebook-Seite** verlinken | `js/config.js` → `contact.facebook` | ✅ erledigt (numerische Profil-URL) |
 | 9 | **Fahrzeug: 4 Plätze** klarstellen | `js/content.js`, `js/i18n.js` | ✅ erledigt |
 
-Punkt 4 ist der letzte echte Blocker: solange er offen ist, stehen unbestätigte
-Preise auf der Seite. Die beiden als Vorlage genannten Websites liegen hinter
-`share.google`-Kurzlinks, die aus der Entwicklungsumgebung nicht abrufbar sind
-(Google ist dort geblockt) — Inhalte müssen als Text oder Screenshot vorliegen.
+### Preise und Touren: woher die Zahlen kommen
+
+Grundlage sind die beiden als Vorlage genannten Anbieter:
+**lombokprivatetour.com** (im Folgenden A) und **lombokroute.com** (B). Beide
+Websites sind aus der Entwicklungsumgebung nicht abrufbar (Netzwerksperre), die
+Daten liegen deshalb als aufbereitete Zusammenfassung vor.
+
+Die beiden rechnen **unterschiedlich**, das ist der wichtigste Punkt:
+
+* **A** rechnet **pro Fahrzeug**, Preis angegeben für **2 Gäste**, Auto bis 6 Sitze,
+  ausdrücklich 100 % privat.
+* **B** rechnet **pro Person**, Mindestteilnehmerzahl 2 — und schreibt im eigenen
+  FAQ, dass viele Gäste die **geteilten** Touren buchen. Bei sechs von elf
+  B-Touren steht im Leistungsumfang nur „Car" ohne „private". B ist also
+  vermutlich kein reiner Privatanbieter, was einen Teil des Preisunterschieds
+  erklärt.
+
+**Getroffene Entscheidungen:**
+
+| Frage | Entscheidung |
+|---|---|
+| Preismodell | Landtouren und Transfers **pro Auto** (bis 4 Gäste), Boots- und Schnorcheltouren **pro Person** |
+| Preisniveau | rund **12 % unter A** — A hat dieselbe Positionierung wie wir |
+| Mittagessen | **nicht** enthalten, außer wo es vor Ort nichts zu kaufen gibt (Pink Beach, Nordost-Inseln) |
+| Eintritte | **enthalten**, inklusive lokaler Guides — so machen es beide Anbieter |
+| Umfang | **14 Touren**, deckt praktisch alles ab, was A und B zusammen anbieten |
+
+**Eine Annahme, die der Fahrer prüfen sollte:** A nennt seine Fahrzeugpreise für
+**zwei** Gäste, unsere gelten für **bis zu vier**. Eine vierköpfige Familie zahlt
+bei uns damit deutlich weniger als bei A. Das ist bewusst so — ein Auto, ein
+Preis — aber er kann sich ab drei Gästen einen Aufschlag wünschen.
+
+**Nicht übernommen wurden** die Fehler der Quellseiten: B nennt bei einer Tour
+68 statt 38 USD, im Footer die Vorwahl +68 statt +62, und bei der Waterfall Tour
+beschreibt der Highlights-Abschnitt eine ganz andere Tour.
+
+Die Preise stehen jetzt vollständig auf der Seite, sind aber **noch nicht vom
+Fahrer bestätigt** — der `### TODO ###`-Block oben in `js/content.js` erklärt,
+worauf beim Durchgehen zu achten ist.
 
 ### Das Fahrzeug: vier Plätze
 
@@ -105,18 +140,43 @@ wird automatisch in die Zwischenablage kopiert. In der Browser-Konsole steht ein
 In **`js/content.js`**, bei jeder Tour:
 
 ```js
-price: 800000,      // in Indonesischen Rupiah, ohne Punkte
+price: 1300000,     // in Indonesischen Rupiah, ohne Punkte
 unit:  'car',       // 'car' = pro Fahrzeug (bis 4 Gäste)
                     // 'person' = pro Person
                     // 'ask' = kein Preis, zeigt "on request"
 ```
 
 Die Seite zeigt zusätzlich einen groben Euro-Betrag mit „≈" an. Der Umrechnungskurs
-steht in `js/config.js` → `pricing.idrPerEur` (Standard: 17.500). Auf `0` setzen
-blendet die Euro-Preise komplett aus.
+steht in `js/config.js` → `pricing.idrPerEur` (aktuell 20.800). Auf `0` setzen
+blendet die Euro-Preise komplett aus. Bis 100 € wird auf ganze Euro gerundet,
+darüber auf Fünferschritte — auf Fünfer zu runden hatte dazu geführt, dass zwei
+benachbarte Karten mit 1.300.000 und 1.400.000 beide „≈ €65" anzeigten.
 
-> Die aktuell hinterlegten Preise sind **marktübliche Richtwerte**, keine echten Preise
-> des Fahrers. Sie müssen vor dem Livegang bestätigt werden.
+**Der aktuelle Katalog:**
+
+| Tour | Preis | Einheit |
+|---|---|---|
+| Airport Transfer | ab 350.000 | pro Auto |
+| Transfer to the Gili Islands | ab 700.000 | pro Auto |
+| Sasak Culture & the South Coast | 1.200.000 | pro Auto |
+| City & Culture, West Lombok | 1.200.000 | pro Auto |
+| Sendang Gile & Tiu Kelep Waterfalls | 1.300.000 | pro Auto |
+| Benang Stokel & Benang Kelambu | 1.400.000 | pro Auto |
+| Sembalun Valley & Rinjani Viewpoints | 1.450.000 | pro Auto |
+| Tetebatu — Rice Fields & Countryside | 1.500.000 | pro Auto |
+| Gili Trawangan Day Trip | 650.000 | pro Person |
+| Gili Nanggu, Sudak & Kedis | 800.000 | pro Person |
+| Pink Beach & Gili Petelu | 1.000.000 | pro Person |
+| Gili Islands Snorkelling Trip | 1.050.000 | pro Person |
+| Hidden Paradise — North-East Islands | 1.100.000 | pro Person |
+| Lombok in Three Days | auf Anfrage (≈ 6.400.000 für 2) | — |
+
+Die Einzelpreise der Punkt-zu-Punkt-Transfers (Senggigi–Bangsal, Senggigi–Kuta
+und so weiter) stehen im `note`-Feld der Tour `airport-transfer`, damit die
+Tourenliste nicht mit zehn Transferkarten zugestellt wird.
+
+> Die Preise sind aus den beiden Vorlage-Anbietern abgeleitet (siehe oben), aber
+> **noch nicht vom Fahrer bestätigt**.
 
 ---
 
@@ -151,6 +211,22 @@ sondern direkt in `index.html` (`images/hero.webp` bzw. `images/waterfall-tall.w
 > `gili-shallows.webp` und `gili-boat.webp` sind aus Instagram-Screenshots
 > gewonnen und deshalb nur 1176 px breit. Sobald die Originaldateien vorliegen,
 > sollten sie unter gleichem Namen ersetzt werden.
+
+**Vier Bilder kommen doppelt vor**, weil es 14 Touren, aber nur 10 Fotos gibt:
+`rinjani.webp` (Tetebatu und Sembalun), `gili-boat.webp` (Gili-Transfer und
+Trawangan-Tagestour), `gili-shallows.webp` (Gili-Schnorcheln und Hidden
+Paradise) und `hero.webp` (City-Tour und Drei-Tages-Tour). Das fällt beim
+Scrollen kaum auf, weil die Paare nie nebeneinander stehen — aber diese sechs
+Touren sind die erste Adresse, wenn eigene Fotos dazukommen:
+
+| Tour | braucht am dringendsten ein eigenes Foto von |
+|---|---|
+| `tetebatu` | Reisterrassen bei Tetebatu |
+| `benang-stokel` | Benang Kelambu, der „Vorhang"-Wasserfall |
+| `city-culture` | Islamic Centre oder Ampenan Altstadt |
+| `southwest-islands` | Gili Nanggu oder Gili Kedis |
+| `hidden-paradise` | Gili Kapal, die Sandbank |
+| `lombok-3-day` | ein Bild, das die drei Tage zusammenfasst |
 
 ---
 

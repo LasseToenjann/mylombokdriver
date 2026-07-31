@@ -38,7 +38,10 @@
     const rate = CFG.pricing.idrPerEur;
     if (!rate) return '';
     const v = n / rate;
-    return '≈ €' + (v < 20 ? v.toFixed(0) : (Math.round(v / 5) * 5));
+    /* Rounded to whole euros up to €100, to fives above it. Rounding
+       everything to fives used to make neighbouring cards collide — a
+       1,300,000 and a 1,400,000 tour both came out at "≈ €65". */
+    return '≈ €' + (v < 100 ? Math.round(v) : Math.round(v / 5) * 5);
   };
 
   const waDigits = () => (CFG.contact.whatsapp || '').replace(/\D/g, '');
@@ -541,7 +544,7 @@
   function serviceLabel(value) {
     if (!value || value === 'custom') return 'Custom itinerary / advice';
     const x = DATA.tours.find(o => o.id === value);
-    return x ? x.title.en : value;              /* always English for the driver */
+    return x ? x.title : value;
   }
 
   /* Read by element id — `form.name` and `form.method` would collide with

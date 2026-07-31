@@ -93,7 +93,7 @@ window.MLD_CONFIG = {
        The site additionally prints a rough EUR figure so European guests can
        judge the price. Update this rate now and then — it is only an estimate
        and is always labelled with "≈". Set to 0 to hide EUR prices entirely. */
-    idrPerEur: 17500,
+    idrPerEur: 20800,
     /* Prices are honest "from" prices. Set to false to drop the "from". */
     showFrom: true
   },

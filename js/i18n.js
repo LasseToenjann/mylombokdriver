@@ -40,7 +40,7 @@ window.MLD_I18N = {
   'strip.1': 'Airport transfers',
   'strip.2': 'Day tours',
   'strip.3': 'Snorkelling trips',
-  'strip.4': 'Lombok–Gili fast boat',
+  'strip.4': 'Private speedboat to the Gilis',
   'strip.5': 'Multi-day itineraries',
 
   'tours.eyebrow': 'What we do',
