@@ -277,41 +277,50 @@ in WhatsApp und Facebook, exakt 1200 × 630 px als JPEG.
 
 Das Konzept steht als Kommentar im Abschnitt `MOTION` in `css/style.css`.
 
-**Nichts bewegt sich.** Zwei frühere Fassungen ließen Elemente beim Scrollen
-10–26 px aufsteigen. Beide wirkten billig, und der Grund steckt in der Methode,
-nicht in den Werten: Was sich bewegt, steht vorher woanders als nachher. Auf dem
-Handy, wo die Scrollgeschwindigkeit nie gleichmäßig ist, erwischt man es
-regelmäßig mitten in der Bewegung — und dann steht es schief. Keine
-Beschleunigungskurve behebt das.
+**Der Kern ist die Kurve, nicht die Geschwindigkeit.** Drei frühere Fassungen
+wirkten billig, obwohl Strecke, Dauer und Auslösepunkt jedes Mal anders waren.
+Der eigentliche Grund: eine gewöhnliche Ease-Out-Kurve legt die letzten Pixel
+in den letzten Millisekunden zurück, und das Auge liest das als Einrasten.
+Langsamer machen ergab nur ein langsameres Einrasten.
 
-Deshalb wird jetzt nur noch **die Deckkraft** animiert. Eine Einblendung kann
-man nicht an der falschen Stelle erwischen: Das Element ist in jedem Moment
-genau dort, wo es hingehört, nur blasser.
+Jetzt läuft alles auf `cubic-bezier(.16, 1, .3, 1)` — einer Expo-Kurve mit sehr
+langem Auslauf. Gemessen an den 24 px Weg:
 
-Drei weitere Entscheidungen in derselben Richtung:
+| nach | zurückgelegt | Restweg |
+|---|---|---|
+| 350 ms | 83 % | 4,2 px |
+| 500 ms | 92 % | 2,0 px |
+| 700 ms | 97 % | 0,7 px |
+| 1400 ms | 100 % | 0 px |
 
-- **Ganze Blöcke, nicht ihre Teile.** Das Tour-Raster blendet als eine Einheit
-  ein, nicht als acht Karten nacheinander. Diese Staffelung war die
-  Hauptursache des „Aufploppens" — eine Reihe nacheinander eintreffender Karten
-  lenkt auf den Mechanismus statt auf den Inhalt.
-- **23 animierte Elemente** statt ursprünglich 51.
-- **Auslösen ein Fünftel Bildschirmhöhe früher**, sodass die Einblendung
-  praktisch fertig ist, bevor man den Block ansieht.
+Gefühlt ist das Element nach einer halben Sekunde da, aber es hört nie sichtbar
+auf sich zu bewegen — und was nicht sichtbar stoppt, kann nicht aufploppen.
 
-Bewusst weiterhin animiert: Hover-Zustände, das FAQ-Aufklappen, die beiden
-Overlays, das Laufband und der Zähler auf der Bewertung. Alle davon sind eine
-Antwort auf etwas, das die Besucherin getan hat, und werden deshalb nie
-halbfertig angetroffen. Scrollen ist keine Handlung — darauf gehört keine
-Choreografie.
+Alles andere folgt daraus:
 
-Der Hero blendet beim Laden als ein Block ein, nicht gestaffelt: ein Hero, der
-sich Stück für Stück zusammensetzt, erzeugt genau den Eindruck einer noch
-ladenden Seite. Das Hintergrundbild driftet sehr langsam (46 s pro Durchlauf).
+- **Weg großzügig, 24 px.** Mit langem Auslauf wirkt Strecke souverän; kurze
+  Wege in kurzer Zeit sind das, was billig aussieht.
+- **Deckkraft in 0,8 s**, deutlich vor der 1,4 s langen Bewegung. Text ist
+  lesbar, während die letzten Pixel noch sitzen.
+- **Staffelung 110 ms** — langsam genug, um komponiert zu wirken. Die 55–70 ms
+  früherer Fassungen waren der Maschinengewehr-Rhythmus, der auf den
+  Mechanismus statt auf den Inhalt lenkte.
+- **Auslösen ein Viertel Bildschirmhöhe früher**, sodass der schnelle Teil der
+  Bewegung vorbei ist, bevor man hinsieht.
+- Einzelne Karten animieren einzeln, Abschnitts-Überschriften und große Blöcke
+  reisen kürzer (16–20 px) als kleine Elemente.
 
-Es wird ausschließlich `opacity` animiert, das bleibt auf dem Compositor. **Kein
-`will-change`:** es auf Dutzende Elemente zu setzen fordert Dutzende
-Compositor-Ebenen an und erzeugt auf Mittelklasse-Handys genau das Ruckeln, das
-es verhindern soll.
+**Ein wichtiger Fehler steckte im Beobachter.** Er meldet nur Zustandswechsel.
+Wischt man schnell, springt ein Element zwischen zwei Frames von unterhalb des
+Beobachtungsbereichs nach oberhalb — es gilt nie als sichtbar und bleibt
+**dauerhaft unsichtbar**. Im Test blieben ganze Abschnitte leer. Behoben, indem
+der Bereich nach oben praktisch unbegrenzt aufgespannt wird: alles, was die
+Auslöselinie je erreicht hat, zählt. Geprüft bei vier Geschwindigkeiten bis hin
+zum Sprung ans Seitenende — kein Element bleibt zurück.
+
+Es werden nur `opacity` und `transform` animiert, das bleibt auf dem Compositor.
+**Kein `will-change`:** es auf Dutzende Elemente zu setzen fordert Dutzende
+Compositor-Ebenen an und erzeugt genau das Ruckeln, das es verhindern soll.
 
 **`prefers-reduced-motion` schaltet alles ab.** Getestet.
 

@@ -50,8 +50,12 @@
 
   --head-h: 76px;
   --ease:   cubic-bezier(.22,.61,.36,1);
-  /* Longer tail than --ease: reveals decelerate almost to a stop. */
-  --ease-reveal: cubic-bezier(.2,.7,.24,1);
+  /* Expo-out. Covers most of the distance in the first quarter of the time,
+     then glides for the rest. That glide is the whole trick: the movement
+     never visibly *stops*, so nothing ever snaps into place. */
+  --ease-reveal: cubic-bezier(.16, 1, .3, 1);
+  /* Slightly softer start for opacity, which should not race the movement. */
+  --ease-fade:   cubic-bezier(.33, 1, .68, 1);
 }
 
 /* ---------- 2. Reset ------------------------------------------------------ */
@@ -733,54 +737,74 @@ ul, ol { list-style: none; padding: 0; }
 /* ============================================================================
    MOTION
    ----------------------------------------------------------------------------
-   Two earlier versions of this moved things: elements rose 10–26px as they
-   came into view. Both felt cheap, and the reason is structural rather than a
-   matter of tuning. Anything that moves is in a different place before and
-   after, so on a phone — where scroll speed is never constant — you routinely
-   catch it mid-flight and see it sitting wrong. No easing curve fixes that.
+   Three earlier attempts at this popped. The distances and the trigger point
+   were not the real problem — the curve was. A 600ms ease-out spends its last
+   100ms covering the final few pixels, and the eye reads that as a snap into
+   place. Slowing it down without changing the curve just made a slower snap.
 
-   So nothing moves any more. Content fades, and only fades. A fade cannot be
-   caught in the wrong position: at every instant the element is exactly where
-   it belongs, just dimmer. That is the whole idea, and it is why this reads
-   calm where the previous versions read like a page still loading.
+   The fix is the shape of the movement, not its size or speed:
 
-   Three further decisions in the same spirit:
+     --ease-reveal is an expo-out. Measured over the 24px travel: 83% is done
+     after 350ms, 92% after 500ms, and from 700ms on there is less than a pixel
+     left, which the remaining 700ms spend finishing. Perceptually it has
+     arrived within half a second, but it never stops — and a movement that
+     never visibly stops cannot pop.
 
-   - Whole blocks, not their parts. The tour grid fades as one thing, not as
-     eight cards in sequence. Staggering was the single biggest source of the
-     "popping" — a row of cards arriving one after another draws attention to
-     the mechanism instead of the content.
-   - Roughly fifteen animated elements on the page, down from fifty-one.
-   - Triggered a fifth of a screen early, so the fade is essentially finished
-     before the block is looked at.
+   Everything else follows from that:
 
-   What is deliberately still animated: hover states, the FAQ panel, the two
-   overlays, the marquee and the rating count-up. Every one of those is a
-   response to something the visitor did, so it is never encountered
-   half-finished. Scroll is not an action — it should not be answered with
-   choreography.
+   - Travel is generous, 24px, not timid. With a long glide, distance reads as
+     confidence; small distances over short times are what look cheap.
+   - Opacity finishes in 800ms, well before the 1.4s movement. Text is fully
+     readable while the last pixels are still settling, so nobody waits.
+   - Stagger is 110ms — slow enough to read as composed. The 55–70ms of the
+     earlier versions was the machine-gun rhythm that drew attention to the
+     mechanism.
+   - The observer starts things a quarter of a screen early, so the fast part
+     of the movement is over before the element is looked at.
 
-   Only opacity is animated here, which stays on the compositor. No
-   will-change: setting it on dozens of elements asks for dozens of layers and
-   causes the stutter it is meant to avoid.
+   Only opacity and transform, so it stays on the compositor. No will-change:
+   requesting dozens of layers at once causes the stutter it claims to prevent.
+   prefers-reduced-motion switches all of it off.
    ========================================================================== */
 
 .reveal {
   opacity: 0;
-  transition: opacity .9s var(--ease-reveal);
+  transform: translateY(var(--rise, 24px));
+  transition: opacity .8s var(--ease-fade),
+              transform 1.4s var(--ease-reveal);
+  transition-delay: var(--delay, 0ms);
 }
-.reveal.in { opacity: 1; }
+.reveal.in { opacity: 1; transform: none; }
 
-/* The hero is the only thing on screen before any scrolling, so it fades in as
-   one block on load. Not staggered: a hero assembling itself piece by piece is
-   exactly the "still loading" impression this is trying to avoid. */
-.hero-inner {
-  animation: heroIn .8s var(--ease-reveal) both;
+/* Travel by element size: a whole section moving as far as a small card looks
+   heavy, so the big blocks move less, not more. */
+.reveal-sm { --rise: 16px; }
+.reveal-lg { --rise: 20px; }
+
+/* The hero is the only thing visible before any scrolling, so it runs its own
+   sequence on load — same curve, same rhythm as everything below it. */
+@keyframes riseIn { to { opacity: 1; transform: none; } }
+.hero-inner > * {
+  opacity: 0; transform: translateY(22px);
+  animation: riseIn 1.3s var(--ease-reveal) forwards;
 }
-@keyframes heroIn { from { opacity: 0; } to { opacity: 1; } }
+.hero-inner > *:nth-child(1) { animation-delay: .10s; }
+.hero-inner > *:nth-child(2) { animation-delay: .21s; }
+.hero-inner > *:nth-child(3) { animation-delay: .32s; }
+.hero-inner > *:nth-child(4) { animation-delay: .43s; }
+.hero-inner > *:nth-child(5) { animation-delay: .54s; }
+.hero-inner > *:nth-child(6) { animation-delay: .65s; }
+
+.hero-badges li {
+  opacity: 0; transform: translateY(14px);
+  animation: riseIn 1.1s var(--ease-reveal) forwards;
+}
+.hero-badges li:nth-child(1) { animation-delay: .72s; }
+.hero-badges li:nth-child(2) { animation-delay: .82s; }
+.hero-badges li:nth-child(3) { animation-delay: .92s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transition: none; }
-  .hero-inner { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero-inner > *, .hero-badges li { opacity: 1; transform: none; animation: none; }
 }
 body.no-scroll { overflow: hidden; }

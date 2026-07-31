@@ -107,6 +107,7 @@
         <h3>${esc(v.title)}</h3>
         <p>${esc(v.text)}</p>
       </article>`).join('');
+    revealGroup($$('#valueGrid .value-card'));
   }
 
   function priceBlock(tour) {
@@ -152,6 +153,7 @@
           </div>
         </div>
       </article>`).join('');
+    revealGroup($$('#tourGrid .tour-card'));
   }
 
   function renderFilters() {
@@ -169,6 +171,7 @@
         <img src="${img(g.scene)}" alt="${esc(g.caption)}" loading="lazy" width="800" height="600">
         <span class="gal-cap">${esc(g.caption)}</span>
       </button>`).join('');
+    revealGroup($$('#galGrid .gal-item'), { size: 'sm', step: 85 });
   }
 
   /* Filled in by loadReviewStats() once assets/review-stats.json arrives. Null
@@ -268,6 +271,7 @@
           <span>${esc(r.origin)}</span>
         </div>
       </article>`).join('');
+    revealGroup($$('#reviewGrid .review-card'));
     const more = $('#reviewsMore');
     if (!more) return;
     if (CFG.contact.googleMaps) more.href = CFG.contact.googleMaps;
@@ -693,14 +697,38 @@
           en.target.classList.add('in');
           obs.unobserve(en.target);
         });
-        /* The root is grown a fifth of a screen downwards, so an element
-           starts moving while it is still below the fold and has all but
-           finished by the time it scrolls into view. Shrinking the root
-           instead — which is what this did before — meant you watched every
-           element appear after it was already on screen. */
-      }, { rootMargin: '0px 0px 20% 0px', threshold: 0 });
+        /* Two different jobs are done by the two margins.
+
+           Bottom, +25%: an element starts moving while it is still below the
+           fold, so the quick part of the travel is over before it is looked
+           at. Shrinking the root instead — the original mistake — meant you
+           watched every element appear after it was already on screen.
+
+           Top, effectively unbounded: anything at or above the viewport counts
+           as intersecting. Without it a flick scroll leaves elements invisible
+           forever. The observer only reports *changes*, and an element that is
+           teleported from below the root to above it between two frames never
+           registers as intersecting at all — so it never gets revealed. Whole
+           sections stayed blank in testing. This is not a fast-scroll edge
+           case on a phone, it is what normal scrolling looks like. */
+      }, { rootMargin: '100000px 0px 25% 0px', threshold: 0 });
     }
     $$('.reveal:not(.in)', root).forEach(el => revealObserver.observe(el));
+  }
+
+  /* 110ms between siblings. The 55–70ms of the earlier versions read as a
+     machine gun; this reads as composed. Capped after six so the last tile of
+     a long gallery is never left arriving on its own. */
+  function stagger(els, step = 110, cap = 6) {
+    els.forEach((el, i) => el.style.setProperty('--delay', Math.min(i, cap) * step + 'ms'));
+  }
+
+  /* Marks a freshly rendered group as revealable and staggers it in one go. */
+  function revealGroup(els, opts = {}) {
+    const list = Array.from(els);
+    list.forEach(el => el.classList.add('reveal', ...(opts.size ? ['reveal-' + opts.size] : [])));
+    stagger(list, opts.step, opts.cap);
+    observeReveals();
   }
 
   /* The rating counts up the first time the bar is seen. It is the one number
@@ -734,12 +762,14 @@
     io.observe(el);
   }
 
-  /* Block level only. Marking individual cards is what produced the sequence
-     of little arrivals that read as cheap; a grid now fades as one thing. */
+  /* Section furniture. The grids are not listed here — each of them staggers
+     its own cards in when it renders. */
   function markReveal() {
-    $$('.sec-head, #tourGrid, #valueGrid, #galGrid, #reviewGrid, .custom-panel, '
-      + '.ig-panel, .about-media, .about-copy, .faq-list, .book-form, .direct')
-      .forEach(el => el.classList.add('reveal'));
+    $$('.sec-head, .about-media, .about-copy, .book-form')
+      .forEach(el => el.classList.add('reveal', 'reveal-lg'));
+    $$('.custom-panel, .ig-panel, .direct').forEach(el => el.classList.add('reveal'));
+    $$('.faq-item').forEach(el => el.classList.add('reveal', 'reveal-sm'));
+    stagger($$('.faq-item'), 70, 8);
   }
 
   function initDelegates() {
