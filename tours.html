@@ -52,8 +52,8 @@
       <a href="#tours"              data-i18n="nav.allTours">All tours</a>
       <a href="#match"              data-i18n="nav.match">Find your tour</a>
       <a href="index.html#why"      data-i18n="nav.why">Why me</a>
-      <a href="index.html#reviews"  data-i18n="nav.reviews">Reviews</a>
       <a href="index.html#about"    data-i18n="nav.about">About</a>
+      <a href="index.html#reviews"  data-i18n="nav.reviews">Reviews</a>
       <a href="index.html#faq"      data-i18n="nav.faq">FAQ</a>
     </nav>
 
@@ -110,16 +110,22 @@
 </section>
 
 <!-- ══════════════════════════════════════════ BACK TO BOOKING ═════════════ -->
-<section class="sec">
+<!-- This was a dark card floating in a light section, directly under the dark
+     matcher — a black box with a bright gap above it and no edge of its own,
+     so it read as something that had come loose. It is a proper closing
+     section now: the same sand background the booking form has on the home
+     page, a real section header, and the two ways on side by side. -->
+<section class="sec sec-book">
   <div class="wrap wrap-narrow">
-    <div class="custom-panel">
-      <div class="custom-copy">
-        <h2 data-i18n="book.title">Tell me about your trip</h2>
-        <p data-i18n="book.sub">Fill this in and WhatsApp opens with the whole enquiry already written. Nothing is sent automatically — you read it over and press send yourself.</p>
-      </div>
+    <header class="sec-head book-head">
+      <p class="eyebrow" data-i18n="book.eyebrow">Booking</p>
+      <h2 data-i18n="book.title">Tell me about your trip</h2>
+      <p class="sec-sub" data-i18n="book.sub">Fill this in and WhatsApp opens with the whole enquiry already written. Nothing is sent automatically — you read it over and press send yourself.</p>
+    </header>
+    <div class="tours-more tours-more--center">
       <a class="btn btn-gold" href="index.html#book" data-i18n="nav.book">Book now</a>
+      <a class="btn btn-line" href="index.html" data-i18n="toursPage.back">Back to the home page</a>
     </div>
-    <p class="sec-foot"><a class="link-gold" href="index.html" data-i18n="toursPage.back">Back to the home page</a></p>
   </div>
 </section>
 </main>
@@ -138,8 +144,8 @@
       <a href="#tours"             data-i18n="nav.allTours">All tours</a>
       <a href="#match"             data-i18n="nav.match">Find your tour</a>
       <a href="index.html#why"     data-i18n="nav.why">Why me</a>
+      <a href="index.html#about"   data-i18n="nav.about">About</a>
       <a href="index.html#reviews" data-i18n="nav.reviews">Reviews</a>
-      <a href="index.html#about"    data-i18n="nav.about">About</a>
       <a href="index.html#faq"     data-i18n="nav.faq">FAQ</a>
     </nav>
 

@@ -330,11 +330,24 @@ Pfeiltasten-Navigation und den zehn Bildunterschriften. Er versprach „das
 echte Lombok" und zeigte gekaufte Stockfotos; der Instagram-Kanal macht
 dieselbe Sache ehrlich.
 
-Geblieben ist an derselben Stelle ein schmales Band mit dem
-**Instagram-Verweis**. Das hat zwei Gründe: ohne Galerie ist es der einzige Ort,
-an dem Gäste echte Fotos sehen — und es hält den Hell-Dunkel-Rhythmus. Ohne
-dieses Band stießen „Why book direct" und „Reviews" als zwei dunkle Abschnitte
-direkt aneinander.
+Geblieben ist der **Instagram-Verweis** — ohne Galerie ist er der einzige Ort,
+an dem Gäste echte Fotos sehen. Er stand zuerst als eigenes Band an derselben
+Stelle, in Instagrams Verlauf von Violett nach Orange. Das war die einzige
+Farbe auf der Seite, die keiner Palette gehorchte, und allein in einem hellen
+Streifen zwischen zwei dunklen Abschnitten sah er aus wie eine hineinkopierte
+Anzeige.
+
+Jetzt schließt er den Abschnitt **„Über uns"** ab, in Gold und Sand wie alles
+andere: das Eingeständnis, dass die Fotos hier gekauft sind und die echten
+woanders liegen, gehört zu der Person, um die es in dem Abschnitt geht. Der
+Abschnitt selbst ist dafür zwischen „Why book direct" und die Bewertungen
+gerückt. Das liest sich ohnehin besser — Behauptung, Person, Bestätigung — und
+er ist jetzt der helle Abschnitt, der die beiden dunklen trennt.
+
+Damit stoßen dafür Bewertungen und FAQ aneinander. Beide dunklen Paare tragen
+deshalb dieselbe Behandlung wie vorher schon der Matcher: das obere bekommt die
+hellere Tinte (`--ink-1`) und eine Haarlinie. Das genügt, um „hier fängt etwas
+Neues an" zu sagen, ohne eine Farbe zu erfinden.
 
 Mit der Galerie sind fünf Stockfotos verschwunden, die sonst nirgends mehr
 gebraucht wurden. `gili-shallows.webp` und `gili-boat.webp` bleiben liegen,
@@ -643,8 +656,14 @@ unerreichbar weit unten. Deshalb jetzt:
 * **`index.html`** zeigt **nur die sieben beliebtesten** Touren, gefolgt von zwei
   Wegen weiter: „Find your match in 4 questions" (golden, also die primäre
   Aktion) und „See all 13 tours" (nur umrandet).
-* **`tours.html`** zeigt **alle 13**, mit den Kategoriefiltern, die vorher auf
-  der Startseite saßen.
+* **`tours.html`** zeigt **alle 13**.
+* **Die Kategoriefilter stehen auf beiden Seiten.** Auf der Startseite grenzen
+  sie die sieben ausgewählten Touren ein, auf `tours.html` den ganzen Katalog.
+  Wer nur einen Transfer sucht, soll nicht an vier Tagestouren vorbeilesen
+  müssen, und „See all 13 tours“ steht direkt darunter. Fehlen einer Kategorie
+  irgendwann alle `featured`-Touren, zeigt die Startseite dort ersatzweise den
+  vollen Katalog dieser Kategorie — ein leeres Raster unter einem Filter sieht
+  kaputt aus, nicht leer.
 
 Der Matcher ist bewusst der goldene Knopf. Wer sieben Karten durchgescrollt hat,
 ohne sich zu entscheiden, sagt damit, dass er noch nicht weiß was er will — für
@@ -730,7 +749,7 @@ auf.
 - **13 Touren**, sieben davon auf der Startseite, alle auf `tours.html` mit Filter nach Kategorie und Detail-Ansicht (Ablauf, Leistungen, Hinweise)
 - **„Find your match"** — vier Fragen, eine Empfehlung, zwei Alternativen
 - **FAQ-Akkordeon**, Bewertungen, „Über uns"
-- **Instagram** prominent verlinkt: eigene Sektion, Header-Buchungspfad, Footer
+- **Instagram** verlinkt: am Ende von „Über uns“, im Buchungsbereich und im Footer
 - **SEO:** Meta-Tags, Open Graph, `TravelAgency`-JSON-LD mit allen Touren als `Offer`
 - Barrierefreiheit: Skip-Link, Fokus-Ringe, ARIA-Zustände, `prefers-reduced-motion`
 - Kein Tracking, keine Cookies, keine externen Anfragen ausser Google Fonts
@@ -871,7 +890,8 @@ womit geprüft wurde, damit man es nach einer Änderung wiederholen kann.
 | JSON-LD | `TravelAgency` mit 13 Angeboten, `FAQPage` nur auf der Startseite |
 | Buchungsformular | Pflichtfeldprüfung, Hinweis ab fünf Gästen, fertige WhatsApp-Nachricht |
 | Tour-Fenster | öffnet, Fokus sitzt, Scrollsperre greift, Escape schließt, eigene Adresse |
-| Kategoriefilter | 2 / 7 / 6 / 13 Karten |
+| Kategoriefilter, `tours.html` | 2 / 7 / 6 / 13 Karten |
+| Kategoriefilter, Startseite | 2 / 4 / 3 / 7 Karten aus der Auswahl |
 | Vorauswahl von `tours.html` zur Startseite | trägt die Tour ein und räumt die Adresse auf |
 | Alle 72 Matcher-Kombinationen | jede liefert ein Ergebnis, keine Sackgasse |
 | Reveal-Animationen | siehe Abschnitt „Bewegung", alle Wege geprüft |

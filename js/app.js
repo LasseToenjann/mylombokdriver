@@ -164,7 +164,14 @@
      on tours.html, which is also the only page with the category filters. */
   function tourList(filter = 'all') {
     const base = ON_TOURS_PAGE ? DATA.tours : DATA.tours.filter(x => x.featured);
-    return base.filter(x => filter === 'all' || x.cats.includes(filter));
+    const list = base.filter(x => filter === 'all' || x.cats.includes(filter));
+    /* On the home page the chips narrow the seven featured tours, so a category
+       whose tours all lost their `featured` flag would leave an empty grid —
+       which reads as broken rather than as "nothing here". In that one case
+       fall back to the full catalogue for that category. */
+    if (!list.length && !ON_TOURS_PAGE && filter !== 'all')
+      return DATA.tours.filter(x => x.cats.includes(filter));
+    return list;
   }
 
   function renderTours(filter = 'all') {

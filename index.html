@@ -53,8 +53,8 @@
       <a href="#tours"   data-i18n="nav.tours">Tours &amp; prices</a>
       <a href="#match"   data-i18n="nav.match">Find your tour</a>
       <a href="#why"     data-i18n="nav.why">Why me</a>
-      <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
       <a href="#about"   data-i18n="nav.about">About</a>
+      <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
       <a href="#faq"     data-i18n="nav.faq">FAQ</a>
     </nav>
 
@@ -112,6 +112,12 @@
            own intro, because there the heading is the page title. -->
       <h2 data-i18n="tours.title">Lombok tours &amp; airport transfers</h2>
     </header>
+
+    <!-- The same category chips as on tours.html. Here they narrow the
+         shortlist rather than the whole catalogue — somebody who only wants a
+         transfer should not have to read past four day tours to find one, and
+         "See all 13 tours" sits right underneath for the rest. -->
+    <div class="filters" id="filters" role="tablist" aria-label="Tour categories"></div>
 
     <!-- Only the seven marked `featured: true` in content.js. All thirteen
          turned this section into a catalogue and pushed everything below it
@@ -172,43 +178,12 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════ INSTAGRAM ═══════════════════ -->
-<!-- What is left of the photo gallery. The grid of stock images went: it
-     promised "the real Lombok" while showing bought photographs, and the
-     Instagram account does the same job honestly. This band also keeps the
-     light/dark rhythm going — without it "Why book direct" and "Reviews"
-     would be two dark sections running into each other. -->
-<section class="sec sec-slim" id="instagram">
-  <div class="wrap">
-    <a class="ig-panel" id="igPanel" href="https://www.instagram.com/mylombokdriver" target="_blank" rel="noopener">
-      <span class="ig-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor" stroke="none"/></svg>
-      </span>
-      <span class="ig-copy">
-        <strong data-i18n="instagram.title">See the real photos on Instagram</strong>
-        <span data-i18n="instagram.text">Every trip is posted on the account — guests, reefs, sunsets and the occasional flat tyre.</span>
-      </span>
-      <span class="ig-handle">@mylombokdriver</span>
-    </a>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════ REVIEWS ═════════════════════ -->
-<section class="sec sec-dark" id="reviews">
-  <div class="wrap">
-    <header class="sec-head">
-      <p class="eyebrow" data-i18n="reviews.eyebrow">Guests</p>
-      <h2 data-i18n="reviews.title">What people say afterwards</h2>
-      <p class="sec-sub" data-i18n="reviews.sub">The compliment that comes up most often is the least glamorous one: everything happened exactly as agreed.</p>
-    </header>
-    <div class="review-grid" id="reviewGrid"></div>
-    <div class="sec-foot">
-      <a class="link-gold" id="reviewsMore" href="#" target="_blank" rel="noopener" data-i18n="reviews.more">Read the reviews on Google</a>
-    </div>
-  </div>
-</section>
-
 <!-- ══════════════════════════════════════════ ABOUT ═══════════════════════ -->
+<!-- Sits between "Why book direct" and the reviews, and does two jobs at once.
+     It reads better — the claim, then the person behind it, then the guests
+     confirming it — and it is the light section that keeps those two dark ones
+     from running into each other. A stand-alone Instagram band used to do that
+     job and looked like an advert somebody had pasted in. -->
 <section class="sec" id="about">
   <div class="wrap about-grid" id="aboutGrid">
     <!-- Portrait of the driver. Rendered by app.js only when
@@ -227,6 +202,36 @@
         <div><dt data-i18n="about.statC"></dt><dd data-i18n="about.statCv"></dd></div>
         <div><dt data-i18n="about.statD"></dt><dd data-i18n="about.statDv"></dd></div>
       </dl>
+
+      <!-- The photographs on this page were bought; the real ones are on his
+           account. That admission belongs to the section about him, as its
+           closing line — not to a band of its own in Instagram's purple, which
+           is the one colour on this page that answers to nobody. -->
+      <a class="about-ig" id="igPanel" href="https://www.instagram.com/mylombokdriver" target="_blank" rel="noopener">
+        <span class="about-ig-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor" stroke="none"/></svg>
+        </span>
+        <span class="about-ig-copy">
+          <strong data-i18n="instagram.title">See the real photos on Instagram</strong>
+          <span data-i18n="instagram.text">Every trip is posted on the account — guests, reefs, sunsets and the occasional flat tyre.</span>
+        </span>
+        <span class="ig-handle">@mylombokdriver</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ REVIEWS ═════════════════════ -->
+<section class="sec sec-dark" id="reviews">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="eyebrow" data-i18n="reviews.eyebrow">Guests</p>
+      <h2 data-i18n="reviews.title">What people say afterwards</h2>
+      <p class="sec-sub" data-i18n="reviews.sub">The compliment that comes up most often is the least glamorous one: everything happened exactly as agreed.</p>
+    </header>
+    <div class="review-grid" id="reviewGrid"></div>
+    <div class="sec-foot">
+      <a class="link-gold" id="reviewsMore" href="#" target="_blank" rel="noopener" data-i18n="reviews.more">Read the reviews on Google</a>
     </div>
   </div>
 </section>
@@ -318,8 +323,8 @@
       <a href="tours.html" data-i18n="nav.allTours">All tours</a>
       <a href="#match"   data-i18n="nav.match">Find your tour</a>
       <a href="#why"     data-i18n="nav.why">Why me</a>
-      <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
       <a href="#about"   data-i18n="nav.about">About</a>
+      <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
       <a href="#faq"     data-i18n="nav.faq">FAQ</a>
     </nav>
 

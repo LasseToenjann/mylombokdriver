@@ -121,7 +121,15 @@ body[data-page="tours"] .site-head {
 .sec-foot { margin-top: 42px; }
 /* A section that is one element tall — the Instagram band. Full section
    padding around a single panel left a hole in the page. */
-.sec-slim { padding: clamp(46px, 5vw, 74px) 0; }
+/* Two pairs of dark sections now touch: the matcher against "Why book direct",
+   and the reviews against the FAQ. Both would otherwise read as one endless
+   slab. The upper one of each pair gets the lighter ink and a hairline, which
+   is enough to say "this is a different thing" without inventing a colour. */
+#match, #faq {
+  background: var(--ink-1);
+  border-block: 1px solid var(--line-d);
+  overflow: hidden;
+}
 
 .eyebrow {
   font-size: .745rem; font-weight: 600; letter-spacing: .19em; text-transform: uppercase;
@@ -417,6 +425,9 @@ body[data-page="tours"] .site-head {
 .tours-more {
   margin-top: 2.2rem; display: flex; flex-wrap: wrap; align-items: center; gap: .8rem;
 }
+/* The closing section of tours.html uses the same row under a centred header,
+   so the buttons centre with it. */
+.tours-more--center { justify-content: center; margin-top: 0; }
 @media (max-width: 560px) {
   .tours-more .btn { width: 100%; }
 }
@@ -617,22 +628,42 @@ body[data-page="tours"] .site-head {
 .value-card h3 { font-family: var(--ff-display); font-size: 1.26rem; font-weight: 600; margin-bottom: .5rem; }
 .value-card p { font-size: .935rem; color: var(--tx-light-2); }
 
-/* ---------- 10. Instagram band ------------------------------------------- */
-.ig-panel {
-  margin-top: 1.7rem; padding: 26px 30px; border-radius: var(--r-lg);
-  display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap;
-  color: var(--white);
-  background: linear-gradient(115deg, #2B1B4D 0%, #7A2A7E 32%, #C4326A 62%, #E8683C 84%, #F0A93C 100%);
-  box-shadow: var(--sh);
-  transition: transform .28s var(--ease), box-shadow .28s var(--ease);
+/* ---------- 10. Instagram, as the closing line of "About" ------------------ */
+/* This was a section of its own: a full-width panel in Instagram's purple to
+   orange gradient, alone in a light band between two dark ones. It was the
+   only element on the page that took its colours from somewhere else, and it
+   read as an advert pasted into the middle of the site.
+
+   Now it closes the section about the driver, in this site's own palette: the
+   gold glyph the value cards use, a hairline, sand. The content did not change
+   — only the claim that it deserved a stage of its own. */
+.about-ig {
+  margin-top: 2.1rem; padding-top: 1.6rem; border-top: 1px solid var(--line-l);
+  display: flex; align-items: center; gap: 1.05rem; flex-wrap: wrap;
+  color: inherit;
+  transition: opacity .22s var(--ease);
 }
-.ig-panel:hover { transform: translateY(-3px); box-shadow: var(--sh-lg); }
-.ig-icon { flex: none; width: 54px; height: 54px; border-radius: 16px; background: rgba(255,255,255,.16); display: grid; place-items: center; }
-.ig-icon svg { width: 28px; height: 28px; fill: none; stroke: #fff; stroke-width: 1.7; }
-.ig-copy { flex: 1 1 320px; display: flex; flex-direction: column; gap: .2rem; }
-.ig-copy strong { font-size: 1.12rem; font-weight: 600; }
-.ig-copy span { font-size: .9rem; color: rgba(255,255,255,.86); }
-.ig-handle { font-weight: 600; letter-spacing: .02em; background: rgba(0,0,0,.24); padding: 9px 17px; border-radius: 999px; font-size: .9rem; }
+.about-ig:hover { opacity: .82; }
+.about-ig:hover .about-ig-mark { border-color: rgba(212,165,68,.55); background: rgba(212,165,68,.19); }
+.about-ig-mark {
+  flex: none; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center;
+  background: rgba(212,165,68,.13); border: 1px solid rgba(212,165,68,.28);
+  transition: background .22s var(--ease), border-color .22s var(--ease);
+}
+.about-ig-mark svg { width: 23px; height: 23px; fill: none; stroke: var(--gold); stroke-width: 1.7; }
+.about-ig-copy { flex: 1 1 240px; display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
+.about-ig-copy strong { font-size: 1.02rem; font-weight: 600; }
+.about-ig-copy span { font-size: .88rem; color: var(--tx-dark-2); }
+/* The handle carries the gold, so the whole row still reads as a link without
+   underlining a block that is mostly explanation. */
+.ig-handle {
+  font-weight: 600; font-size: .88rem; letter-spacing: .02em; white-space: nowrap;
+  color: var(--gold-lo); border-bottom: 1px solid rgba(212,165,68,.4); padding-bottom: 2px;
+}
+@media (max-width: 560px) {
+  .about-ig { gap: .85rem; }
+  .about-ig-copy { flex-basis: 100%; }
+}
 
 /* ---------- 11. Reviews --------------------------------------------------- */
 .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(285px, 1fr)); gap: 1.4rem; }
