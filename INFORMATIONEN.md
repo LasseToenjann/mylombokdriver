@@ -21,7 +21,7 @@ Ländern — eine Sprache, die alle lesen, schlägt eine halb übersetzte Seite.
 
 **Stand und Entscheidungen**
 * [Vor dem Livegang: zwingend, erledigt](#vor-dem-livegang-zwingend-erledigt) — abgearbeitete Checkliste
-* [Der einzige verbliebene Punkt](#der-einzige-verbliebene-punkt)
+* [Nichts mehr offen](#nichts-mehr-offen)
 * [Preise und Touren: woher die Zahlen kommen](#preise-und-touren-woher-die-zahlen-kommen)
 * [Das Fahrzeug: vier Plätze](#das-fahrzeug-vier-plätze)
 
@@ -73,22 +73,24 @@ was geprüft wurde:
 Ein Gründungsjahr wird bewusst **nicht** genannt — es stand früher als offener
 Punkt hier und ist auf Wunsch des Betreibers ersatzlos entfallen.
 
-### Der einzige verbliebene Punkt
+### Nichts mehr offen
 
-**Es fehlen zwei Repository-Secrets, sonst nichts.** Der Workflow, der die
-Bewertungszahlen täglich aus dem Google-Profil holt, liegt fertig im Repository
-und läuft auch — er bricht aber jeden Morgen mit
-`PLACE_ID and GOOGLE_MAPS_KEY must both be set` ab, weil die beiden Secrets nie
-angelegt wurden. Deshalb sind die Läufe unter *Actions* rot.
+Der letzte Punkt war, dass die Bewertungszahlen von Hand gepflegt wurden. **Seit
+dem 3. August 2026 holt der Workflow sie selbst.** Die beiden Secrets `PLACE_ID`
+und `GOOGLE_MAPS_KEY` sind angelegt, der erste Lauf hat 5,0 aus 41 Bewertungen
+zurückgeliefert — dieselben Zahlen, die vorher von Hand dort standen.
 
-Solange das so ist, zeigt der Vertrauensbalken die Zahlen aus `js/config.js`
-(5,0 aus 41) — richtig, aber eingefroren. Sobald die Secrets stehen, aktualisiert
-sich beides von allein: die Datei, die die Seite liest, **und** die Rückfallwerte
-in `config.js`. Die zehn Minuten Einrichtung stehen im Abschnitt
+Damit ist die ganze Seite abgenommen: Preise, Touren, Texte, Fotos, Kontaktdaten,
+Facebook-Link, die Anmeldung in der Search Console und die Bewertungszahlen.
+
+**Eine Sache steht in der Zukunft an.** Das Google-Cloud-Konto läuft im
+kostenlosen Testzeitraum, der Anfang November 2026 endet. Danach braucht das
+Projekt ein reguläres Rechnungskonto, sonst hört der Schlüssel auf zu
+funktionieren und der Workflow wird rot. Kosten entstehen dadurch keine — ein
+Aufruf pro Tag bleibt weit im Freikontingent, siehe
 [Bewertungszahlen automatisch aktualisieren](#bewertungszahlen-automatisch-aktualisieren).
-
-Alles andere auf dieser Seite ist abgenommen: Preise, Touren, Texte, Fotos,
-Kontaktdaten, Facebook-Link und die Anmeldung in der Search Console.
+Fällt es aus, zeigt die Seite weiter die Zahlen aus `config.js`; auffallen würde
+es also nur in der Actions-Übersicht.
 
 ### Preise und Touren: woher die Zahlen kommen
 
