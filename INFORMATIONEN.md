@@ -435,9 +435,25 @@ Schlüssel für jeden lesbar wäre.
 4. Unter **Actions → Refresh Google review stats → Run workflow** einmal von
    Hand starten und prüfen, dass die Ausgabe die richtigen Zahlen zeigt.
 
-Danach läuft es allein. Ein Aufruf pro Tag sind ~30 im Monat; das Kontingent
-der Places API liegt weit darüber, und die Feldmaske fragt nur `rating` und
-`userRatingCount` ab — die günstigste Abfrage, die es gibt.
+Danach läuft es allein.
+
+**Zu den Kosten**, weil Google beim Einrichten hartnäckig ein Abo anbietet
+(„Starter", 100 $ im Monat): Das ist **nicht nötig**. Pay-as-you-go mit
+kostenlosem Freikontingent bleibt daneben bestehen — den Abo-Dialog einfach
+abbrechen und unter *APIs & Dienste → Anmeldedaten* weitermachen.
+
+Jede Preisstufe hat seit März 2025 ein eigenes Freikontingent pro Monat. Die
+Felder `rating` und `userRatingCount` lösen die **Enterprise**-Stufe aus, also
+die strengste: **1.000 Aufrufe im Monat frei**. Der Workflow macht einen Aufruf
+pro Tag, höchstens 31 im Monat — rund 3 % davon. Die Feldmaske hält die Antwort
+klein, teuer oder billig macht sie die Abfrage aber nicht; entscheidend ist,
+dass es **ein** Aufruf pro Tag ist.
+
+Ein Rechnungskonto mit Zahlungsmittel verlangt Google trotzdem, auch im
+Freikontingent. Wer das Restrisiko ganz ausschließen will, setzt in der Cloud
+Console unter *Places API → Kontingente* ein Tageslimit von z. B. 50 Anfragen.
+Zusammen mit der Beschränkung des Schlüssels auf die Places API ist damit auch
+ein abhandengekommener Schlüssel gedeckelt.
 
 ### Wenn etwas schiefgeht
 
