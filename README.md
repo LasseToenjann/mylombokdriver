@@ -21,7 +21,7 @@ dem Markup:
 
 | Datei | Inhalt |
 |---|---|
-| `js/config.js` | Kontaktdaten, Live-Adresse, Umrechnungskurs, Bewertungszahlen |
+| `js/config.js` | Kontaktdaten, Live-Adresse, Umrechnungskurs, Bewertungszahlen (die pflegt der Workflow) |
 | `js/content.js` | Touren, Preise, Matcher-Fragen, Bewertungen, FAQ |
 | `js/i18n.js` | alle Oberflächentexte, WhatsApp-Nachrichtenvorlage |
 

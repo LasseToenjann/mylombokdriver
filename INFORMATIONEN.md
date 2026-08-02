@@ -21,7 +21,7 @@ Ländern — eine Sprache, die alle lesen, schlägt eine halb übersetzte Seite.
 
 **Stand und Entscheidungen**
 * [Vor dem Livegang: zwingend, erledigt](#vor-dem-livegang-zwingend-erledigt) — abgearbeitete Checkliste
-* [Der einzige verbliebene Punkt](#der-einzige-verbliebene-punkt)
+* [Nichts mehr offen](#nichts-mehr-offen)
 * [Preise und Touren: woher die Zahlen kommen](#preise-und-touren-woher-die-zahlen-kommen)
 * [Das Fahrzeug: vier Plätze](#das-fahrzeug-vier-plätze)
 
@@ -73,16 +73,20 @@ was geprüft wurde:
 Ein Gründungsjahr wird bewusst **nicht** genannt — es stand früher als offener
 Punkt hier und ist auf Wunsch des Betreibers ersatzlos entfallen.
 
-### Der einzige verbliebene Punkt
+### Nichts mehr offen
 
-**Die Bewertungszahlen werden von Hand gepflegt.** In `js/config.js` stehen
-5,0 aus 41 Bewertungen; der Vertrauensbalken unter dem Hero zeigt genau diese
-Zahlen. Sie veralten mit jeder neuen Google-Bewertung.
+Der letzte Punkt war, dass die Bewertungszahlen von Hand gepflegt wurden. **Seit
+dem 3. August 2026 holt der Workflow sie selbst.** Die beiden Secrets `PLACE_ID`
+und `GOOGLE_MAPS_KEY` sind angelegt, der erste Lauf hat 5,0 aus 41 Bewertungen
+zurückgeliefert — dieselben Zahlen, die vorher von Hand dort standen.
 
-Der Workflow, der sie automatisch holt, liegt fertig im Repository und braucht
-nur zwei Repository-Secrets — siehe Abschnitt „Live-Bewertungen" weiter unten.
-Alles andere auf dieser Seite ist abgenommen: Preise, Touren, Texte, Fotos,
-Kontaktdaten, Facebook-Link und die Anmeldung in der Search Console.
+Damit ist die ganze Seite abgenommen: Preise, Touren, Texte, Fotos, Kontaktdaten,
+Facebook-Link, die Anmeldung in der Search Console und die Bewertungszahlen.
+
+Das Google-Cloud-Konto hat ein reguläres Rechnungskonto mit hinterlegter Karte,
+der Abruf hört also nicht auf, wenn der Testzeitraum endet. Abgerechnet wird
+trotzdem nichts: ein Aufruf pro Tag gegen 1.000 kostenlose im Monat, siehe
+[Bewertungszahlen automatisch aktualisieren](#bewertungszahlen-automatisch-aktualisieren).
 
 ### Preise und Touren: woher die Zahlen kommen
 
@@ -401,7 +405,18 @@ im nächsten Abschnitt.
 Der Vertrauens-Streifen zieht Schnitt und Anzahl aus **`assets/review-stats.json`**.
 Diese Datei wird von einem **GitHub-Action-Cron** (`.github/workflows/review-stats.yml`)
 einmal täglich aus dem Google-Profil aktualisiert und eingecheckt — Pages baut
-danach automatisch neu.
+danach automatisch neu. Der Lauf steht auf **00:17 UTC**, also kurz nach
+Mitternacht Weltzeit. Die krumme Minute ist Absicht: Zur vollen Stunde stellt
+alle Welt ihre Cron-Jobs ein, und GitHub schiebt Läufe von `:00` unter Last
+gerne um zehn Minuten und mehr nach hinten. Wer die Uhrzeit ändert, sollte die
+`17` deshalb stehen lassen.
+
+Derselbe Lauf schreibt die neuen Werte auch in den `reviewStats`-Block in
+`js/config.js`. Das ist Absicht: `config.js` ist das Sicherheitsnetz, wenn die
+JSON-Datei einmal nicht lädt, und ein Sicherheitsnetz mit zwei Jahre alten
+Zahlen wäre keins. **An den Zahlen muss damit nichts mehr von Hand gepflegt
+werden** — der Bot-Commit heißt „Refresh Google review stats" und fasst nur
+diese beiden Dateien an.
 
 Der API-Schlüssel liegt als Repository-Secret und landet **nie** im Browser.
 Das ist der Unterschied zu einem Aufruf aus dem JavaScript heraus, wo der
@@ -422,21 +437,45 @@ Schlüssel für jeden lesbar wäre.
 4. Unter **Actions → Refresh Google review stats → Run workflow** einmal von
    Hand starten und prüfen, dass die Ausgabe die richtigen Zahlen zeigt.
 
-Danach läuft es allein. Ein Aufruf pro Tag sind ~30 im Monat; das Kontingent
-der Places API liegt weit darüber, und die Feldmaske fragt nur `rating` und
-`userRatingCount` ab — die günstigste Abfrage, die es gibt.
+Danach läuft es allein.
+
+**Zu den Kosten**, weil Google beim Einrichten hartnäckig ein Abo anbietet
+(„Starter", 100 $ im Monat): Das ist **nicht nötig**. Pay-as-you-go mit
+kostenlosem Freikontingent bleibt daneben bestehen — den Abo-Dialog einfach
+abbrechen und unter *APIs & Dienste → Anmeldedaten* weitermachen.
+
+Jede Preisstufe hat seit März 2025 ein eigenes Freikontingent pro Monat. Die
+Felder `rating` und `userRatingCount` lösen die **Enterprise**-Stufe aus, also
+die strengste: **1.000 Aufrufe im Monat frei**. Der Workflow macht einen Aufruf
+pro Tag, höchstens 31 im Monat — rund 3 % davon. Die Feldmaske hält die Antwort
+klein, teuer oder billig macht sie die Abfrage aber nicht; entscheidend ist,
+dass es **ein** Aufruf pro Tag ist.
+
+Ein Rechnungskonto mit Zahlungsmittel verlangt Google trotzdem, auch im
+Freikontingent. Wer das Restrisiko ganz ausschließen will, setzt in der Cloud
+Console unter *Places API → Kontingente* ein Tageslimit von z. B. 50 Anfragen.
+Zusammen mit der Beschränkung des Schlüssels auf die Places API ist damit auch
+ein abhandengekommener Schlüssel gedeckelt.
 
 ### Wenn etwas schiefgeht
 
-Nichts. Der Streifen fällt der Reihe nach zurück auf: JSON-Datei → die Zahlen
-in `js/config.js` → `reviewStats` → die Anzahl der Zitate. Fehlende Datei,
+Auf der Seite: nichts. Der Streifen fällt der Reihe nach zurück auf: JSON-Datei
+→ `reviewStats` in `js/config.js` → die Anzahl der Zitate. Fehlende Datei,
 kaputtes JSON, HTTP 403 wegen falschem Schlüssel, unplausible Werte wie `0` —
-alles getestet, in jedem Fall stehen weiter die Zahlen aus `config.js`. Die
-Werte dort sollten daher gepflegt bleiben, sie sind das Sicherheitsnetz.
+alles getestet, in jedem Fall stehen weiter die Zahlen aus `config.js`.
 
 Das Skript bricht bei einer unplausiblen Antwort bewusst mit Fehler ab und
 lässt die alte Datei stehen, statt „0 guest reviews" zu veröffentlichen. Ein
-fehlgeschlagener Lauf ist in der Actions-Übersicht rot sichtbar.
+fehlgeschlagener Lauf ist in der Actions-Übersicht rot sichtbar. Was in der
+Log-Ausgabe des Schritts *Fetch rating and review count* stehen kann:
+
+| Meldung | Bedeutung |
+|---|---|
+| `PLACE_ID and GOOGLE_MAPS_KEY must both be set…` | Ein Secret fehlt oder ist leer — Schritt 3 der Einrichtung. |
+| `Places API returned 403` | Schlüssel falsch, gesperrt, oder die Places API (New) ist im Projekt nicht aktiviert. |
+| `Places API returned 404` | Die `PLACE_ID` gibt es nicht — im Place ID Finder neu holen. |
+| `Implausible response…` | Antwort ohne Bewertungen. Meist eine Place ID, die auf den falschen Eintrag zeigt. |
+| `::warning … Could not sync the reviewStats fallback` | Kein Abbruch: Die JSON-Datei ist aktuell, nur der Block in `config.js` wurde umbenannt und konnte nicht mitgezogen werden. |
 
 ### Was damit *nicht* geht
 
@@ -445,15 +484,18 @@ gibt maximal fünf zurück, von Google ausgewählt — nicht die aussagekräftig
 Die sechs auf der Seite sind gezielt nach Nutzen für Gäste ausgewählt, das ist
 besser als alles, was eine API liefern würde.
 
----|---|
+### Verworfene Wege
+
+| Weg | Warum nicht |
+|---|---|
 | **Google Places API direkt aus dem Browser** | Der API-Schlüssel steht im JavaScript und ist damit für jeden lesbar. Wer ihn kopiert, verbraucht das Kontingent auf Kosten des Profilinhabers. Ausserdem liefert die Places API nur **fünf** Bewertungen, von Google ausgewählt — nicht die besten, nicht alle 41. |
 | **Fertige Widgets** (Elfsight, Trustindex …) | Laden fremdes JavaScript, setzen Cookies, kosten monatlich und machen die Seite langsamer. Widerspricht dem Grundsatz „kein Tracking, keine externen Anfragen ausser Google Fonts". |
 | **Eigene Serverless-Funktion** (Cloudflare Worker, Netlify Function) | Funktioniert wirklich: Der Schlüssel bleibt geheim, das Ergebnis lässt sich zwischenspeichern. Kostet nichts in der Gratisstufe, ist aber ein zweiter Dienst, der eingerichtet und gepflegt werden muss. Auch hier gilt das Limit von fünf Bewertungen. |
 
-**Empfehlung:** so lassen. Zwei Zahlen von Hand pflegen, die sich alle paar
-Wochen um eins ändern, ist weniger Aufwand als ein Worker — und die
-handverlesenen Zitate sind ohnehin besser als das, was die API zurückgibt.
-Wenn es später doch automatisch sein soll, ist der Cloudflare Worker der Weg.
+Gewählt wurde der Cron-Job: Er hat dieselben Vorteile wie der Worker — der
+Schlüssel bleibt geheim, das Ergebnis ist zwischengespeichert —, ist aber kein
+zweiter Dienst, sondern eine Datei im Repository. Die Seite lädt eine 90 Byte
+große Datei von der eigenen Domain, keine fremde Anfrage kommt hinzu.
 
 ---
 

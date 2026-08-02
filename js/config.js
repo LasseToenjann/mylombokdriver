@@ -67,10 +67,11 @@ window.MLD_CONFIG = {
      content.js. Six quotes are shown on the page; the profile itself holds far
      more, and the honest number is the one guests can go and verify.
 
-     These are typed in by hand because the site has no backend — see the
-     "Live-Bewertungen" section in INFORMATIONEN.md for why, and what it would take.
-     Check them against the Google profile now and then; they only move when a
-     new review comes in. */
+     These two values are maintained by scripts/fetch-review-stats.mjs, which the
+     daily workflow runs — it writes assets/review-stats.json and then updates the
+     numbers below to match. They are the fallback the strip uses when that file
+     does not load, so an edit here is only needed if the automation is switched
+     off. See "Bewertungszahlen automatisch aktualisieren" in INFORMATIONEN.md. */
   reviewStats: {
     rating: 5.0,
     count: 41,

@@ -3,9 +3,13 @@ name: Refresh Google review stats
 # Once a day is plenty for a number that moves a few times a month, and it keeps
 # the call count at ~30 per month. workflow_dispatch is there so the numbers can
 # be pulled on demand after a new review comes in.
+#
+# Midnight UTC, but deliberately not on the hour: GitHub queues every scheduled
+# workflow in the world at :00, and runs planted there are routinely delayed by
+# ten minutes or more. Seventeen past sidesteps the crush.
 on:
   schedule:
-    - cron: '17 4 * * *'
+    - cron: '17 0 * * *'
   workflow_dispatch:
 
 # Needed so the job can commit the refreshed JSON back to main.
@@ -20,11 +24,11 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Fetch rating and review count
         env:
@@ -32,14 +36,16 @@ jobs:
           GOOGLE_MAPS_KEY: ${{ secrets.GOOGLE_MAPS_KEY }}
         run: node scripts/fetch-review-stats.mjs
 
+      # Two files: the JSON the site reads, and the fallback figures in config.js
+      # that the script keeps in step with it.
       - name: Commit if the numbers moved
         run: |
-          if git diff --quiet -- assets/review-stats.json; then
+          if git diff --quiet -- assets/review-stats.json js/config.js; then
             echo "No change, nothing to commit."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/review-stats.json
+          git add assets/review-stats.json js/config.js
           git commit -m "Refresh Google review stats"
           git push
