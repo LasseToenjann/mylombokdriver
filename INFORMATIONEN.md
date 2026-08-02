@@ -405,11 +405,15 @@ im nächsten Abschnitt.
 Der Vertrauens-Streifen zieht Schnitt und Anzahl aus **`assets/review-stats.json`**.
 Diese Datei wird von einem **GitHub-Action-Cron** (`.github/workflows/review-stats.yml`)
 einmal täglich aus dem Google-Profil aktualisiert und eingecheckt — Pages baut
-danach automatisch neu. Der Lauf steht auf **00:17 UTC**, also kurz nach
-Mitternacht Weltzeit. Die krumme Minute ist Absicht: Zur vollen Stunde stellt
-alle Welt ihre Cron-Jobs ein, und GitHub schiebt Läufe von `:00` unter Last
-gerne um zehn Minuten und mehr nach hinten. Wer die Uhrzeit ändert, sollte die
-`17` deshalb stehen lassen.
+danach automatisch neu. Der Lauf steht auf **00:30 Lombok-Zeit**, im Cron also
+`30 16 * * *`: Cron rechnet ausschließlich in UTC, und Lombok liegt auf WITA,
+UTC+8. Indonesien hat keine Sommerzeit, die Umrechnung verrutscht deshalb nie —
+anders als bei deutscher Zeit, wo es zweimal im Jahr um eine Stunde daneben
+läge.
+
+Die volle Stunde ist bewusst gemieden: Dort stellt alle Welt ihre Cron-Jobs
+ein, und GitHub schiebt Läufe von `:00` unter Last gerne um zehn Minuten und
+mehr nach hinten. Halb ist unkritisch.
 
 Derselbe Lauf schreibt die neuen Werte auch in den `reviewStats`-Block in
 `js/config.js`. Das ist Absicht: `config.js` ist das Sicherheitsnetz, wenn die

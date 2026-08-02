@@ -4,12 +4,15 @@ name: Refresh Google review stats
 # the call count at ~30 per month. workflow_dispatch is there so the numbers can
 # be pulled on demand after a new review comes in.
 #
-# Midnight UTC, but deliberately not on the hour: GitHub queues every scheduled
-# workflow in the world at :00, and runs planted there are routinely delayed by
-# ten minutes or more. Seventeen past sidesteps the crush.
+# 16:30 UTC is 00:30 on Lombok — the island runs on WITA (UTC+8) and Indonesia
+# keeps no daylight saving, so this mapping never drifts. Cron itself is always
+# UTC and would not follow a change anyway.
+#
+# Not on the hour, deliberately: GitHub queues every scheduled workflow in the
+# world at :00 and routinely delays the ones planted there.
 on:
   schedule:
-    - cron: '17 0 * * *'
+    - cron: '30 16 * * *'
   workflow_dispatch:
 
 # Needed so the job can commit the refreshed JSON back to main.
