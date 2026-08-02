@@ -75,12 +75,18 @@ Punkt hier und ist auf Wunsch des Betreibers ersatzlos entfallen.
 
 ### Der einzige verbliebene Punkt
 
-**Die Bewertungszahlen werden von Hand gepflegt.** In `js/config.js` stehen
-5,0 aus 41 Bewertungen; der Vertrauensbalken unter dem Hero zeigt genau diese
-Zahlen. Sie veralten mit jeder neuen Google-Bewertung.
+**Es fehlen zwei Repository-Secrets, sonst nichts.** Der Workflow, der die
+Bewertungszahlen täglich aus dem Google-Profil holt, liegt fertig im Repository
+und läuft auch — er bricht aber jeden Morgen mit
+`PLACE_ID and GOOGLE_MAPS_KEY must both be set` ab, weil die beiden Secrets nie
+angelegt wurden. Deshalb sind die Läufe unter *Actions* rot.
 
-Der Workflow, der sie automatisch holt, liegt fertig im Repository und braucht
-nur zwei Repository-Secrets — siehe Abschnitt „Live-Bewertungen" weiter unten.
+Solange das so ist, zeigt der Vertrauensbalken die Zahlen aus `js/config.js`
+(5,0 aus 41) — richtig, aber eingefroren. Sobald die Secrets stehen, aktualisiert
+sich beides von allein: die Datei, die die Seite liest, **und** die Rückfallwerte
+in `config.js`. Die zehn Minuten Einrichtung stehen im Abschnitt
+[Bewertungszahlen automatisch aktualisieren](#bewertungszahlen-automatisch-aktualisieren).
+
 Alles andere auf dieser Seite ist abgenommen: Preise, Touren, Texte, Fotos,
 Kontaktdaten, Facebook-Link und die Anmeldung in der Search Console.
 
@@ -403,6 +409,13 @@ Diese Datei wird von einem **GitHub-Action-Cron** (`.github/workflows/review-sta
 einmal täglich aus dem Google-Profil aktualisiert und eingecheckt — Pages baut
 danach automatisch neu.
 
+Derselbe Lauf schreibt die neuen Werte auch in den `reviewStats`-Block in
+`js/config.js`. Das ist Absicht: `config.js` ist das Sicherheitsnetz, wenn die
+JSON-Datei einmal nicht lädt, und ein Sicherheitsnetz mit zwei Jahre alten
+Zahlen wäre keins. **An den Zahlen muss damit nichts mehr von Hand gepflegt
+werden** — der Bot-Commit heißt „Refresh Google review stats" und fasst nur
+diese beiden Dateien an.
+
 Der API-Schlüssel liegt als Repository-Secret und landet **nie** im Browser.
 Das ist der Unterschied zu einem Aufruf aus dem JavaScript heraus, wo der
 Schlüssel für jeden lesbar wäre.
@@ -428,15 +441,23 @@ der Places API liegt weit darüber, und die Feldmaske fragt nur `rating` und
 
 ### Wenn etwas schiefgeht
 
-Nichts. Der Streifen fällt der Reihe nach zurück auf: JSON-Datei → die Zahlen
-in `js/config.js` → `reviewStats` → die Anzahl der Zitate. Fehlende Datei,
+Auf der Seite: nichts. Der Streifen fällt der Reihe nach zurück auf: JSON-Datei
+→ `reviewStats` in `js/config.js` → die Anzahl der Zitate. Fehlende Datei,
 kaputtes JSON, HTTP 403 wegen falschem Schlüssel, unplausible Werte wie `0` —
-alles getestet, in jedem Fall stehen weiter die Zahlen aus `config.js`. Die
-Werte dort sollten daher gepflegt bleiben, sie sind das Sicherheitsnetz.
+alles getestet, in jedem Fall stehen weiter die Zahlen aus `config.js`.
 
 Das Skript bricht bei einer unplausiblen Antwort bewusst mit Fehler ab und
 lässt die alte Datei stehen, statt „0 guest reviews" zu veröffentlichen. Ein
-fehlgeschlagener Lauf ist in der Actions-Übersicht rot sichtbar.
+fehlgeschlagener Lauf ist in der Actions-Übersicht rot sichtbar. Was in der
+Log-Ausgabe des Schritts *Fetch rating and review count* stehen kann:
+
+| Meldung | Bedeutung |
+|---|---|
+| `PLACE_ID and GOOGLE_MAPS_KEY must both be set…` | Ein Secret fehlt oder ist leer — Schritt 3 der Einrichtung. |
+| `Places API returned 403` | Schlüssel falsch, gesperrt, oder die Places API (New) ist im Projekt nicht aktiviert. |
+| `Places API returned 404` | Die `PLACE_ID` gibt es nicht — im Place ID Finder neu holen. |
+| `Implausible response…` | Antwort ohne Bewertungen. Meist eine Place ID, die auf den falschen Eintrag zeigt. |
+| `::warning … Could not sync the reviewStats fallback` | Kein Abbruch: Die JSON-Datei ist aktuell, nur der Block in `config.js` wurde umbenannt und konnte nicht mitgezogen werden. |
 
 ### Was damit *nicht* geht
 
@@ -445,15 +466,18 @@ gibt maximal fünf zurück, von Google ausgewählt — nicht die aussagekräftig
 Die sechs auf der Seite sind gezielt nach Nutzen für Gäste ausgewählt, das ist
 besser als alles, was eine API liefern würde.
 
----|---|
+### Verworfene Wege
+
+| Weg | Warum nicht |
+|---|---|
 | **Google Places API direkt aus dem Browser** | Der API-Schlüssel steht im JavaScript und ist damit für jeden lesbar. Wer ihn kopiert, verbraucht das Kontingent auf Kosten des Profilinhabers. Ausserdem liefert die Places API nur **fünf** Bewertungen, von Google ausgewählt — nicht die besten, nicht alle 41. |
 | **Fertige Widgets** (Elfsight, Trustindex …) | Laden fremdes JavaScript, setzen Cookies, kosten monatlich und machen die Seite langsamer. Widerspricht dem Grundsatz „kein Tracking, keine externen Anfragen ausser Google Fonts". |
 | **Eigene Serverless-Funktion** (Cloudflare Worker, Netlify Function) | Funktioniert wirklich: Der Schlüssel bleibt geheim, das Ergebnis lässt sich zwischenspeichern. Kostet nichts in der Gratisstufe, ist aber ein zweiter Dienst, der eingerichtet und gepflegt werden muss. Auch hier gilt das Limit von fünf Bewertungen. |
 
-**Empfehlung:** so lassen. Zwei Zahlen von Hand pflegen, die sich alle paar
-Wochen um eins ändern, ist weniger Aufwand als ein Worker — und die
-handverlesenen Zitate sind ohnehin besser als das, was die API zurückgibt.
-Wenn es später doch automatisch sein soll, ist der Cloudflare Worker der Weg.
+Gewählt wurde der Cron-Job: Er hat dieselben Vorteile wie der Worker — der
+Schlüssel bleibt geheim, das Ergebnis ist zwischengespeichert —, ist aber kein
+zweiter Dienst, sondern eine Datei im Repository. Die Seite lädt eine 90 Byte
+große Datei von der eigenen Domain, keine fremde Anfrage kommt hinzu.
 
 ---
 
