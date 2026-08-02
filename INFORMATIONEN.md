@@ -83,14 +83,10 @@ zurückgeliefert — dieselben Zahlen, die vorher von Hand dort standen.
 Damit ist die ganze Seite abgenommen: Preise, Touren, Texte, Fotos, Kontaktdaten,
 Facebook-Link, die Anmeldung in der Search Console und die Bewertungszahlen.
 
-**Eine Sache steht in der Zukunft an.** Das Google-Cloud-Konto läuft im
-kostenlosen Testzeitraum, der Anfang November 2026 endet. Danach braucht das
-Projekt ein reguläres Rechnungskonto, sonst hört der Schlüssel auf zu
-funktionieren und der Workflow wird rot. Kosten entstehen dadurch keine — ein
-Aufruf pro Tag bleibt weit im Freikontingent, siehe
+Das Google-Cloud-Konto hat ein reguläres Rechnungskonto mit hinterlegter Karte,
+der Abruf hört also nicht auf, wenn der Testzeitraum endet. Abgerechnet wird
+trotzdem nichts: ein Aufruf pro Tag gegen 1.000 kostenlose im Monat, siehe
 [Bewertungszahlen automatisch aktualisieren](#bewertungszahlen-automatisch-aktualisieren).
-Fällt es aus, zeigt die Seite weiter die Zahlen aus `config.js`; auffallen würde
-es also nur in der Actions-Übersicht.
 
 ### Preise und Touren: woher die Zahlen kommen
 
@@ -409,7 +405,11 @@ im nächsten Abschnitt.
 Der Vertrauens-Streifen zieht Schnitt und Anzahl aus **`assets/review-stats.json`**.
 Diese Datei wird von einem **GitHub-Action-Cron** (`.github/workflows/review-stats.yml`)
 einmal täglich aus dem Google-Profil aktualisiert und eingecheckt — Pages baut
-danach automatisch neu.
+danach automatisch neu. Der Lauf steht auf **00:17 UTC**, also kurz nach
+Mitternacht Weltzeit. Die krumme Minute ist Absicht: Zur vollen Stunde stellt
+alle Welt ihre Cron-Jobs ein, und GitHub schiebt Läufe von `:00` unter Last
+gerne um zehn Minuten und mehr nach hinten. Wer die Uhrzeit ändert, sollte die
+`17` deshalb stehen lassen.
 
 Derselbe Lauf schreibt die neuen Werte auch in den `reviewStats`-Block in
 `js/config.js`. Das ist Absicht: `config.js` ist das Sicherheitsnetz, wenn die
