@@ -74,7 +74,7 @@ window.MLD_CONFIG = {
      off. See "Bewertungszahlen automatisch aktualisieren" in INFORMATIONEN.md. */
   reviewStats: {
     rating: 5.0,
-    count: 42,
+    count: 43,
     /* Set to '' to hide the strip's source label. */
     source: 'Google'
   },
